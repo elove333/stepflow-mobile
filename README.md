@@ -1,6 +1,6 @@
 # stepflow-mobile
 
-React Native mobile application for StepFlow - a rhythm-based movement training app.
+React Native, Swift, and Kotlin mobile application for StepFlow - a rhythm-based movement training app.
 
 ## Project Structure
 
