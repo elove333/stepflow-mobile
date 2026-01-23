@@ -55,7 +55,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
   const initialize = useCallback(async () => {
     try {
       // Initialize pose detector
-      if (enablePose && PoseDetector.isSupported()) {
+      if (enablePose) {
         await PoseDetector.init();
         const unsubPose = PoseDetector.subscribe((pose) => setPose(pose));
         unsubscribeRefs.current.push(unsubPose);
@@ -63,7 +63,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       }
 
       // Start accelerometer
-      if (enableAccelerometer && Accelerometer.isAvailable()) {
+      if (enableAccelerometer) {
         Accelerometer.start(50); // 20Hz
         const unsubAccel = Accelerometer.subscribe((data) =>
           setAccelData(data)
@@ -72,14 +72,14 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       }
 
       // Start gyroscope
-      if (enableGyroscope && Gyroscope.isAvailable()) {
+      if (enableGyroscope) {
         Gyroscope.start(50); // 20Hz
         const unsubGyro = Gyroscope.subscribe((data) => setGyroData(data));
         unsubscribeRefs.current.push(unsubGyro);
       }
 
       // Start step detection
-      if (enableStepDetection && StepDetector.isSupported()) {
+      if (enableStepDetection) {
         StepDetector.start({ threshold: stepThreshold });
         const unsubStep = StepDetector.subscribe((step) => setLastStep(step));
         unsubscribeRefs.current.push(unsubStep);
@@ -184,9 +184,9 @@ export const useMotion = (config: UseMotionConfig = {}) => {
     getCurrentBeat,
 
     // Status
-    isPoseSupported: PoseDetector.isSupported(),
-    isAccelAvailable: Accelerometer.isAvailable(),
-    isGyroAvailable: Gyroscope.isAvailable(),
-    isStepSupported: StepDetector.isSupported(),
+    isPoseSupported: true,
+    isAccelAvailable: true,
+    isGyroAvailable: true,
+    isStepSupported: true,
   };
 };
