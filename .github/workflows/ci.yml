@@ -1,0 +1,117 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript Checks
+        run: npm run type-check
+
+      - name: Lint the Code with ESLint
+        run: npm run lint
+
+      - name: Run Prettier
+        run: npm run format:check
+
+      - name: Run Unit and Integration Tests
+        run: npm test
+
+      - name: Run E2E Tests
+        run: |
+          npm run detox:build
+          npm run detox:test
+
+  pr-validation:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate PR Title
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          if [ ${#PR_TITLE} -lt 10 ]; then
+            echo "❌ PR title is too short. Please provide a meaningful title (minimum 10 characters)."
+            exit 1
+          fi
+          echo "✅ PR title validation passed"
+
+      - name: Validate PR Description
+        run: |
+          PR_BODY="${{ github.event.pull_request.body }}"
+          if [ -z "$PR_BODY" ] || [ ${#PR_BODY} -lt 20 ]; then
+            echo "❌ PR description is missing or too short. Please provide a clear description following the template."
+            exit 1
+          fi
+          echo "✅ PR description validation passed"
+
+      - name: Check Commit Messages
+        run: |
+          echo "Checking commit messages for meaningful content..."
+          git fetch origin ${{ github.base_ref }}
+          MESSAGES=$(git log --format=%B origin/${{ github.base_ref }}..HEAD)
+          FAILED=0
+          while IFS= read -r line; do
+            if [ ! -z "$line" ] && [ ${#line} -lt 10 ]; then
+              echo "❌ Commit message too short: $line"
+              echo "Please use meaningful commit messages (minimum 10 characters)."
+              FAILED=1
+            fi
+          done <<< "$MESSAGES"
+          if [ $FAILED -eq 1 ]; then
+            exit 1
+          fi
+          echo "✅ Commit message validation passed"
+
+  post-merge-validation:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Regression Tests
+        run: npm test -- --coverage
+
+      - name: Notify on Failure
+        if: failure()
+        run: |
+          echo "⚠️ Post-merge validation failed! Regression tests detected issues."
+          echo "Please investigate and fix the issues immediately."

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+coverage/
+.expo/
+.expo-shared/
+ios/Pods/
+ios/build/
+android/build/
+android/app/build/
+*.log
+.DS_Store
