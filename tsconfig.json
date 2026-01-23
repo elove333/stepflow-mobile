@@ -22,7 +22,6 @@
   },
   "include": [
     "src/**/*",
-    "index.js",
     "__tests__/**/*"
   ],
   "exclude": [
