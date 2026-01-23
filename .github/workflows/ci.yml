@@ -43,7 +43,6 @@ jobs:
         run: |
           npm run detox:build
           npm run detox:test
-        continue-on-error: true
 
   pr-validation:
     runs-on: ubuntu-latest
@@ -76,13 +75,18 @@ jobs:
       - name: Check Commit Messages
         run: |
           echo "Checking commit messages for meaningful content..."
-          git log --format=%B origin/${{ github.base_ref }}..HEAD | while read -r line; do
+          MESSAGES=$(git log --format=%B origin/${{ github.base_ref }}..HEAD)
+          FAILED=0
+          while IFS= read -r line; do
             if [ ! -z "$line" ] && [ ${#line} -lt 10 ]; then
               echo "❌ Commit message too short: $line"
               echo "Please use meaningful commit messages (minimum 10 characters)."
-              exit 1
+              FAILED=1
             fi
-          done
+          done <<< "$MESSAGES"
+          if [ $FAILED -eq 1 ]; then
+            exit 1
+          fi
           echo "✅ Commit message validation passed"
 
   post-merge-validation:
