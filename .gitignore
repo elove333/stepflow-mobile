@@ -54,3 +54,6 @@ fastlane/test_output
 
 # testing
 /coverage
+
+# environment variables
+.env
