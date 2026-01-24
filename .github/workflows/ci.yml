@@ -40,6 +40,7 @@ jobs:
         run: npm test
 
       - name: Run E2E Tests
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           npm run detox:build
           npm run detox:test
