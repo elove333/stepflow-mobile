@@ -15,21 +15,21 @@ export const Card: React.FC<CardProps> = ({
   onPress,
   elevated = true,
 }) => {
-  const Container = onPress ? TouchableOpacity : View;
+  const containerStyle = [styles.card, elevated && styles.elevated, style];
 
-  return (
-    <Container
-      style={[
-        styles.card,
-        elevated && styles.elevated,
-        style,
-      ]}
-      onPress={onPress}
-      activeOpacity={onPress ? 0.7 : 1}
-    >
-      {children}
-    </Container>
-  );
+  if (onPress) {
+    return (
+      <TouchableOpacity
+        style={containerStyle}
+        onPress={onPress}
+        activeOpacity={0.7}
+      >
+        {children}
+      </TouchableOpacity>
+    );
+  }
+
+  return <View style={containerStyle}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
