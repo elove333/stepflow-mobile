@@ -9,20 +9,11 @@ export interface CardProps {
   elevated?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({
-  children,
-  style,
-  onPress,
-  elevated = true,
-}) => {
+export const Card: React.FC<CardProps> = ({ children, style, onPress, elevated = true }) => {
   if (onPress) {
     return (
       <TouchableOpacity
-        style={[
-          styles.card,
-          elevated && styles.elevated,
-          style,
-        ]}
+        style={[styles.card, elevated && styles.elevated, style]}
         onPress={onPress}
         activeOpacity={0.7}
       >
@@ -31,17 +22,7 @@ export const Card: React.FC<CardProps> = ({
     );
   }
 
-  return (
-    <View
-      style={[
-        styles.card,
-        elevated && styles.elevated,
-        style,
-      ]}
-    >
-      {children}
-    </View>
-  );
+  return <View style={[styles.card, elevated && styles.elevated, style]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

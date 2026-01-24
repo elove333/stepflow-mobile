@@ -75,11 +75,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <TouchableOpacity
-      style={[
-        getButtonStyle(),
-        disabled && styles.disabled,
-        style,
-      ]}
+      style={[getButtonStyle(), disabled && styles.disabled, style]}
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.7}
@@ -89,9 +85,7 @@ export const Button: React.FC<ButtonProps> = ({
           color={variant === 'primary' || variant === 'secondary' ? colors.white : colors.primary}
         />
       ) : (
-        <Text style={[getTextStyle(), disabled && styles.disabledText, textStyle]}>
-          {title}
-        </Text>
+        <Text style={[getTextStyle(), disabled && styles.disabledText, textStyle]}>{title}</Text>
       )}
     </TouchableOpacity>
   );

@@ -17,7 +17,9 @@ export const validators = {
    * - At least one letter and one number
    */
   password: (password: string): boolean => {
-    if (password.length < 8) return false;
+    if (password.length < 8) {
+      return false;
+    }
     const hasLetter = /[a-zA-Z]/.test(password);
     const hasNumber = /\d/.test(password);
     return hasLetter && hasNumber;

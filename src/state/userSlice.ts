@@ -44,10 +44,7 @@ const userSlice = createSlice({
     setTokens: (state, action: PayloadAction<AuthTokens>) => {
       state.tokens = action.payload;
     },
-    setAuth: (
-      state,
-      action: PayloadAction<{ user: User; tokens: AuthTokens }>
-    ) => {
+    setAuth: (state, action: PayloadAction<{ user: User; tokens: AuthTokens }>) => {
       state.user = action.payload.user;
       state.tokens = action.payload.tokens;
       state.isAuthenticated = true;

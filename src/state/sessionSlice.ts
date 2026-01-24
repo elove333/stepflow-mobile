@@ -53,13 +53,8 @@ const sessionSlice = createSlice({
     addSession: (state, action: PayloadAction<Session>) => {
       state.sessions.push(action.payload);
     },
-    updateSession: (
-      state,
-      action: PayloadAction<{ id: string; data: Partial<Session> }>
-    ) => {
-      const index = state.sessions.findIndex(
-        (s) => s.id === action.payload.id
-      );
+    updateSession: (state, action: PayloadAction<{ id: string; data: Partial<Session> }>) => {
+      const index = state.sessions.findIndex((s) => s.id === action.payload.id);
       if (index !== -1) {
         state.sessions[index] = {
           ...state.sessions[index],
@@ -87,7 +82,7 @@ const sessionSlice = createSlice({
     },
     updateActiveSession: (
       state,
-      action: PayloadAction<Partial<Omit<ActiveSession, 'session'>>>
+      action: PayloadAction<Partial<Omit<ActiveSession, 'session'>>>,
     ) => {
       if (state.activeSession) {
         state.activeSession = {
@@ -110,9 +105,7 @@ const sessionSlice = createSlice({
         // Calculate accuracy as percentage
         const accuracy =
           state.activeSession.totalSteps > 0
-            ? (state.activeSession.onBeatSteps /
-                state.activeSession.totalSteps) *
-              100
+            ? (state.activeSession.onBeatSteps / state.activeSession.totalSteps) * 100
             : 0;
         state.activeSession.score = Math.round(accuracy);
       }

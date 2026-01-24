@@ -37,32 +37,28 @@ export interface AuthResponse {
 /**
  * Login user
  */
-export const login = async (
-  credentials: LoginCredentials
-): Promise<ApiResponse<AuthResponse>> => {
+export const login = async (credentials: LoginCredentials): Promise<ApiResponse<AuthResponse>> => {
   const response = await client.post<AuthResponse>('/auth/login', credentials);
-  
+
   // Set auth token in client
   if (response.data.tokens.accessToken) {
     client.setAuthToken(response.data.tokens.accessToken);
   }
-  
+
   return response;
 };
 
 /**
  * Register new user
  */
-export const register = async (
-  data: RegisterData
-): Promise<ApiResponse<AuthResponse>> => {
+export const register = async (data: RegisterData): Promise<ApiResponse<AuthResponse>> => {
   const response = await client.post<AuthResponse>('/auth/register', data);
-  
+
   // Set auth token in client
   if (response.data.tokens.accessToken) {
     client.setAuthToken(response.data.tokens.accessToken);
   }
-  
+
   return response;
 };
 
@@ -71,28 +67,26 @@ export const register = async (
  */
 export const logout = async (): Promise<ApiResponse<void>> => {
   const response = await client.post<void>('/auth/logout');
-  
+
   // Clear auth token
   client.setAuthToken(null);
-  
+
   return response;
 };
 
 /**
  * Refresh authentication token
  */
-export const refreshToken = async (
-  refreshToken: string
-): Promise<ApiResponse<AuthTokens>> => {
+export const refreshToken = async (refreshToken: string): Promise<ApiResponse<AuthTokens>> => {
   const response = await client.post<AuthTokens>('/auth/refresh', {
     refreshToken,
   });
-  
+
   // Update auth token
   if (response.data.accessToken) {
     client.setAuthToken(response.data.accessToken);
   }
-  
+
   return response;
 };
 
@@ -106,9 +100,7 @@ export const getCurrentUser = async (): Promise<ApiResponse<User>> => {
 /**
  * Update user profile
  */
-export const updateProfile = async (
-  data: Partial<User>
-): Promise<ApiResponse<User>> => {
+export const updateProfile = async (data: Partial<User>): Promise<ApiResponse<User>> => {
   return await client.patch<User>('/auth/profile', data);
 };
 
@@ -117,7 +109,7 @@ export const updateProfile = async (
  */
 export const changePassword = async (
   currentPassword: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<ApiResponse<void>> => {
   return await client.post<void>('/auth/change-password', {
     currentPassword,
@@ -128,9 +120,7 @@ export const changePassword = async (
 /**
  * Request password reset
  */
-export const requestPasswordReset = async (
-  email: string
-): Promise<ApiResponse<void>> => {
+export const requestPasswordReset = async (email: string): Promise<ApiResponse<void>> => {
   return await client.post<void>('/auth/reset-password/request', { email });
 };
 
@@ -139,7 +129,7 @@ export const requestPasswordReset = async (
  */
 export const resetPassword = async (
   token: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<ApiResponse<void>> => {
   return await client.post<void>('/auth/reset-password/confirm', {
     token,

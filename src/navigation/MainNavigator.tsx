@@ -35,11 +35,7 @@ export const MainNavigator: React.FC = () => {
         },
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'StepFlow' }}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'StepFlow' }} />
       <Stack.Screen
         name="SessionPicker"
         component={SessionPickerScreen}
@@ -61,16 +57,8 @@ export const MainNavigator: React.FC = () => {
           headerLeft: () => null, // Prevent back navigation
         }}
       />
-      <Stack.Screen
-        name="Progress"
-        component={ProgressScreen}
-        options={{ title: 'Progress' }}
-      />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: 'Settings' }}
-      />
+      <Stack.Screen name="Progress" component={ProgressScreen} options={{ title: 'Progress' }} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
     </Stack.Navigator>
   );
 };

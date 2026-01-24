@@ -19,9 +19,9 @@ export const FeedbackScreen: React.FC = () => {
   const { activeSession } = useSession();
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
-  const [feedbackType, setFeedbackType] = useState<
-    'bug' | 'feature' | 'improvement' | 'other'
-  >('improvement');
+  const [feedbackType, setFeedbackType] = useState<'bug' | 'feature' | 'improvement' | 'other'>(
+    'improvement',
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRatingPress = (value: number) => {
@@ -47,16 +47,12 @@ export const FeedbackScreen: React.FC = () => {
         });
       }
 
-      Alert.alert(
-        'Thank You!',
-        'Your feedback has been submitted successfully',
-        [
-          {
-            text: 'OK',
-            onPress: () => navigation.navigate('Home'),
-          },
-        ]
-      );
+      Alert.alert('Thank You!', 'Your feedback has been submitted successfully', [
+        {
+          text: 'OK',
+          onPress: () => navigation.navigate('Home'),
+        },
+      ]);
     } catch (error) {
       console.error('Failed to submit feedback:', error);
       Alert.alert('Error', 'Failed to submit feedback. Please try again.');
@@ -73,9 +69,7 @@ export const FeedbackScreen: React.FC = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>How was your session?</Text>
-        <Text style={styles.subtitle}>
-          Your feedback helps us improve your experience
-        </Text>
+        <Text style={styles.subtitle}>Your feedback helps us improve your experience</Text>
       </View>
 
       {/* Session Summary */}
@@ -84,32 +78,24 @@ export const FeedbackScreen: React.FC = () => {
           <Text style={styles.cardTitle}>Session Summary</Text>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Total Steps:</Text>
-            <Text style={styles.summaryValue}>
-              {activeSession.totalSteps}
-            </Text>
+            <Text style={styles.summaryValue}>{activeSession.totalSteps}</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>On Beat:</Text>
-            <Text style={styles.summaryValue}>
-              {activeSession.onBeatSteps}
-            </Text>
+            <Text style={styles.summaryValue}>{activeSession.onBeatSteps}</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Accuracy:</Text>
             <Text style={styles.summaryValue}>
               {activeSession.totalSteps > 0
-                ? Math.round(
-                    (activeSession.onBeatSteps / activeSession.totalSteps) * 100
-                  )
+                ? Math.round((activeSession.onBeatSteps / activeSession.totalSteps) * 100)
                 : 0}
               %
             </Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Score:</Text>
-            <Text style={[styles.summaryValue, styles.scoreValue]}>
-              {activeSession.score}
-            </Text>
+            <Text style={[styles.summaryValue, styles.scoreValue]}>{activeSession.score}</Text>
           </View>
         </Card>
       )}
@@ -124,9 +110,7 @@ export const FeedbackScreen: React.FC = () => {
               onPress={() => handleRatingPress(value)}
               style={styles.starButton}
             >
-              <Text style={styles.star}>
-                {value <= rating ? '⭐' : '☆'}
-              </Text>
+              <Text style={styles.star}>{value <= rating ? '⭐' : '☆'}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -154,10 +138,7 @@ export const FeedbackScreen: React.FC = () => {
           {(['improvement', 'bug', 'feature', 'other'] as const).map((type) => (
             <TouchableOpacity
               key={type}
-              style={[
-                styles.typeButton,
-                feedbackType === type && styles.typeButtonActive,
-              ]}
+              style={[styles.typeButton, feedbackType === type && styles.typeButtonActive]}
               onPress={() => setFeedbackType(type)}
             >
               <Text

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { Button, FeedbackBubble, RhythmIndicator } from '../components';
@@ -14,9 +8,21 @@ import { useMotion } from '../hooks/useMotion';
 
 export const LiveSessionScreen: React.FC = () => {
   const navigation = useNavigation<any>();
-  const { activeSession, selectedSession, startSession, recordStepEvent, pause, resume, completeSession, cancelSession } = useSession();
-  const [feedback, setFeedback] = useState<{ message: string; type: 'success' | 'error' | 'warning' | 'info' } | null>(null);
-  
+  const {
+    activeSession,
+    selectedSession,
+    startSession,
+    recordStepEvent,
+    pause,
+    resume,
+    completeSession,
+    cancelSession,
+  } = useSession();
+  const [feedback, setFeedback] = useState<{
+    message: string;
+    type: 'success' | 'error' | 'warning' | 'info';
+  } | null>(null);
+
   const session = activeSession?.session || selectedSession;
   const bpm = session?.bpm || 120;
 
@@ -50,7 +56,7 @@ export const LiveSessionScreen: React.FC = () => {
       const syncResult = checkSync(lastStep.timestamp);
       if (syncResult) {
         recordStepEvent(syncResult.onBeat);
-        
+
         // Show feedback
         if (syncResult.onBeat) {
           setFeedback({ message: 'Perfect! 🎯', type: 'success' });
@@ -59,7 +65,7 @@ export const LiveSessionScreen: React.FC = () => {
         } else {
           setFeedback({ message: 'Keep trying!', type: 'warning' });
         }
-        
+
         // Clear feedback after delay
         setTimeout(() => setFeedback(null), 1000);
       }
@@ -75,27 +81,23 @@ export const LiveSessionScreen: React.FC = () => {
   };
 
   const handleEnd = async () => {
-    Alert.alert(
-      'End Session',
-      'Are you sure you want to end this session?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'End',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await completeSession();
-              navigation.navigate('Feedback');
-            } catch (error) {
-              console.error('Failed to complete session:', error);
-              cancelSession();
-              navigation.goBack();
-            }
-          },
+    Alert.alert('End Session', 'Are you sure you want to end this session?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'End',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await completeSession();
+            navigation.navigate('Feedback');
+          } catch (error) {
+            console.error('Failed to complete session:', error);
+            cancelSession();
+            navigation.goBack();
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleCancel = () => {
@@ -112,7 +114,7 @@ export const LiveSessionScreen: React.FC = () => {
             navigation.goBack();
           },
         },
-      ]
+      ],
     );
   };
 
@@ -120,18 +122,12 @@ export const LiveSessionScreen: React.FC = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.errorText}>No session selected</Text>
-        <Button
-          title="Go Back"
-          onPress={() => navigation.goBack()}
-          variant="primary"
-        />
+        <Button title="Go Back" onPress={() => navigation.goBack()} variant="primary" />
       </View>
     );
   }
 
-  const elapsedTime = activeSession
-    ? Math.floor((Date.now() - activeSession.startTime) / 1000)
-    : 0;
+  const elapsedTime = activeSession ? Math.floor((Date.now() - activeSession.startTime) / 1000) : 0;
   const remainingTime = Math.max(0, session.duration - elapsedTime);
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
@@ -174,19 +170,14 @@ export const LiveSessionScreen: React.FC = () => {
       {/* Timer */}
       <View style={styles.timerContainer}>
         <Text style={styles.timerText}>
-          {minutes.toString().padStart(2, '0')}:
-          {seconds.toString().padStart(2, '0')}
+          {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
         </Text>
       </View>
 
       {/* Feedback Bubble */}
       {feedback && (
         <View style={styles.feedbackContainer}>
-          <FeedbackBubble
-            message={feedback.message}
-            type={feedback.type}
-            visible={true}
-          />
+          <FeedbackBubble message={feedback.message} type={feedback.type} visible={true} />
         </View>
       )}
 

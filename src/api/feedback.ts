@@ -38,22 +38,18 @@ export interface FeedbackResponse {
 /**
  * Submit feedback
  */
-export const submitFeedback = async (
-  data: CreateFeedbackData
-): Promise<ApiResponse<Feedback>> => {
+export const submitFeedback = async (data: CreateFeedbackData): Promise<ApiResponse<Feedback>> => {
   return await client.post<Feedback>('/feedback', data);
 };
 
 /**
  * Get user's feedback history
  */
-export const getFeedbackHistory = async (
-  params?: {
-    limit?: number;
-    offset?: number;
-    status?: string;
-  }
-): Promise<ApiResponse<Feedback[]>> => {
+export const getFeedbackHistory = async (params?: {
+  limit?: number;
+  offset?: number;
+  status?: string;
+}): Promise<ApiResponse<Feedback[]>> => {
   return await client.get<Feedback[]>('/feedback', { params });
 };
 
@@ -69,7 +65,7 @@ export const getFeedback = async (id: string): Promise<ApiResponse<Feedback>> =>
  */
 export const updateFeedback = async (
   id: string,
-  data: Partial<CreateFeedbackData>
+  data: Partial<CreateFeedbackData>,
 ): Promise<ApiResponse<Feedback>> => {
   return await client.patch<Feedback>(`/feedback/${id}`, data);
 };
@@ -85,11 +81,9 @@ export const deleteFeedback = async (id: string): Promise<ApiResponse<void>> => 
  * Get feedback responses
  */
 export const getFeedbackResponses = async (
-  feedbackId: string
+  feedbackId: string,
 ): Promise<ApiResponse<FeedbackResponse[]>> => {
-  return await client.get<FeedbackResponse[]>(
-    `/feedback/${feedbackId}/responses`
-  );
+  return await client.get<FeedbackResponse[]>(`/feedback/${feedbackId}/responses`);
 };
 
 /**
@@ -98,7 +92,7 @@ export const getFeedbackResponses = async (
 export const rateSession = async (
   sessionId: string,
   rating: number,
-  comment?: string
+  comment?: string,
 ): Promise<ApiResponse<Feedback>> => {
   return await client.post<Feedback>('/feedback/rate', {
     sessionId,

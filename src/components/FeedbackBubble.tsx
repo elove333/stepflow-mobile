@@ -13,7 +13,9 @@ export const FeedbackBubble: React.FC<FeedbackBubbleProps> = ({
   type = 'info',
   visible = true,
 }) => {
-  if (!visible) return null;
+  if (!visible) {
+    return null;
+  }
 
   const getBackgroundColor = () => {
     switch (type) {

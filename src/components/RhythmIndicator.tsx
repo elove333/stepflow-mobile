@@ -54,7 +54,9 @@ export const RhythmIndicator: React.FC<RhythmIndicatorProps> = ({
           }),
         ]),
       ]).start(() => {
-        if (active) pulse();
+        if (active) {
+          pulse();
+        }
       });
     };
 

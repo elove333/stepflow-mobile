@@ -9,13 +9,13 @@ export const spacing = {
   lg: 24,
   xl: 32,
   xxl: 48,
-  
+
   // Specific use cases
   screenPadding: 16,
   cardPadding: 16,
   sectionGap: 24,
   itemGap: 12,
-  
+
   // Border radius
   radiusSmall: 4,
   radiusMedium: 8,

@@ -30,7 +30,9 @@ export const calculateMagnitude = (vector: Vector3D): number => {
  */
 export const normalizeVector = (vector: Vector3D): Vector3D => {
   const magnitude = calculateMagnitude(vector);
-  if (magnitude === 0) return { x: 0, y: 0, z: 0 };
+  if (magnitude === 0) {
+    return { x: 0, y: 0, z: 0 };
+  }
   return {
     x: vector.x / magnitude,
     y: vector.y / magnitude,
@@ -42,9 +44,7 @@ export const normalizeVector = (vector: Vector3D): Vector3D => {
  * Calculates distance between two 3D points
  */
 export const calculateDistance = (p1: Vector3D, p2: Vector3D): number => {
-  return Math.sqrt(
-    (p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2 + (p2.z - p1.z) ** 2
-  );
+  return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2 + (p2.z - p1.z) ** 2);
 };
 
 /**
@@ -59,7 +59,7 @@ export const detectStep = (
   magnitude: number,
   threshold: number = 1.5,
   lastStepTime: number = 0,
-  minStepInterval: number = 300
+  minStepInterval: number = 300,
 ): boolean => {
   const now = Date.now();
   const timeSinceLastStep = now - lastStepTime;
@@ -73,11 +73,7 @@ export const detectStep = (
  * @param alpha - Smoothing factor (0-1, default 0.8)
  * @returns Filtered value
  */
-export const applyEMA = (
-  current: number,
-  previous: number,
-  alpha: number = 0.8
-): number => {
+export const applyEMA = (current: number, previous: number, alpha: number = 0.8): number => {
   return alpha * current + (1 - alpha) * previous;
 };
 
@@ -87,7 +83,7 @@ export const applyEMA = (
 export const lowPassFilter = (
   current: Vector3D,
   previous: Vector3D,
-  alpha: number = 0.8
+  alpha: number = 0.8,
 ): Vector3D => {
   return {
     x: applyEMA(current.x, previous.x, alpha),
@@ -102,34 +98,34 @@ export const lowPassFilter = (
 export const calculateAngle = (
   p1: { x: number; y: number },
   center: { x: number; y: number },
-  p2: { x: number; y: number }
+  p2: { x: number; y: number },
 ): number => {
   const angle1 = Math.atan2(p1.y - center.y, p1.x - center.x);
   const angle2 = Math.atan2(p2.y - center.y, p2.x - center.x);
   let angle = ((angle2 - angle1) * 180) / Math.PI;
-  if (angle < 0) angle += 360;
+  if (angle < 0) {
+    angle += 360;
+  }
   return angle;
 };
 
 /**
  * Checks if pose keypoint confidence is above threshold
  */
-export const isKeypointValid = (
-  keypoint: { score: number },
-  threshold: number = 0.5
-): boolean => {
+export const isKeypointValid = (keypoint: { score: number }, threshold: number = 0.5): boolean => {
   return keypoint.score >= threshold;
 };
 
 /**
  * Smooths pose data over time using moving average
  */
-export const smoothPose = (
-  poses: Pose[],
-  windowSize: number = 5
-): Pose | null => {
-  if (poses.length === 0) return null;
-  if (poses.length < windowSize) return poses[poses.length - 1];
+export const smoothPose = (poses: Pose[], windowSize: number = 5): Pose | null => {
+  if (poses.length === 0) {
+    return null;
+  }
+  if (poses.length < windowSize) {
+    return poses[poses.length - 1];
+  }
 
   const recentPoses = poses.slice(-windowSize);
   const avgPose: Pose = {
@@ -157,8 +153,7 @@ export const smoothPose = (
   }
 
   // Average overall pose score
-  avgPose.score =
-    recentPoses.reduce((sum, pose) => sum + pose.score, 0) / windowSize;
+  avgPose.score = recentPoses.reduce((sum, pose) => sum + pose.score, 0) / windowSize;
 
   return avgPose;
 };

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 import { Card, ProgressGraph } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +11,7 @@ import type { ProgressDataPoint } from '../components/ProgressGraph';
 export const ProgressScreen: React.FC = () => {
   const dispatch = useDispatch();
   const { stats, progressData, achievements, isLoading } = useSelector(
-    (state: RootState) => state.progress
+    (state: RootState) => state.progress,
   );
   const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month'>('week');
 
@@ -70,9 +64,7 @@ export const ProgressScreen: React.FC = () => {
             <Text style={styles.statLabel}>Steps</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statValue}>
-              {stats?.averageAccuracy?.toFixed(1) || 0}%
-            </Text>
+            <Text style={styles.statValue}>{stats?.averageAccuracy?.toFixed(1) || 0}%</Text>
             <Text style={styles.statLabel}>Accuracy</Text>
           </View>
           <View style={styles.statItem}>
@@ -122,11 +114,7 @@ export const ProgressScreen: React.FC = () => {
           </View>
         </View>
         <ProgressGraph
-          data={
-            selectedTimeframe === 'week'
-              ? graphData.slice(-7)
-              : graphData.slice(-30)
-          }
+          data={selectedTimeframe === 'week' ? graphData.slice(-7) : graphData.slice(-30)}
           showLabels={true}
           color={colors.primary}
         />
@@ -140,11 +128,7 @@ export const ProgressScreen: React.FC = () => {
             style={[
               styles.experienceFill,
               {
-                width: `${
-                  stats?.experience
-                    ? (stats.experience % 1000) / 10
-                    : 0
-                }%`,
+                width: `${stats?.experience ? (stats.experience % 1000) / 10 : 0}%`,
               },
             ]}
           />
@@ -157,7 +141,7 @@ export const ProgressScreen: React.FC = () => {
       {/* Achievements */}
       <View style={styles.achievementsSection}>
         <Text style={styles.sectionTitle}>Achievements</Text>
-        
+
         {unlockedAchievements.length > 0 && (
           <>
             <Text style={styles.subsectionTitle}>Unlocked</Text>
@@ -166,15 +150,10 @@ export const ProgressScreen: React.FC = () => {
                 <View style={styles.achievementContent}>
                   <Text style={styles.achievementIcon}>{achievement.icon}</Text>
                   <View style={styles.achievementInfo}>
-                    <Text style={styles.achievementTitle}>
-                      {achievement.title}
-                    </Text>
-                    <Text style={styles.achievementDescription}>
-                      {achievement.description}
-                    </Text>
+                    <Text style={styles.achievementTitle}>{achievement.title}</Text>
+                    <Text style={styles.achievementDescription}>{achievement.description}</Text>
                     <Text style={styles.achievementDate}>
-                      Unlocked on{' '}
-                      {new Date(achievement.unlockedAt!).toLocaleDateString()}
+                      Unlocked on {new Date(achievement.unlockedAt!).toLocaleDateString()}
                     </Text>
                   </View>
                 </View>
@@ -189,42 +168,26 @@ export const ProgressScreen: React.FC = () => {
             {lockedAchievements.map((achievement) => (
               <Card key={achievement.id} style={styles.achievementCard}>
                 <View style={styles.achievementContent}>
-                  <Text style={[styles.achievementIcon, styles.lockedIcon]}>
-                    🔒
-                  </Text>
+                  <Text style={[styles.achievementIcon, styles.lockedIcon]}>🔒</Text>
                   <View style={styles.achievementInfo}>
-                    <Text
-                      style={[
-                        styles.achievementTitle,
-                        styles.lockedText,
-                      ]}
-                    >
+                    <Text style={[styles.achievementTitle, styles.lockedText]}>
                       {achievement.title}
                     </Text>
-                    <Text
-                      style={[
-                        styles.achievementDescription,
-                        styles.lockedText,
-                      ]}
-                    >
+                    <Text style={[styles.achievementDescription, styles.lockedText]}>
                       {achievement.description}
                     </Text>
-                    {achievement.progress !== undefined &&
-                      achievement.target !== undefined && (
-                        <View style={styles.progressBar}>
-                          <View
-                            style={[
-                              styles.progressFill,
-                              {
-                                width: `${
-                                  (achievement.progress / achievement.target) *
-                                  100
-                                }%`,
-                              },
-                            ]}
-                          />
-                        </View>
-                      )}
+                    {achievement.progress !== undefined && achievement.target !== undefined && (
+                      <View style={styles.progressBar}>
+                        <View
+                          style={[
+                            styles.progressFill,
+                            {
+                              width: `${(achievement.progress / achievement.target) * 100}%`,
+                            },
+                          ]}
+                        />
+                      </View>
+                    )}
                   </View>
                 </View>
               </Card>

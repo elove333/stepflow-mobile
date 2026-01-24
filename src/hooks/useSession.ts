@@ -21,8 +21,9 @@ import { Session, SessionProgress } from '../api/sessions';
 
 export const useSession = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { sessions, activeSession, selectedSession, isLoading, error } =
-    useSelector((state: RootState) => state.session);
+  const { sessions, activeSession, selectedSession, isLoading, error } = useSelector(
+    (state: RootState) => state.session,
+  );
 
   /**
    * Load available sessions
@@ -39,7 +40,7 @@ export const useSession = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -57,7 +58,7 @@ export const useSession = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -67,7 +68,7 @@ export const useSession = () => {
     (session: Session | null) => {
       dispatch(setSelectedSession(session));
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -83,7 +84,7 @@ export const useSession = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -95,7 +96,7 @@ export const useSession = () => {
         dispatch(recordStep({ onBeat }));
       }
     },
-    [dispatch, activeSession]
+    [dispatch, activeSession],
   );
 
   /**
@@ -115,36 +116,30 @@ export const useSession = () => {
   /**
    * Complete and end session
    */
-  const completeSession = useCallback(
-    async () => {
-      if (!activeSession) {
-        throw new Error('No active session');
-      }
+  const completeSession = useCallback(async () => {
+    if (!activeSession) {
+      throw new Error('No active session');
+    }
 
-      try {
-        const progress: Omit<
-          SessionProgress,
-          'sessionId' | 'userId' | 'completedAt'
-        > = {
-          score: activeSession.score,
-          accuracy:
-            activeSession.totalSteps > 0
-              ? (activeSession.onBeatSteps / activeSession.totalSteps) * 100
-              : 0,
-          totalSteps: activeSession.totalSteps,
-          onBeatSteps: activeSession.onBeatSteps,
-        };
+    try {
+      const progress: Omit<SessionProgress, 'sessionId' | 'userId' | 'completedAt'> = {
+        score: activeSession.score,
+        accuracy:
+          activeSession.totalSteps > 0
+            ? (activeSession.onBeatSteps / activeSession.totalSteps) * 100
+            : 0,
+        totalSteps: activeSession.totalSteps,
+        onBeatSteps: activeSession.onBeatSteps,
+      };
 
-        await sessionsApi.completeSession(activeSession.session.id, progress);
-        dispatch(endSession());
-        return progress;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to complete session'));
-        throw error;
-      }
-    },
-    [dispatch, activeSession]
-  );
+      await sessionsApi.completeSession(activeSession.session.id, progress);
+      dispatch(endSession());
+      return progress;
+    } catch (error: any) {
+      dispatch(setError(error.message || 'Failed to complete session'));
+      throw error;
+    }
+  }, [dispatch, activeSession]);
 
   /**
    * Cancel active session

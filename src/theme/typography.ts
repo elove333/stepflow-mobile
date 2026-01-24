@@ -8,7 +8,7 @@ export const typography = {
     medium: 'System',
     bold: 'System',
   },
-  
+
   // Font sizes
   fontSize: {
     xs: 12,
@@ -19,7 +19,7 @@ export const typography = {
     xxl: 24,
     xxxl: 32,
   },
-  
+
   // Font weights
   fontWeight: {
     regular: '400' as const,
@@ -27,14 +27,14 @@ export const typography = {
     semiBold: '600' as const,
     bold: '700' as const,
   },
-  
+
   // Line heights
   lineHeight: {
     tight: 1.2,
     normal: 1.5,
     relaxed: 1.75,
   },
-  
+
   // Letter spacing
   letterSpacing: {
     tight: -0.5,

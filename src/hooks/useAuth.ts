@@ -5,20 +5,14 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../state';
-import {
-  setLoading,
-  setError,
-  setAuth,
-  updateUser,
-  clearAuth,
-} from '../state/userSlice';
+import { setLoading, setError, setAuth, updateUser, clearAuth } from '../state/userSlice';
 import * as authApi from '../api/auth';
 import { LoginCredentials, RegisterData, User } from '../api/auth';
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user, tokens, isAuthenticated, isLoading, error } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
 
   /**
@@ -33,7 +27,7 @@ export const useAuth = () => {
           setAuth({
             user: response.data.user,
             tokens: response.data.tokens,
-          })
+          }),
         );
         return response.data;
       } catch (error: any) {
@@ -41,7 +35,7 @@ export const useAuth = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -56,7 +50,7 @@ export const useAuth = () => {
           setAuth({
             user: response.data.user,
             tokens: response.data.tokens,
-          })
+          }),
         );
         return response.data;
       } catch (error: any) {
@@ -64,7 +58,7 @@ export const useAuth = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -96,7 +90,7 @@ export const useAuth = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -113,7 +107,7 @@ export const useAuth = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   /**
@@ -130,7 +124,7 @@ export const useAuth = () => {
         throw error;
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   return {

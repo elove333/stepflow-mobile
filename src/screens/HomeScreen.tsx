@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { Button, Card } from '../components';
@@ -16,9 +10,7 @@ export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<any>();
   const { user } = useAuth();
   const { getRecommendedSessions, isLoading } = useSession();
-  const [recommendedSessions, setRecommendedSessions] = React.useState<any[]>(
-    []
-  );
+  const [recommendedSessions, setRecommendedSessions] = React.useState<any[]>([]);
 
   useEffect(() => {
     loadRecommended();
@@ -82,23 +74,18 @@ export const HomeScreen: React.FC = () => {
             >
               <Text style={styles.sessionTitle}>{session.title}</Text>
               <Text style={styles.sessionMeta}>
-                {session.bpm} BPM • {Math.floor(session.duration / 60)} min •{' '}
-                {session.difficulty}
+                {session.bpm} BPM • {Math.floor(session.duration / 60)} min • {session.difficulty}
               </Text>
             </Card>
           ))
         ) : (
-          <Text style={styles.noDataText}>
-            No recommendations available yet
-          </Text>
+          <Text style={styles.noDataText}>No recommendations available yet</Text>
         )}
       </View>
 
       <Card style={styles.progressCard}>
         <Text style={styles.cardTitle}>Your Progress</Text>
-        <Text style={styles.cardDescription}>
-          View your stats and achievements
-        </Text>
+        <Text style={styles.cardDescription}>View your stats and achievements</Text>
         <Button
           title="View Progress"
           onPress={handleViewProgress}

@@ -51,9 +51,7 @@ const progressSlice = createSlice({
       state.error = null;
     },
     addProgressData: (state, action: PayloadAction<ProgressData>) => {
-      const existingIndex = state.progressData.findIndex(
-        (p) => p.date === action.payload.date
-      );
+      const existingIndex = state.progressData.findIndex((p) => p.date === action.payload.date);
       if (existingIndex !== -1) {
         state.progressData[existingIndex] = action.payload;
       } else {
@@ -66,20 +64,13 @@ const progressSlice = createSlice({
       state.error = null;
     },
     unlockAchievement: (state, action: PayloadAction<string>) => {
-      const achievement = state.achievements.find(
-        (a) => a.id === action.payload
-      );
+      const achievement = state.achievements.find((a) => a.id === action.payload);
       if (achievement && !achievement.unlockedAt) {
         achievement.unlockedAt = new Date().toISOString();
       }
     },
-    updateAchievementProgress: (
-      state,
-      action: PayloadAction<{ id: string; progress: number }>
-    ) => {
-      const achievement = state.achievements.find(
-        (a) => a.id === action.payload.id
-      );
+    updateAchievementProgress: (state, action: PayloadAction<{ id: string; progress: number }>) => {
+      const achievement = state.achievements.find((a) => a.id === action.payload.id);
       if (achievement) {
         achievement.progress = action.payload.progress;
       }

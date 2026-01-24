@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Switch,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { Button, Card } from '../components';
@@ -16,7 +8,7 @@ import { useAuth } from '../hooks/useAuth';
 export const SettingsScreen: React.FC = () => {
   const navigation = useNavigation<any>();
   const { user, logout } = useAuth();
-  
+
   // Settings state
   const [notifications, setNotifications] = useState(true);
   const [soundEffects, setSoundEffects] = useState(true);
@@ -24,26 +16,22 @@ export const SettingsScreen: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Logout',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await logout();
-              // Navigation will be handled by auth state change
-            } catch (error) {
-              console.error('Logout failed:', error);
-              Alert.alert('Error', 'Failed to logout. Please try again.');
-            }
-          },
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await logout();
+            // Navigation will be handled by auth state change
+          } catch (error) {
+            console.error('Logout failed:', error);
+            Alert.alert('Error', 'Failed to logout. Please try again.');
+          }
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleDeleteAccount = () => {
@@ -56,13 +44,10 @@ export const SettingsScreen: React.FC = () => {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            Alert.alert(
-              'Not Implemented',
-              'Account deletion is not yet implemented'
-            );
+            Alert.alert('Not Implemented', 'Account deletion is not yet implemented');
           },
         },
-      ]
+      ],
     );
   };
 
@@ -78,9 +63,7 @@ export const SettingsScreen: React.FC = () => {
         <Card style={styles.profileCard}>
           <View style={styles.profileHeader}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>
-                {user?.name?.charAt(0).toUpperCase() || 'U'}
-              </Text>
+              <Text style={styles.avatarText}>{user?.name?.charAt(0).toUpperCase() || 'U'}</Text>
             </View>
             <View style={styles.profileInfo}>
               <Text style={styles.profileName}>{user?.name || 'User'}</Text>
@@ -104,9 +87,7 @@ export const SettingsScreen: React.FC = () => {
           <View style={styles.settingItem}>
             <View style={styles.settingLabel}>
               <Text style={styles.settingTitle}>Notifications</Text>
-              <Text style={styles.settingDescription}>
-                Receive session reminders and updates
-              </Text>
+              <Text style={styles.settingDescription}>Receive session reminders and updates</Text>
             </View>
             <Switch
               value={notifications}
@@ -119,9 +100,7 @@ export const SettingsScreen: React.FC = () => {
           <View style={styles.settingItem}>
             <View style={styles.settingLabel}>
               <Text style={styles.settingTitle}>Sound Effects</Text>
-              <Text style={styles.settingDescription}>
-                Play audio feedback during sessions
-              </Text>
+              <Text style={styles.settingDescription}>Play audio feedback during sessions</Text>
             </View>
             <Switch
               value={soundEffects}
@@ -134,9 +113,7 @@ export const SettingsScreen: React.FC = () => {
           <View style={styles.settingItem}>
             <View style={styles.settingLabel}>
               <Text style={styles.settingTitle}>Haptic Feedback</Text>
-              <Text style={styles.settingDescription}>
-                Vibrate on beat and step detection
-              </Text>
+              <Text style={styles.settingDescription}>Vibrate on beat and step detection</Text>
             </View>
             <Switch
               value={hapticFeedback}
@@ -149,9 +126,7 @@ export const SettingsScreen: React.FC = () => {
           <View style={styles.settingItem}>
             <View style={styles.settingLabel}>
               <Text style={styles.settingTitle}>Dark Mode</Text>
-              <Text style={styles.settingDescription}>
-                Switch to dark theme (coming soon)
-              </Text>
+              <Text style={styles.settingDescription}>Switch to dark theme (coming soon)</Text>
             </View>
             <Switch
               value={darkMode}
@@ -186,7 +161,9 @@ export const SettingsScreen: React.FC = () => {
 
           <TouchableOpacity
             style={styles.linkItem}
-            onPress={() => Alert.alert('Not Implemented', 'Terms of service is not yet implemented')}
+            onPress={() =>
+              Alert.alert('Not Implemented', 'Terms of service is not yet implemented')
+            }
           >
             <Text style={styles.linkText}>Terms of Service</Text>
             <Text style={styles.linkArrow}>›</Text>

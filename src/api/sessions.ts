@@ -38,13 +38,11 @@ export interface CreateSessionData {
 /**
  * Get all available sessions
  */
-export const getSessions = async (
-  params?: {
-    difficulty?: string;
-    limit?: number;
-    offset?: number;
-  }
-): Promise<ApiResponse<Session[]>> => {
+export const getSessions = async (params?: {
+  difficulty?: string;
+  limit?: number;
+  offset?: number;
+}): Promise<ApiResponse<Session[]>> => {
   return await client.get<Session[]>('/sessions', { params });
 };
 
@@ -58,9 +56,7 @@ export const getSession = async (id: string): Promise<ApiResponse<Session>> => {
 /**
  * Create new session
  */
-export const createSession = async (
-  data: CreateSessionData
-): Promise<ApiResponse<Session>> => {
+export const createSession = async (data: CreateSessionData): Promise<ApiResponse<Session>> => {
   return await client.post<Session>('/sessions', data);
 };
 
@@ -69,7 +65,7 @@ export const createSession = async (
  */
 export const updateSession = async (
   id: string,
-  data: Partial<CreateSessionData>
+  data: Partial<CreateSessionData>,
 ): Promise<ApiResponse<Session>> => {
   return await client.patch<Session>(`/sessions/${id}`, data);
 };
@@ -85,7 +81,7 @@ export const deleteSession = async (id: string): Promise<ApiResponse<void>> => {
  * Start a session
  */
 export const startSession = async (
-  sessionId: string
+  sessionId: string,
 ): Promise<ApiResponse<{ startTime: string }>> => {
   return await client.post<{ startTime: string }>(`/sessions/${sessionId}/start`);
 };
@@ -95,31 +91,24 @@ export const startSession = async (
  */
 export const completeSession = async (
   sessionId: string,
-  progress: Omit<SessionProgress, 'sessionId' | 'userId' | 'completedAt'>
+  progress: Omit<SessionProgress, 'sessionId' | 'userId' | 'completedAt'>,
 ): Promise<ApiResponse<SessionProgress>> => {
-  return await client.post<SessionProgress>(
-    `/sessions/${sessionId}/complete`,
-    progress
-  );
+  return await client.post<SessionProgress>(`/sessions/${sessionId}/complete`, progress);
 };
 
 /**
  * Get user's session history
  */
-export const getSessionHistory = async (
-  params?: {
-    limit?: number;
-    offset?: number;
-  }
-): Promise<ApiResponse<SessionProgress[]>> => {
+export const getSessionHistory = async (params?: {
+  limit?: number;
+  offset?: number;
+}): Promise<ApiResponse<SessionProgress[]>> => {
   return await client.get<SessionProgress[]>('/sessions/history', { params });
 };
 
 /**
  * Get recommended sessions based on user's level
  */
-export const getRecommendedSessions = async (): Promise<
-  ApiResponse<Session[]>
-> => {
+export const getRecommendedSessions = async (): Promise<ApiResponse<Session[]>> => {
   return await client.get<Session[]>('/sessions/recommended');
 };

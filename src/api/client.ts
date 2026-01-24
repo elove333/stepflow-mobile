@@ -24,7 +24,7 @@ class ApiClient {
 
   constructor() {
     this.baseURL = process.env.API_BASE_URL || 'https://api.stepflow.app';
-    
+
     this.client = axios.create({
       baseURL: this.baseURL,
       timeout: 15000,
@@ -51,7 +51,7 @@ class ApiClient {
       },
       (error) => {
         return Promise.reject(this.handleError(error));
-      }
+      },
     );
 
     // Response interceptor
@@ -59,7 +59,7 @@ class ApiClient {
       (response) => response,
       (error) => {
         return Promise.reject(this.handleError(error));
-      }
+      },
     );
   }
 
@@ -75,9 +75,7 @@ class ApiClient {
       // Server responded with error status
       apiError.status = error.response.status;
       apiError.message =
-        (error.response.data as any)?.message ||
-        error.message ||
-        'Server error occurred';
+        (error.response.data as any)?.message || error.message || 'Server error occurred';
     } else if (error.request) {
       // Request made but no response
       apiError.message = 'Network error - please check your connection';
@@ -107,10 +105,7 @@ class ApiClient {
   /**
    * Generic GET request
    */
-  async get<T = any>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<ApiResponse<T>> {
+  async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.client.get(url, config);
       return {
@@ -128,7 +123,7 @@ class ApiClient {
   async post<T = any>(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.client.post(url, data, config);
@@ -147,7 +142,7 @@ class ApiClient {
   async put<T = any>(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.client.put(url, data, config);
@@ -166,7 +161,7 @@ class ApiClient {
   async patch<T = any>(
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.client.patch(url, data, config);
@@ -182,10 +177,7 @@ class ApiClient {
   /**
    * Generic DELETE request
    */
-  async delete<T = any>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<ApiResponse<T>> {
+  async delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     try {
       const response: AxiosResponse<T> = await this.client.delete(url, config);
       return {

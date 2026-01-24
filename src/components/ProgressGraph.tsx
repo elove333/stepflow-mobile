@@ -76,11 +76,13 @@ export const ProgressGraph: React.FC<ProgressGraphProps> = ({
 
         {/* Line graph */}
         {points.map((point, index) => {
-          if (index === 0) return null;
+          if (index === 0) {
+            return null;
+          }
           const prevPoint = points[index - 1];
           const angle = Math.atan2(point.y - prevPoint.y, point.x - prevPoint.x);
           const length = Math.sqrt(
-            Math.pow(point.x - prevPoint.x, 2) + Math.pow(point.y - prevPoint.y, 2)
+            Math.pow(point.x - prevPoint.x, 2) + Math.pow(point.y - prevPoint.y, 2),
           );
 
           return (
@@ -122,7 +124,9 @@ export const ProgressGraph: React.FC<ProgressGraphProps> = ({
       {showLabels && (
         <View style={styles.xAxis}>
           {data.map((point, index) => {
-            if (data.length > 7 && index % 2 !== 0) return null;
+            if (data.length > 7 && index % 2 !== 0) {
+              return null;
+            }
             return (
               <Text
                 key={`label-${index}`}

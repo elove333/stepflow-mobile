@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { Button, Card } from '../components';
@@ -14,8 +8,7 @@ import { Session } from '../api/sessions';
 
 export const SessionPickerScreen: React.FC = () => {
   const navigation = useNavigation<any>();
-  const { sessions, loadSessions, selectSession, isLoading, error } =
-    useSession();
+  const { sessions, loadSessions, selectSession, isLoading, error } = useSession();
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
 
   useEffect(() => {
@@ -38,9 +31,7 @@ export const SessionPickerScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Choose a Session</Text>
-        <Text style={styles.subtitle}>
-          Select a session that matches your level
-        </Text>
+        <Text style={styles.subtitle}>Select a session that matches your level</Text>
       </View>
 
       {/* Difficulty filter */}
@@ -62,8 +53,7 @@ export const SessionPickerScreen: React.FC = () => {
             <Text
               style={[
                 styles.filterButtonText,
-                selectedDifficulty === difficulty &&
-                  styles.filterButtonTextActive,
+                selectedDifficulty === difficulty && styles.filterButtonTextActive,
               ]}
             >
               {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
@@ -89,27 +79,14 @@ export const SessionPickerScreen: React.FC = () => {
             >
               <View style={styles.sessionHeader}>
                 <Text style={styles.sessionTitle}>{session.title}</Text>
-                <View
-                  style={[
-                    styles.difficultyBadge,
-                    styles[`difficulty_${session.difficulty}`],
-                  ]}
-                >
-                  <Text style={styles.difficultyText}>
-                    {session.difficulty.toUpperCase()}
-                  </Text>
+                <View style={[styles.difficultyBadge, styles[`difficulty_${session.difficulty}`]]}>
+                  <Text style={styles.difficultyText}>{session.difficulty.toUpperCase()}</Text>
                 </View>
               </View>
-              <Text style={styles.sessionDescription}>
-                {session.description}
-              </Text>
+              <Text style={styles.sessionDescription}>{session.description}</Text>
               <View style={styles.sessionMeta}>
-                <Text style={styles.metaText}>
-                  🎵 {session.bpm} BPM
-                </Text>
-                <Text style={styles.metaText}>
-                  ⏱️ {Math.floor(session.duration / 60)} min
-                </Text>
+                <Text style={styles.metaText}>🎵 {session.bpm} BPM</Text>
+                <Text style={styles.metaText}>⏱️ {Math.floor(session.duration / 60)} min</Text>
               </View>
             </Card>
           ))

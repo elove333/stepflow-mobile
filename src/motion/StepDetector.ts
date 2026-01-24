@@ -54,9 +54,7 @@ class StepDetectorClass {
       if (!Accelerometer.isActive()) {
         Accelerometer.start(50); // 20Hz update rate
       }
-      this.unsubscribeAccel = Accelerometer.subscribe((data) =>
-        this.processAccelData(data)
-      );
+      this.unsubscribeAccel = Accelerometer.subscribe((data) => this.processAccelData(data));
     } else {
       console.warn('Accelerometer not available, step detection may not work');
     }
@@ -89,7 +87,7 @@ class StepDetectorClass {
     const filtered = lowPassFilter(
       { x: data.x, y: data.y, z: data.z },
       this.lastAccel,
-      this.config.filterAlpha
+      this.config.filterAlpha,
     );
     this.lastAccel = filtered;
 
@@ -100,17 +98,11 @@ class StepDetectorClass {
     const now = data.timestamp;
     const timeSinceLastStep = now - this.lastStepTime;
 
-    if (
-      magnitude > this.config.threshold &&
-      timeSinceLastStep >= this.config.minInterval
-    ) {
+    if (magnitude > this.config.threshold && timeSinceLastStep >= this.config.minInterval) {
       this.lastStepTime = now;
-      
+
       // Calculate confidence based on how much threshold was exceeded
-      const confidence = Math.min(
-        (magnitude - this.config.threshold) / this.config.threshold,
-        1.0
-      );
+      const confidence = Math.min((magnitude - this.config.threshold) / this.config.threshold, 1.0);
 
       this.emitStep({
         timestamp: now,

@@ -3,13 +3,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  PoseDetector,
-  Accelerometer,
-  Gyroscope,
-  StepDetector,
-  BeatSync,
-} from '../motion';
+import { PoseDetector, Accelerometer, Gyroscope, StepDetector, BeatSync } from '../motion';
 import type { Pose } from '../motion/PoseDetector';
 import type { AccelerometerData } from '../motion/Accelerometer';
 import type { GyroscopeData } from '../motion/Gyroscope';
@@ -65,9 +59,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       // Start accelerometer
       if (enableAccelerometer) {
         Accelerometer.start(50); // 20Hz
-        const unsubAccel = Accelerometer.subscribe((data) =>
-          setAccelData(data)
-        );
+        const unsubAccel = Accelerometer.subscribe((data) => setAccelData(data));
         unsubscribeRefs.current.push(unsubAccel);
       }
 
@@ -118,19 +110,23 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       unsubscribeRefs.current = [];
 
       // Stop all motion modules
-      if (enablePose) PoseDetector.stop();
-      if (enableAccelerometer) Accelerometer.stop();
-      if (enableGyroscope) Gyroscope.stop();
-      if (enableStepDetection) StepDetector.stop();
-      if (enableBeatSync) BeatSync.stop();
+      if (enablePose) {
+        PoseDetector.stop();
+      }
+      if (enableAccelerometer) {
+        Accelerometer.stop();
+      }
+      if (enableGyroscope) {
+        Gyroscope.stop();
+      }
+      if (enableStepDetection) {
+        StepDetector.stop();
+      }
+      if (enableBeatSync) {
+        BeatSync.stop();
+      }
     };
-  }, [
-    enablePose,
-    enableAccelerometer,
-    enableGyroscope,
-    enableStepDetection,
-    enableBeatSync,
-  ]);
+  }, [enablePose, enableAccelerometer, enableGyroscope, enableStepDetection, enableBeatSync]);
 
   /**
    * Check sync for a timestamp
@@ -142,7 +138,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       }
       return null;
     },
-    [enableBeatSync]
+    [enableBeatSync],
   );
 
   /**
@@ -154,7 +150,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
         BeatSync.updateBpm(newBpm);
       }
     },
-    [enableBeatSync]
+    [enableBeatSync],
   );
 
   /**

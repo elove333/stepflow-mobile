@@ -50,25 +50,21 @@ export const getUserStats = async (): Promise<ApiResponse<UserStats>> => {
 /**
  * Get progress data over time
  */
-export const getProgressData = async (
-  params?: {
-    startDate?: string;
-    endDate?: string;
-    interval?: 'day' | 'week' | 'month';
-  }
-): Promise<ApiResponse<ProgressData[]>> => {
+export const getProgressData = async (params?: {
+  startDate?: string;
+  endDate?: string;
+  interval?: 'day' | 'week' | 'month';
+}): Promise<ApiResponse<ProgressData[]>> => {
   return await client.get<ProgressData[]>('/analytics/progress', { params });
 };
 
 /**
  * Get leaderboard
  */
-export const getLeaderboard = async (
-  params?: {
-    timeframe?: 'daily' | 'weekly' | 'monthly' | 'all-time';
-    limit?: number;
-  }
-): Promise<ApiResponse<Leaderboard[]>> => {
+export const getLeaderboard = async (params?: {
+  timeframe?: 'daily' | 'weekly' | 'monthly' | 'all-time';
+  limit?: number;
+}): Promise<ApiResponse<Leaderboard[]>> => {
   return await client.get<Leaderboard[]>('/analytics/leaderboard', { params });
 };
 
@@ -84,7 +80,7 @@ export const getAchievements = async (): Promise<ApiResponse<Achievement[]>> => 
  */
 export const trackEvent = async (
   eventName: string,
-  properties?: Record<string, any>
+  properties?: Record<string, any>,
 ): Promise<ApiResponse<void>> => {
   return await client.post<void>('/analytics/track', {
     event: eventName,
@@ -97,7 +93,7 @@ export const trackEvent = async (
  * Get session insights
  */
 export const getSessionInsights = async (
-  sessionId: string
+  sessionId: string,
 ): Promise<
   ApiResponse<{
     averageScore: number;

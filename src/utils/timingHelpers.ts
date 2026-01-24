@@ -53,7 +53,7 @@ export const getNextBeat = (lastBeat: number, bpm: number): number => {
 export const isOnBeat = (
   timestamp: number,
   beatTimestamp: number,
-  tolerance: number = 100
+  tolerance: number = 100,
 ): boolean => {
   return Math.abs(timestamp - beatTimestamp) <= tolerance;
 };
@@ -68,10 +68,12 @@ export const isOnBeat = (
 export const calculateTimingAccuracy = (
   timestamp: number,
   beatTimestamp: number,
-  tolerance: number = 200
+  tolerance: number = 200,
 ): number => {
   const diff = Math.abs(timestamp - beatTimestamp);
-  if (diff >= tolerance) return 0;
+  if (diff >= tolerance) {
+    return 0;
+  }
   return Math.round(((tolerance - diff) / tolerance) * 100);
 };
 
@@ -83,7 +85,7 @@ export const calculateTimingAccuracy = (
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
