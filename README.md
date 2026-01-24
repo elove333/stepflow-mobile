@@ -1,6 +1,15 @@
-# stepflow-mobile
+# StepFlow Mobile
 
-React Native, Swift, and Kotlin mobile application for StepFlow - a rhythm-based movement training app.
+A React Native mobile application for rhythm-based movement training. StepFlow combines motion detection, beat synchronization, and real-time feedback to help users improve their timing and coordination through structured workout sessions.
+
+## Project Overview
+
+StepFlow Mobile is built with React Native and TypeScript, featuring:
+- Real-time motion tracking via accelerometer, gyroscope, and pose detection
+- Beat synchronization engine for music tempo matching
+- Gamified workout sessions with instant feedback
+- Progress tracking and analytics
+- RESTful API integration with JWT authentication
 
 ## Project Structure
 
@@ -99,21 +108,27 @@ src/
 ## Setup and Installation
 
 ### Prerequisites
-- Node.js 16+
+- Node.js 16+ and npm
 - React Native development environment
-- iOS: Xcode and CocoaPods
-- Android: Android Studio and SDK
+- **iOS**: Xcode 14+ and CocoaPods
+- **Android**: Android Studio and SDK (API level 31+)
 
 ### Install Dependencies
 ```bash
 npm install
-# or
-yarn install
 ```
 
 ### iOS Setup
 ```bash
 cd ios && pod install && cd ..
+```
+
+### Environment Configuration
+Create a `.env` file in the project root (use `.env.example` as a template):
+```bash
+API_BASE_URL=https://api.stepflow.app
+SENTRY_DSN=your_sentry_dsn_here
+APP_ENV=development
 ```
 
 ### Run the App
@@ -144,6 +159,89 @@ npm run lint
 ### Testing
 ```bash
 npm test
+
+# Watch mode
+npm test -- --watch
+```
+
+### Code Formatting
+```bash
+npx prettier --write .
+```
+
+## Native Module Notes
+
+### iOS Considerations
+- Camera permissions required for pose detection
+- Motion & Fitness permissions for accelerometer/gyroscope
+- Background modes for music playback during sessions
+- Minimum deployment target: iOS 13.0
+
+### Android Considerations
+- Camera permissions in AndroidManifest.xml
+- Motion sensors permissions
+- Foreground service for active sessions
+- Minimum SDK version: 23 (Android 6.0)
+
+### Native Dependencies
+The following native modules require additional setup:
+- `react-native-reanimated` - Gesture handling and animations
+- `react-native-sensors` - Accelerometer and gyroscope access
+- `react-native-screens` - Native navigation optimization
+
+Refer to each library's documentation for platform-specific configuration.
+
+## Configuration
+
+### Environment Variables
+Create a `.env` file (not committed to version control):
+```
+API_BASE_URL=https://api.stepflow.app
+SENTRY_DSN=
+APP_ENV=development
+```
+
+### Theme Customization
+Edit files in `src/theme/` to customize:
+- **colors.ts**: Brand colors, semantic colors (primary, secondary, error, etc.)
+- **spacing.ts**: Padding, margins, border radius values
+- **typography.ts**: Font families, sizes, weights, line heights
+
+### TypeScript Configuration
+The project uses strict TypeScript settings for enhanced type safety. Path aliases are configured for cleaner imports:
+```typescript
+import { Button } from '@src/components';
+import { bpmToMs } from '@src/utils/timingHelpers';
+```
+
+## Contributing
+
+We welcome contributions! Please follow these guidelines:
+
+1. **Code Style**: Follow existing patterns and use TypeScript
+2. **Testing**: Write tests for new features and bug fixes
+3. **Commits**: Use conventional commit messages (e.g., `feat:`, `fix:`, `docs:`)
+4. **PR Process**:
+   - Create a feature branch from `develop`
+   - Write clear PR descriptions
+   - Ensure CI passes (lint, type-check, tests)
+   - Request review from maintainers
+
+### Development Workflow
+```bash
+# Create feature branch
+git checkout -b feature/your-feature-name
+
+# Make changes and test
+npm run lint
+npx tsc --noEmit
+npm test
+
+# Commit using conventional commits
+git commit -m "feat: add new feature"
+
+# Push and create PR
+git push origin feature/your-feature-name
 ```
 
 ## Architecture Decisions
@@ -151,42 +249,60 @@ npm test
 ### Component Design
 - Components are pure and reusable
 - No screen-specific logic in components
-- Props are fully typed with TypeScript
+- Props are fully typed with TypeScript interfaces
+- Conditional rendering over dynamic component types where possible
 
 ### Motion Detection
 - Modular design with fallback methods
-- Device capability checking
+- Device capability checking before feature use
 - Configurable parameters for different devices
+- Mock implementations for testing
 
 ### State Management
-- Redux Toolkit for simplified Redux
-- Normalized state structure
-- Async actions with proper error handling
+- Redux Toolkit for simplified Redux patterns
+- Normalized state structure for efficient updates
+- Async thunks with proper error handling
+- Loading states managed consistently in finally blocks
 
 ### Navigation
 - Stack-based navigation with React Navigation
 - Type-safe navigation with TypeScript
 - Proper screen lifecycle management
+- Deep linking support for notifications
 
-## Configuration
+## Troubleshooting
 
-### Environment Variables
-Create a `.env` file (not committed) with:
+### Common Issues
+
+**Metro bundler cache issues:**
+```bash
+npm start -- --reset-cache
 ```
-API_BASE_URL=https://api.stepflow.app
+
+**iOS build failures:**
+```bash
+cd ios && pod install && cd ..
+npx react-native run-ios
 ```
 
-### Theme Customization
-Edit files in `src/theme/` to customize colors, spacing, and typography.
+**Android build failures:**
+```bash
+cd android && ./gradlew clean && cd ..
+npx react-native run-android
+```
 
-## Contributing
-
-1. Follow the existing code structure
-2. Use TypeScript for type safety
-3. Write clean, documented code
-4. Test thoroughly before committing
+**Type errors after dependency updates:**
+```bash
+rm -rf node_modules
+npm install
+```
 
 ## License
 
-Copyright © 2026 StepFlow
+Copyright © 2026 StepFlow. All rights reserved.
 
+## Support
+
+For questions or issues:
+- GitHub Issues: [elove333/stepflow-mobile](https://github.com/elove333/stepflow-mobile/issues)
+- Email: support@stepflow.app
