@@ -45,12 +45,17 @@ class ApiClient {
       (config) => {
         // Add auth token if available
         if (this.authToken) {
+          // Guard against missing headers
+          if (!config.headers) {
+            config.headers = {} as any;
+          }
           config.headers.Authorization = `Bearer ${this.authToken}`;
         }
         return config;
       },
       (error) => {
-        return Promise.reject(this.handleError(error));
+        const apiError = this.handleError(error);
+        return Promise.reject(apiError);
       }
     );
 
@@ -58,7 +63,8 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       (error) => {
-        return Promise.reject(this.handleError(error));
+        const apiError = this.handleError(error);
+        return Promise.reject(apiError);
       }
     );
   }
@@ -95,6 +101,12 @@ class ApiClient {
    */
   setAuthToken(token: string | null): void {
     this.authToken = token;
+    // Update axios defaults when setAuthToken is called
+    if (token) {
+      this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete this.client.defaults.headers.common['Authorization'];
+    }
   }
 
   /**
@@ -111,15 +123,11 @@ class ApiClient {
     url: string,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<T> = await this.client.get(url, config);
-      return {
-        data: response.data,
-        success: true,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const response: AxiosResponse<T> = await this.client.get(url, config);
+    return {
+      data: response.data,
+      success: true,
+    };
   }
 
   /**
@@ -130,15 +138,11 @@ class ApiClient {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<T> = await this.client.post(url, data, config);
-      return {
-        data: response.data,
-        success: true,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const response: AxiosResponse<T> = await this.client.post(url, data, config);
+    return {
+      data: response.data,
+      success: true,
+    };
   }
 
   /**
@@ -149,15 +153,11 @@ class ApiClient {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<T> = await this.client.put(url, data, config);
-      return {
-        data: response.data,
-        success: true,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const response: AxiosResponse<T> = await this.client.put(url, data, config);
+    return {
+      data: response.data,
+      success: true,
+    };
   }
 
   /**
@@ -168,15 +168,11 @@ class ApiClient {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<T> = await this.client.patch(url, data, config);
-      return {
-        data: response.data,
-        success: true,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const response: AxiosResponse<T> = await this.client.patch(url, data, config);
+    return {
+      data: response.data,
+      success: true,
+    };
   }
 
   /**
@@ -186,15 +182,11 @@ class ApiClient {
     url: string,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse<T> = await this.client.delete(url, config);
-      return {
-        data: response.data,
-        success: true,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const response: AxiosResponse<T> = await this.client.delete(url, config);
+    return {
+      data: response.data,
+      success: true,
+    };
   }
 }
 

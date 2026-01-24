@@ -15,20 +15,34 @@ export const Card: React.FC<CardProps> = ({
   onPress,
   elevated = true,
 }) => {
-  const Container = onPress ? TouchableOpacity : View;
+  // Use TouchableOpacity only if onPress is provided
+  if (onPress) {
+    return (
+      <TouchableOpacity
+        style={[
+          styles.card,
+          elevated && styles.elevated,
+          style,
+        ]}
+        onPress={onPress}
+        activeOpacity={0.7}
+      >
+        {children}
+      </TouchableOpacity>
+    );
+  }
 
+  // Use View when no onPress
   return (
-    <Container
+    <View
       style={[
         styles.card,
         elevated && styles.elevated,
         style,
       ]}
-      onPress={onPress}
-      activeOpacity={onPress ? 0.7 : 1}
     >
       {children}
-    </Container>
+    </View>
   );
 };
 
