@@ -37,6 +37,8 @@ export const useSession = () => {
       } catch (error: any) {
         dispatch(setError(error.message || 'Failed to load sessions'));
         throw error;
+      } finally {
+        dispatch(setLoading(false));
       }
     },
     [dispatch]
@@ -50,11 +52,12 @@ export const useSession = () => {
       try {
         dispatch(setLoading(true));
         const response = await sessionsApi.getSession(id);
-        dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
         dispatch(setError(error.message || 'Failed to load session'));
         throw error;
+      } finally {
+        dispatch(setLoading(false));
       }
     },
     [dispatch]
@@ -160,11 +163,12 @@ export const useSession = () => {
     try {
       dispatch(setLoading(true));
       const response = await sessionsApi.getRecommendedSessions();
-      dispatch(setLoading(false));
       return response.data;
     } catch (error: any) {
       dispatch(setError(error.message || 'Failed to load recommendations'));
       throw error;
+    } finally {
+      dispatch(setLoading(false));
     }
   }, [dispatch]);
 
