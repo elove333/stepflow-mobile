@@ -87,7 +87,7 @@ class AccelerometerClass {
   /**
    * Check if accelerometer is available
    */
-  static isAvailable(): boolean {
+  isAvailable(): boolean {
     // In a real implementation, check device capabilities
     return true;
   }
