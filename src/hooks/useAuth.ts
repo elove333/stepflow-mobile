@@ -35,6 +35,7 @@ export const useAuth = () => {
             tokens: response.data.tokens,
           })
         );
+        dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
         dispatch(setError(error.message || 'Login failed'));
@@ -58,6 +59,7 @@ export const useAuth = () => {
             tokens: response.data.tokens,
           })
         );
+        dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
         dispatch(setError(error.message || 'Registration failed'));
@@ -75,6 +77,7 @@ export const useAuth = () => {
       dispatch(setLoading(true));
       await authApi.logout();
       dispatch(clearAuth());
+      dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(setError(error.message || 'Logout failed'));
       throw error;
@@ -90,6 +93,7 @@ export const useAuth = () => {
         dispatch(setLoading(true));
         const response = await authApi.updateProfile(data);
         dispatch(updateUser(response.data));
+        dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
         dispatch(setError(error.message || 'Profile update failed'));

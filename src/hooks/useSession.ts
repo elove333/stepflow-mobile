@@ -33,6 +33,7 @@ export const useSession = () => {
         dispatch(setLoading(true));
         const response = await sessionsApi.getSessions(params);
         dispatch(setSessions(response.data));
+        dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
         dispatch(setError(error.message || 'Failed to load sessions'));
@@ -76,8 +77,10 @@ export const useSession = () => {
   const startSession = useCallback(
     async (session: Session) => {
       try {
+        dispatch(setLoading(true));
         await sessionsApi.startSession(session.id);
         dispatch(startSessionAction(session));
+        dispatch(setLoading(false));
       } catch (error: any) {
         dispatch(setError(error.message || 'Failed to start session'));
         throw error;
@@ -122,6 +125,7 @@ export const useSession = () => {
       }
 
       try {
+        dispatch(setLoading(true));
         const progress: Omit<
           SessionProgress,
           'sessionId' | 'userId' | 'completedAt'
@@ -137,6 +141,7 @@ export const useSession = () => {
 
         await sessionsApi.completeSession(activeSession.session.id, progress);
         dispatch(endSession());
+        dispatch(setLoading(false));
         return progress;
       } catch (error: any) {
         dispatch(setError(error.message || 'Failed to complete session'));
