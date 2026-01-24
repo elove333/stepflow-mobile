@@ -2,7 +2,13 @@
  * Tests for timing helpers
  */
 
-import { bpmToMs, msToBpm, formatTime, isOnBeat, calculateTimingAccuracy } from './timingHelpers';
+import {
+  bpmToMs,
+  msToBpm,
+  formatTime,
+  isOnBeat,
+  calculateTimingAccuracy,
+} from './timingHelpers';
 
 describe('timingHelpers', () => {
   describe('bpmToMs', () => {

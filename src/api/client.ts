@@ -3,7 +3,12 @@
  * Base HTTP client for API requests
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+} from 'axios';
 
 export interface ApiError {
   message: string;
@@ -24,7 +29,7 @@ class ApiClient {
 
   constructor() {
     this.baseURL = process.env.API_BASE_URL || 'https://api.stepflow.app';
-    
+
     this.client = axios.create({
       baseURL: this.baseURL,
       timeout: 15000,
@@ -103,9 +108,9 @@ class ApiClient {
     this.authToken = token;
     // Update axios defaults when setAuthToken is called
     if (token) {
-      this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      this.client.defaults.headers.common.Authorization = `Bearer ${token}`;
     } else {
-      delete this.client.defaults.headers.common['Authorization'];
+      delete this.client.defaults.headers.common.Authorization;
     }
   }
 
@@ -138,7 +143,11 @@ class ApiClient {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    const response: AxiosResponse<T> = await this.client.post(url, data, config);
+    const response: AxiosResponse<T> = await this.client.post(
+      url,
+      data,
+      config
+    );
     return {
       data: response.data,
       success: true,
@@ -168,7 +177,11 @@ class ApiClient {
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
-    const response: AxiosResponse<T> = await this.client.patch(url, data, config);
+    const response: AxiosResponse<T> = await this.client.patch(
+      url,
+      data,
+      config
+    );
     return {
       data: response.data,
       success: true,

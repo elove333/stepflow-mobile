@@ -2,7 +2,7 @@
  * Session Hook
  */
 
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../state';
 import {
@@ -34,9 +34,9 @@ export const useSession = () => {
         const response = await sessionsApi.getSessions(params);
         dispatch(setSessions(response.data));
         return response.data;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to load sessions'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to load sessions'));
+        throw err;
       } finally {
         dispatch(setLoading(false));
       }
@@ -53,9 +53,9 @@ export const useSession = () => {
         dispatch(setLoading(true));
         const response = await sessionsApi.getSession(id);
         return response.data;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to load session'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to load session'));
+        throw err;
       } finally {
         dispatch(setLoading(false));
       }
@@ -81,9 +81,9 @@ export const useSession = () => {
       try {
         await sessionsApi.startSession(session.id);
         dispatch(startSessionAction(session));
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to start session'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to start session'));
+        throw err;
       }
     },
     [dispatch]
@@ -118,36 +118,33 @@ export const useSession = () => {
   /**
    * Complete and end session
    */
-  const completeSession = useCallback(
-    async () => {
-      if (!activeSession) {
-        throw new Error('No active session');
-      }
+  const completeSession = useCallback(async () => {
+    if (!activeSession) {
+      throw new Error('No active session');
+    }
 
-      try {
-        const progress: Omit<
-          SessionProgress,
-          'sessionId' | 'userId' | 'completedAt'
-        > = {
-          score: activeSession.score,
-          accuracy:
-            activeSession.totalSteps > 0
-              ? (activeSession.onBeatSteps / activeSession.totalSteps) * 100
-              : 0,
-          totalSteps: activeSession.totalSteps,
-          onBeatSteps: activeSession.onBeatSteps,
-        };
+    try {
+      const progress: Omit<
+        SessionProgress,
+        'sessionId' | 'userId' | 'completedAt'
+      > = {
+        score: activeSession.score,
+        accuracy:
+          activeSession.totalSteps > 0
+            ? (activeSession.onBeatSteps / activeSession.totalSteps) * 100
+            : 0,
+        totalSteps: activeSession.totalSteps,
+        onBeatSteps: activeSession.onBeatSteps,
+      };
 
-        await sessionsApi.completeSession(activeSession.session.id, progress);
-        dispatch(endSession());
-        return progress;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to complete session'));
-        throw error;
-      }
-    },
-    [dispatch, activeSession]
-  );
+      await sessionsApi.completeSession(activeSession.session.id, progress);
+      dispatch(endSession());
+      return progress;
+    } catch (err: any) {
+      dispatch(setError(err.message || 'Failed to complete session'));
+      throw err;
+    }
+  }, [dispatch, activeSession]);
 
   /**
    * Cancel active session
@@ -164,9 +161,9 @@ export const useSession = () => {
       dispatch(setLoading(true));
       const response = await sessionsApi.getRecommendedSessions();
       return response.data;
-    } catch (error: any) {
-      dispatch(setError(error.message || 'Failed to load recommendations'));
-      throw error;
+    } catch (err: any) {
+      dispatch(setError(err.message || 'Failed to load recommendations'));
+      throw err;
     } finally {
       dispatch(setLoading(false));
     }

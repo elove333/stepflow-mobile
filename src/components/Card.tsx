@@ -19,11 +19,7 @@ export const Card: React.FC<CardProps> = ({
   if (onPress) {
     return (
       <TouchableOpacity
-        style={[
-          styles.card,
-          elevated && styles.elevated,
-          style,
-        ]}
+        style={[styles.card, elevated && styles.elevated, style]}
         onPress={onPress}
         activeOpacity={0.7}
       >
@@ -34,13 +30,7 @@ export const Card: React.FC<CardProps> = ({
 
   // Use View when no onPress
   return (
-    <View
-      style={[
-        styles.card,
-        elevated && styles.elevated,
-        style,
-      ]}
-    >
+    <View style={[styles.card, elevated && styles.elevated, style]}>
       {children}
     </View>
   );

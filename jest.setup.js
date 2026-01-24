@@ -1,5 +1,11 @@
 // jest.setup.js
-import 'react-native-gesture-handler/jestSetup';
+
+// Mock react-native-gesture-handler (if available)
+try {
+  require('react-native-gesture-handler/jestSetup');
+} catch (e) {
+  // Optional dependency, not required for tests
+}
 
 // Mock react-native modules
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');

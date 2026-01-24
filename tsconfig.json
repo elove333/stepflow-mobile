@@ -29,7 +29,7 @@
       "@/*": ["src/*"],
       "@src/*": ["src/*"]
     },
-    "types": ["react", "react-native", "jest"]
+    "types": ["react", "react-native", "jest", "node"]
   },
   "include": ["src/**/*", "index.js"],
   "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
