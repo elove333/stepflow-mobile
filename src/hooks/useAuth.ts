@@ -38,6 +38,7 @@ export const useAuth = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Login failed'));
         throw error;
       }
@@ -62,6 +63,7 @@ export const useAuth = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Registration failed'));
         throw error;
       }
@@ -79,6 +81,7 @@ export const useAuth = () => {
       dispatch(clearAuth());
       dispatch(setLoading(false));
     } catch (error: any) {
+      dispatch(setLoading(false));
       dispatch(setError(error.message || 'Logout failed'));
       throw error;
     }
@@ -96,6 +99,7 @@ export const useAuth = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Profile update failed'));
         throw error;
       }
@@ -113,6 +117,7 @@ export const useAuth = () => {
         await authApi.changePassword(currentPassword, newPassword);
         dispatch(setLoading(false));
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Password change failed'));
         throw error;
       }
@@ -130,6 +135,7 @@ export const useAuth = () => {
         await authApi.requestPasswordReset(email);
         dispatch(setLoading(false));
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Password reset request failed'));
         throw error;
       }

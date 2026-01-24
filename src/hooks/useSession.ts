@@ -36,6 +36,7 @@ export const useSession = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Failed to load sessions'));
         throw error;
       }
@@ -54,6 +55,7 @@ export const useSession = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Failed to load session'));
         throw error;
       }
@@ -82,6 +84,7 @@ export const useSession = () => {
         dispatch(startSessionAction(session));
         dispatch(setLoading(false));
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Failed to start session'));
         throw error;
       }
@@ -144,6 +147,7 @@ export const useSession = () => {
         dispatch(setLoading(false));
         return progress;
       } catch (error: any) {
+        dispatch(setLoading(false));
         dispatch(setError(error.message || 'Failed to complete session'));
         throw error;
       }
@@ -168,6 +172,7 @@ export const useSession = () => {
       dispatch(setLoading(false));
       return response.data;
     } catch (error: any) {
+      dispatch(setLoading(false));
       dispatch(setError(error.message || 'Failed to load recommendations'));
       throw error;
     }
