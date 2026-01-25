@@ -65,9 +65,8 @@ export const register = async (data: RegisterData): Promise<ApiResponse<AuthResp
 /**
  * Logout user
  */
-  export const logout = async ():
-    => {
-  const response = await client.post<void>('/.      auth/logout');
+export const logout = async (): Promise<ApiResponse<void>> => {
+  const response = await client.post<void>('/auth/logout');
 
   // Clear auth token
   client.setAuthToken(null);

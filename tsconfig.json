@@ -13,7 +13,6 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["react", "react-native", "jest", "node"],
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"]
