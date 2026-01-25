@@ -15,7 +15,7 @@ class AccelerometerClass {
   private listeners: AccelerometerCallback[] = [];
   private isRunning = false;
   private updateInterval = 100; // ms
-  private intervalId?: NodeJS.Timeout;
+  private intervalId?: ReturnType<typeof setInterval>;
 
   /**
    * Start listening to accelerometer
