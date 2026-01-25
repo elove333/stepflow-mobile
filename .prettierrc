@@ -7,6 +7,6 @@
   "useTabs": false,
   "arrowParens": "always",
   "bracketSpacing": true,
-  "jsxBracketSameLine": false,
+  "bracketSameLine": false,
   "endOfLine": "lf"
 }
