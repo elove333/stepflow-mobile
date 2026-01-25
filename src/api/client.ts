@@ -2,8 +2,7 @@
  * API Client
  * Base HTTP client for API requests
  */
-
-import axios, {
+  , {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
@@ -25,7 +24,7 @@ export interface ApiResponse<T = any> {
 class ApiClient {
   private client: AxiosInstance;
   private baseURL: string;
-  private authToken: string | null = null;
+   ;
 
   constructor() {
     this.baseURL = process.env.API_BASE_URL || 'https://api.stepflow.app';
