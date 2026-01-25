@@ -1,6 +1,12 @@
-# StepFlow Mobile
+# StepFlow /**
+ ""* File: app/page.tsx**
+ """"* Purpose: STEPFLOW - purpose - a practice tool designed to help people actually learn and remember choreography faster, with every feature like camera, effects, AI, and music working to improve practice quality, feedback, and progression.""""
+ (pose tracking + timing/energy scoring).
+ *
+ * Copyright (c) 2026 Emerald Hardee (STEPFLOW)
+ * SPDX-License-Identifier: MIT
+ */
 
-A React Native mobile application for rhythm-based movement training. StepFlow combines motion detection, beat synchronization, and real-time feedback to help users improve their timing and coordination through structured workout sessions.
 
 ## Project Overview
 
