@@ -34,7 +34,7 @@ class BeatSyncClass {
   private tolerance = 100; // ms
   private startTime = 0;
   private beatNumber = 0;
-  private intervalId?: NodeJS.Timeout;
+  private intervalId?: ReturnType<typeof setTimeout>;
 
   /**
    * Start beat synchronization
