@@ -23,6 +23,3 @@ jest.mock('react-native-sensors', () => ({
   gyroscope: jest.fn(),
   setUpdateIntervalForType: jest.fn(),
 }));
-
-// Silence the warning: Animated: `useNativeDriver` is not supported
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
