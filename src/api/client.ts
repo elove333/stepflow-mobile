@@ -3,7 +3,7 @@
  * Base HTTP client for API requests
  */
   , {
-  AxiosInstance,
+  ,
   AxiosRequestConfig,
   AxiosResponse,
   AxiosError,
