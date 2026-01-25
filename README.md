@@ -1,5 +1,7 @@
 # StepFlow Mobile
-A React Native mobile application for rhythm-based movement training. StepFlow combines motion detection, beat synchronization, and real-time feedback to help users improve their timing and coordination through structured workout sessions.
+#StepFlow
+
+-A React Native mobile application for rhythm-based movement training. StepFlow combines motion detection, beat synchronization, and real-time feedback to help users improve their timing and coordination through structured workout sessions.
 
 ## Project Overview
 - Real-time motion tracking via accelerometer, gyroscope, and pose detection
