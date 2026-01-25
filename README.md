@@ -1,7 +1,4 @@
 # stepflow-mobile
-<<<<<<< HEAD
-React Native / Swift / Kotlin code
-=======
 
 React Native, Swift, and Kotlin mobile application for StepFlow - a rhythm-based movement training app.
 
@@ -193,4 +190,3 @@ Edit files in `src/theme/` to customize colors, spacing, and typography.
 
 Copyright © 2026 StepFlow
 
->>>>>>> copilot/choreadd-config-and-fixes

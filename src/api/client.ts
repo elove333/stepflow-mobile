@@ -48,7 +48,7 @@ class ApiClient {
 
         // Add auth token if available
         if (this.authToken) {
-          (config.headers as Record<string, string>)['Authorization'] = `Bearer ${this.authToken}`;
+          config.headers['Authorization'] = `Bearer ${this.authToken}`;
         }
         return config;
       },
