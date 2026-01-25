@@ -2,7 +2,7 @@
  * Session Hook
  */
 
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../state';
 import {
