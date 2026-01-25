@@ -7,17 +7,29 @@
     "jsx": "react-native",
     "noEmit": true,
     "isolatedModules": true,
-    "strict": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@src/*": ["src/*"]
     },
-    "types": ["react", "react-native"]
+    "types": ["react", "react-native", "jest", "node"]
   },
   "include": ["src/**/*", "index.js"],
   "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
