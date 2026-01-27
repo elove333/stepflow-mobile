@@ -48,7 +48,7 @@ class ApiClient {
 
         // Add auth token if available
         if (this.authToken) {
-          config.headers['Authorization'] = `Bearer ${this.authToken}`;
+          config.headers.Authorization = `Bearer ${this.authToken}`;
         }
         return config;
       },
@@ -98,9 +98,9 @@ class ApiClient {
     this.authToken = token;
     // Update axios default Authorization header immediately
     if (token) {
-      this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      this.client.defaults.headers.common.Authorization = `Bearer ${token}`;
     } else {
-      delete this.client.defaults.headers.common['Authorization'];
+      delete this.client.defaults.headers.common.Authorization;
     }
   }
 
