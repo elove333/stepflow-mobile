@@ -218,6 +218,20 @@ export const uploadVideo = async (
   file: File | Blob,
   metadata?: Record<string, any>,
 ): Promise<ApiResponse<{ videoId: string; url: string }>> => {
+  // Validate file size (from config)
+  const maxSize = 100 * 1024 * 1024; // 100 MB
+  if (file.size > maxSize) {
+    throw new Error(`Video file size exceeds maximum allowed size of ${maxSize / 1024 / 1024}MB`);
+  }
+
+  // Validate file type (basic check)
+  if (file instanceof File) {
+    const validTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'];
+    if (!validTypes.includes(file.type)) {
+      throw new Error(`Invalid video format. Supported formats: ${validTypes.join(', ')}`);
+    }
+  }
+
   const formData = new FormData();
   formData.append('video', file);
   if (metadata) {

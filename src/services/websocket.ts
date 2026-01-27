@@ -24,8 +24,8 @@ class WebSocketService {
   private config: WebSocketConfig;
   private listeners: Map<string, Set<WebSocketEventHandler>> = new Map();
   private reconnectAttempts = 0;
-  private reconnectTimer: NodeJS.Timeout | null = null;
-  private heartbeatTimer: NodeJS.Timeout | null = null;
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  private heartbeatTimer: ReturnType<typeof setInterval> | null = null;
   private isConnected = false;
   private authToken: string | null = null;
 

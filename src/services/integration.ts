@@ -71,10 +71,18 @@ class IntegrationOrchestrator {
    * Process session with full workflow
    * Includes: video upload -> motion tracking -> AI analysis -> archival
    */
-  async processSession(sessionId: string, videoFile: File | Blob): Promise<SessionWorkflow> {
+  async processSession(
+    sessionId: string,
+    videoFile: File | Blob,
+    userId: string,
+  ): Promise<SessionWorkflow> {
+    if (!userId) {
+      throw new Error('userId is required for session processing');
+    }
+
     const workflow: SessionWorkflow = {
       sessionId,
-      userId: '', // Will be set from auth context
+      userId,
       steps: [
         { name: 'Upload Video', type: 'video_upload', status: 'pending' },
         { name: 'Motion Tracking', type: 'motion_tracking', status: 'pending' },
@@ -181,10 +189,15 @@ class IntegrationOrchestrator {
   async createWorkflowTask(
     type: 'motion_analysis' | 'video_processing' | 'ai_inference' | 'content_archival',
     data: Record<string, any>,
+    userId: string,
   ): Promise<BackendAPI.WorkflowTask> {
+    if (!userId) {
+      throw new Error('userId is required for creating workflow tasks');
+    }
+
     const task = await BackendAPI.createWorkflowTask({
       type,
-      userId: '', // Will be set from auth context
+      userId,
       data,
     });
 
