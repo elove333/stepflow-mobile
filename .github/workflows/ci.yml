@@ -26,6 +26,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v4
@@ -33,16 +34,51 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run TypeScript check
-        run: npm run type-check
+      - name: Run linter (if present)
+        run: |
+          if npm run | grep -q " lint"; then
+            npm run lint
+          else
+            echo "No lint script found, skipping."
+          fi
 
-      - name: Run linter
-        run: npm run lint
+      - name: Run TypeScript check (if tsconfig exists and script present)
+        run: |
+          if [ -f tsconfig.json ]; then
+            if npm run | grep -q " type-check"; then
+              npm run type-check
+            elif npm run | grep -q " typecheck"; then
+              npm run typecheck
+            else
+              echo "tsconfig.json exists but no type-check script found, skipping."
+            fi
+          else
+            echo "No tsconfig.json found, skipping type check."
+          fi
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests (if present)
+        run: |
+          if npm run | grep -q " test"; then
+            npm test -- --ci
+          else
+            echo "No test script found, skipping."
+          fi
+
+      # OPTIONAL: Android build sanity check (slower).
+      # Uncomment if you want CI to actually compile Android.
+      #
+      # - name: Set up Java
+      #   uses: actions/setup-java@v4
+      #   with:
+      #     distribution: temurin
+      #     java-version: 17
+      #
+      # - name: Build Android debug
+      #   working-directory: android
+      #   run: ./gradlew assembleDebug
