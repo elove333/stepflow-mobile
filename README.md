@@ -1,4 +1,7 @@
 # STEPFLOW Mobile — React Native, Swift, and Kotlin
+
+A cross-platform mobile application built with React Native, Swift, and Kotlin.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -31,12 +34,12 @@ npm run android # For Android
 This project follows a strict **Definition of Done** (DoD) to ensure code quality and consistency.
 
 ### Before You Start
-1. Read the <a>Contributing Guidelines</a>
-2. Familiarize yourself with the <a>DoD requirements</a>
-3. Review the <a>Branch Protection Rules</a>
-1. Read the [Contributing Guidelines](#)
-2. Familiarize yourself with the [DoD requirements](#)
-3. Review the [Branch Protection Rules](#)
+1. Read the [Contributing Guidelines](./CONTRIBUTING.md)
+2. Familiarize yourself with the DoD requirements
+3. Review the Branch Protection Rules
+
+### Development Process
+
 1. **Create a feature branch**
    ```bash
    git checkout -b feature/your-feature-name
@@ -108,7 +111,7 @@ All code contributions must meet the following criteria:
 - ✅ PR has been reviewed and approved
 - ✅ All CI checks pass
 
-See <a>CONTRIBUTING.md</a> for complete details.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for complete details.
 
 ## 🔄 CI/CD Pipeline
 
@@ -124,14 +127,13 @@ Our GitHub Actions workflow automatically:
 
 ## 📚 Documentation
 
-- <a>Contributing Guidelines</a> - How to contribute
-- <a>Branch Protection</a> - Branch protection setup
-- <a>Implementation Summary</a> - DoD integration details
-- <a>Requirements Verification</a> - Implementation verification
+- [Contributing Guidelines](./CONTRIBUTING.md) - How to contribute
+
+Additional documentation for branch protection, implementation summary, and requirements verification will be added to this repository.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our <a>Contributing Guidelines</a> before submitting a pull request.
+We welcome contributions! Please read our [Contributing Guidelines](./CONTRIBUTING.md) before submitting a pull request.
 
 ### Quick Contribution Checklist
 - [ ] Fork the repository
@@ -141,10 +143,6 @@ We welcome contributions! Please read our <a>Contributing Guidelines</a> before 
 - [ ] Create a PR using the template
 - [ ] Ensure all CI checks pass
 - [ ] Get at least 1 approval
-
-## 📝 License
-
-[License information to be added]
 
 ## 🙋 Support
 
