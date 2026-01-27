@@ -1,6 +1,4 @@
-cat > package.json <<'JSON'
-{
-  "name": "stepflow-mobile",
+{name": "stepflow-mobile",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -20,4 +18,3 @@ cat > package.json <<'JSON'
     "jest": "^29.0.0"
   }
 }
-JSON
