@@ -27,8 +27,8 @@ export interface BeatSyncConfig {
 }
 
 class BeatSyncClass {
-  private beatListeners: BeatCallback[] = [];
-  private syncListeners: SyncCallback[] = [];
+  private beatListeners: Set<BeatCallback> = new Set();
+  private syncListeners: Set<SyncCallback> = new Set();
   private isRunning = false;
   private bpm = 120;
   private tolerance = 100; // ms
@@ -126,9 +126,9 @@ class BeatSyncClass {
    * Subscribe to beat events
    */
   subscribeBeat(callback: BeatCallback): () => void {
-    this.beatListeners.push(callback);
+    this.beatListeners.add(callback);
     return () => {
-      this.beatListeners = this.beatListeners.filter((cb) => cb !== callback);
+      this.beatListeners.delete(callback);
     };
   }
 
@@ -136,9 +136,9 @@ class BeatSyncClass {
    * Subscribe to sync check events
    */
   subscribeSync(callback: SyncCallback): () => void {
-    this.syncListeners.push(callback);
+    this.syncListeners.add(callback);
     return () => {
-      this.syncListeners = this.syncListeners.filter((cb) => cb !== callback);
+      this.syncListeners.delete(callback);
     };
   }
 
@@ -195,8 +195,8 @@ class BeatSyncClass {
    */
   dispose(): void {
     this.stop();
-    this.beatListeners = [];
-    this.syncListeners = [];
+    this.beatListeners.clear();
+    this.syncListeners.clear();
   }
 }
 

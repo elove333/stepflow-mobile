@@ -66,8 +66,9 @@ export const LiveSessionScreen: React.FC = () => {
           setFeedback({ message: 'Keep trying!', type: 'warning' });
         }
 
-        // Clear feedback after delay
-        setTimeout(() => setFeedback(null), 1000);
+        // Clear feedback after delay - with cleanup
+        const timeoutId = setTimeout(() => setFeedback(null), 1000);
+        return () => clearTimeout(timeoutId);
       }
     }
   }, [lastStep]);

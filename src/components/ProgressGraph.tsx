@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 
@@ -22,6 +22,35 @@ export const ProgressGraph: React.FC<ProgressGraphProps> = ({
   showLabels = true,
   color = colors.primary,
 }) => {
+  // Memoize expensive calculations
+  const { maxValue, minValue, points } = useMemo(() => {
+    if (!data || data.length === 0) {
+      return { maxValue: 1, minValue: 0, points: [] };
+    }
+
+    const max = Math.max(...data.map((d) => d.value), 1);
+    const min = Math.min(...data.map((d) => d.value), 0);
+    const rangeVal = max - min || 1;
+
+    const graphHeight = height - (showLabels ? 40 : 20);
+    const graphWidth = width - 40;
+    const pointWidth = graphWidth / Math.max(data.length - 1, 1);
+
+    const getY = (value: number) => {
+      const normalized = (value - min) / rangeVal;
+      return graphHeight - normalized * graphHeight + 10;
+    };
+
+    const pts = data.map((point, index) => ({
+      x: 20 + index * pointWidth,
+      y: getY(point.value),
+      value: point.value,
+      date: point.date,
+    }));
+
+    return { maxValue: max, minValue: min, points: pts };
+  }, [data, height, width, showLabels]);
+
   if (!data || data.length === 0) {
     return (
       <View style={[styles.container, { width, height }]}>
@@ -29,26 +58,6 @@ export const ProgressGraph: React.FC<ProgressGraphProps> = ({
       </View>
     );
   }
-
-  const maxValue = Math.max(...data.map((d) => d.value), 1);
-  const minValue = Math.min(...data.map((d) => d.value), 0);
-  const range = maxValue - minValue || 1;
-
-  const graphHeight = height - (showLabels ? 40 : 20);
-  const graphWidth = width - 40;
-  const pointWidth = graphWidth / Math.max(data.length - 1, 1);
-
-  const getY = (value: number) => {
-    const normalized = (value - minValue) / range;
-    return graphHeight - normalized * graphHeight + 10;
-  };
-
-  const points = data.map((point, index) => ({
-    x: 20 + index * pointWidth,
-    y: getY(point.value),
-    value: point.value,
-    date: point.date,
-  }));
 
   return (
     <View style={[styles.container, { width, height }]}>

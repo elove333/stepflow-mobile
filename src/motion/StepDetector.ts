@@ -21,7 +21,7 @@ export interface StepDetectorConfig {
 }
 
 class StepDetectorClass {
-  private listeners: StepCallback[] = [];
+  private listeners: Set<StepCallback> = new Set();
   private isRunning = false;
   private config: Required<StepDetectorConfig>;
   private lastStepTime = 0;
@@ -116,9 +116,9 @@ class StepDetectorClass {
    * Subscribe to step events
    */
   subscribe(callback: StepCallback): () => void {
-    this.listeners.push(callback);
+    this.listeners.add(callback);
     return () => {
-      this.listeners = this.listeners.filter((cb) => cb !== callback);
+      this.listeners.delete(callback);
     };
   }
 
@@ -155,7 +155,7 @@ class StepDetectorClass {
    */
   dispose(): void {
     this.stop();
-    this.listeners = [];
+    this.listeners.clear();
   }
 }
 
