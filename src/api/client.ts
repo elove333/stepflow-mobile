@@ -43,14 +43,17 @@ class ApiClient {
     // Request interceptor
     this.client.interceptors.request.use(
       (config) => {
+        // Ensure headers object exists
+        config.headers = config.headers || {};
+
         // Add auth token if available
         if (this.authToken) {
-          config.headers.Authorization = `Bearer ${this.authToken}`;
+          (config.headers as Record<string, string>)['Authorization'] = `Bearer ${this.authToken}`;
         }
         return config;
       },
       (error) => {
-        return Promise.reject(this.handleError(error));
+        return Promise.reject(this.handleError(error as AxiosError));
       },
     );
 
@@ -93,6 +96,12 @@ class ApiClient {
    */
   setAuthToken(token: string | null): void {
     this.authToken = token;
+    // Update axios default Authorization header immediately
+    if (token) {
+      this.client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete this.client.defaults.headers.common['Authorization'];
+    }
   }
 
   /**
@@ -113,7 +122,7 @@ class ApiClient {
         success: true,
       };
     } catch (error) {
-      throw error;
+      throw this.handleError(error as AxiosError);
     }
   }
 
@@ -132,7 +141,7 @@ class ApiClient {
         success: true,
       };
     } catch (error) {
-      throw error;
+      throw this.handleError(error as AxiosError);
     }
   }
 
@@ -151,7 +160,7 @@ class ApiClient {
         success: true,
       };
     } catch (error) {
-      throw error;
+      throw this.handleError(error as AxiosError);
     }
   }
 
@@ -170,7 +179,7 @@ class ApiClient {
         success: true,
       };
     } catch (error) {
-      throw error;
+      throw this.handleError(error as AxiosError);
     }
   }
 
@@ -185,7 +194,7 @@ class ApiClient {
         success: true,
       };
     } catch (error) {
-      throw error;
+      throw this.handleError(error as AxiosError);
     }
   }
 }
