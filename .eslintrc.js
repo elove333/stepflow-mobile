@@ -3,6 +3,10 @@ module.exports = {
   extends: ['@react-native-community'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  rules: {
+    // Disable deprecated rule that was removed in @typescript-eslint v8
+    '@typescript-eslint/func-call-spacing': 'off',
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -10,6 +14,12 @@ module.exports = {
         '@typescript-eslint/no-shadow': ['error'],
         'no-shadow': 'off',
         'no-undef': 'off',
+      },
+    },
+    {
+      files: ['*.test.js', '*.test.ts', '*.test.tsx', 'jest.setup.js', 'jest.config.js'],
+      env: {
+        jest: true,
       },
     },
   ],
