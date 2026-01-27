@@ -61,7 +61,7 @@ class ApiClient {
     this.client.interceptors.response.use(
       (response) => response,
       (error) => {
-        return Promise.reject(this.handleError(error));
+        return Promise.reject(this.handleError(error as AxiosError));
       },
     );
   }
