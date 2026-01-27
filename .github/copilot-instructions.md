@@ -128,8 +128,9 @@ When working on new code:
 - Write tests for critical business logic
 - Test custom hooks
 - Test API integration functions
-- Use Jest with React Native Testing Library
-- Mock React Native modules appropriately (see `jest.setup.js`)
+- Use Jest as the primary test runner
+- Optionally use React Native Testing Library once `@testing-library/react-native` is added to `devDependencies` and configured
+- Mock React Native modules appropriately (for example, via a Jest setup file such as `jest.setup.js` if configured)
 
 ## Performance Considerations
 - Motion detection runs frequently - optimize calculations
