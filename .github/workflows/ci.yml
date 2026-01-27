@@ -5,28 +5,54 @@ on:
     branches:
       - main
       - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
+      - 'release/**'
+      - 'experiment/**'
   pull_request:
     branches:
       - main
       - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript check
+        run: npm run type-check
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+  ios-build:
+    needs: test
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
 
@@ -34,15 +60,63 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run TypeScript check
-        run: npm run type-check
+      - name: Setup CocoaPods
+        run: |
+          cd ios
+          pod install --repo-update
 
-      - name: Run linter
-        run: npm run lint
+      - name: Build iOS
+        run: |
+          cd ios
+          xcodebuild -workspace STEPFLOW.xcworkspace \
+                     -scheme STEPFLOW \
+                     -configuration Release \
+                     -sdk iphonesimulator \
+                     -destination 'platform=iOS Simulator,name=iPhone 15' \
+                     clean build test
 
-      - name: Run tests
-        run: npm test
+  android-build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept Android licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Build Android
+        run: |
+          chmod +x android/gradlew
+          cd android
+          ./gradlew clean assembleRelease test
+
+  quality-gate:
+    needs: [test, ios-build, android-build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: All checks passed ✅
+        run: echo "🎉 Mobile CI pipeline completed successfully!"
