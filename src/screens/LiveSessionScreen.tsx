@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
@@ -22,6 +22,7 @@ export const LiveSessionScreen: React.FC = () => {
     message: string;
     type: 'success' | 'error' | 'warning' | 'info';
   } | null>(null);
+  const feedbackTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const session = activeSession?.session || selectedSession;
   const bpm = session?.bpm || 120;
@@ -57,6 +58,11 @@ export const LiveSessionScreen: React.FC = () => {
       if (syncResult) {
         recordStepEvent(syncResult.onBeat);
 
+        // Clear any existing timeout
+        if (feedbackTimeoutRef.current) {
+          clearTimeout(feedbackTimeoutRef.current);
+        }
+
         // Show feedback
         if (syncResult.onBeat) {
           setFeedback({ message: 'Perfect! 🎯', type: 'success' });
@@ -67,14 +73,21 @@ export const LiveSessionScreen: React.FC = () => {
         }
 
         // Clear feedback after delay
-        const timeoutId = setTimeout(() => setFeedback(null), 1000);
-        // Cleanup on next step or unmount
-        return () => clearTimeout(timeoutId);
+        feedbackTimeoutRef.current = setTimeout(() => {
+          setFeedback(null);
+          feedbackTimeoutRef.current = null;
+        }, 1000);
       }
     }
-    // No cleanup needed if no feedback was set
-    return undefined;
-  }, [lastStep]);
+    
+    // Cleanup on unmount
+    return () => {
+      if (feedbackTimeoutRef.current) {
+        clearTimeout(feedbackTimeoutRef.current);
+        feedbackTimeoutRef.current = null;
+      }
+    };
+  }, [lastStep, activeSession, checkSync, recordStepEvent]);
 
   const handlePause = () => {
     if (activeSession?.isPaused) {
