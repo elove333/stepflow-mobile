@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "StepFlow - A rhythm-based movement training mobile app",
-  "author": "StepFlow Team",
+  "author": "Emerald Hardee",
   "license": "UNLICENSED",
   "scripts": {
     "android": "react-native run-android",
