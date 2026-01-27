@@ -28,8 +28,17 @@ export const ProgressGraph: React.FC<ProgressGraphProps> = ({
       return { maxValue: 1, minValue: 0, points: [] };
     }
 
-    const max = Math.max(...data.map((d) => d.value), 1);
-    const min = Math.min(...data.map((d) => d.value), 0);
+    // Find min and max in a single pass
+    let max = data[0].value;
+    let min = data[0].value;
+    for (let i = 1; i < data.length; i++) {
+      const value = data[i].value;
+      if (value > max) max = value;
+      if (value < min) min = value;
+    }
+    // Ensure we have a valid range
+    max = Math.max(max, 1);
+    min = Math.min(min, 0);
     const rangeVal = max - min || 1;
 
     const graphHeight = height - (showLabels ? 40 : 20);
