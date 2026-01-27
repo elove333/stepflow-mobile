@@ -1,1 +1,23 @@
-{\n  "name": "stepflow",\n  "version": "0.1.0",\n  "private": true,\n  "main": "expo-router/entry",\n  "scripts": {\n    "start": "expo start",\n    "android": "expo run:android",\n    "ios": "expo run:ios",\n    "web": "expo start --web",\n    "lint": "eslint .",\n    "format": "prettier --write .",\n    "test": "jest"\n  },\n  "dependencies": {\n    "expo": "^55.0.0",\n    "react": "18.3.1",\n    "react-native": "0.76.5",\n    "expo-camera": "^55.0.0",\n    "expo-av": "^55.0.0",\n    "expo-haptics": "^55.0.0",\n    "expo-router": "^4.0.0",\n    "react-native-gesture-handler": "~2.20.0",\n    "react-native-reanimated": "~3.16.0",\n    "react-native-safe-area-context": "4.12.0",\n    "react-native-screens": "~4.4.0"\n  },\n  "devDependencies": {\n    "@babel/core": "^7.26.0",\n    "eslint": "^9.0.0",\n    "eslint-config-prettier": "^9.0.0",\n    "eslint-plugin-react": "^7.0.0",\n    "eslint-plugin-react-hooks": "^5.0.0",\n    "jest": "^29.0.0",\n    "prettier": "^3.0.0"\n  }\n}
+cat > package.json <<'JSON'
+{
+  "name": "stepflow-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-native": "0.76.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "eslint": "^9.0.0",
+    "jest": "^29.0.0"
+  }
+}
+JSON
