@@ -23,12 +23,14 @@ STEPFLOW Mobile is the front-end application designed to connect with the STEPFL
    npm run build
    ```
 
+For detailed information on managing backend services and serverless functions using `doctl` CLI, refer to the [Developer Guide](docs/developer-guide.md).
+
 ## Integration with STEPFLOW Ecosystem
 - **STEPFLOW-backend**: Provides REST/GraphQL APIs used to fetch data.
 - **STEPFLOW-AI**: Supplies processed AI results which are displayed in the app.
 
 ## Deployment
-The app is deployed via DigitalOcean's workflow. Follow these steps:
+The app is deployed via DigitalOcean's workflow. For a quick start, follow these steps:
 1. Install serverless support:
    ```bash
    doctl serverless install
@@ -41,6 +43,8 @@ The app is deployed via DigitalOcean's workflow. Follow these steps:
    ```bash
    doctl serverless deploy
    ```
+
+For comprehensive documentation on DigitalOcean's `doctl` CLI, serverless functions management, and detailed deployment workflows, see the [Developer Guide](docs/developer-guide.md).
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
