@@ -95,24 +95,30 @@ src/
 ### Running the App
 
 ```bash
-npm install          # Install dependencies
-npm start            # Start Metro bundler
-npm run ios          # Run on iOS simulator
-npm run android      # Run on Android emulator
+npm install                      # Install dependencies
+npx react-native start           # Start Metro bundler
+npx react-native run-ios         # Run on iOS simulator
+npx react-native run-android     # Run on Android emulator
 ```
 
 ### Quality Checks
 
 ```bash
-npm run type-check   # TypeScript compilation check (npx tsc --noEmit)
+# If npm scripts are configured in package.json:
+npm run type-check   # TypeScript compilation check
 npm run lint         # ESLint check
+npm test             # Run Jest tests
+
+# Or use these direct commands:
+npx tsc --noEmit     # TypeScript compilation check
+npx eslint .         # ESLint check
 npm test             # Run Jest tests
 ```
 
 ### Before Committing
 
-1. Run type checking: `npm run type-check`
-2. Run linting: `npm run lint`
+1. Run type checking: `npx tsc --noEmit` (or `npm run type-check` if configured)
+2. Run linting: `npx eslint .` (or `npm run lint` if configured)
 3. Run tests: `npm test`
 4. Ensure all checks pass before pushing
 
@@ -124,9 +130,18 @@ The repository uses GitHub Actions CI (`.github/workflows/ci.yml`) that runs on:
 - Workflow dispatches
 
 The CI pipeline runs:
-1. TypeScript type checking
-2. ESLint linting
-3. Jest tests
+1. TypeScript type checking (`npm run type-check`)
+2. ESLint linting (`npm run lint`)
+3. Jest tests (`npm test`)
+
+**Note**: The CI workflow expects `type-check` and `lint` scripts in package.json. If these scripts are not configured, add them:
+```json
+"scripts": {
+  "type-check": "tsc --noEmit",
+  "lint": "eslint .",
+  "test": "jest"
+}
+```
 
 All checks must pass before merging.
 
