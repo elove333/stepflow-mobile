@@ -12,7 +12,7 @@ export interface AccelerometerData extends Vector3D {
 type AccelerometerCallback = (data: AccelerometerData) => void;
 
 class AccelerometerClass {
-  private listeners: AccelerometerCallback[] = [];
+  private listeners: Set<AccelerometerCallback> = new Set();
   private isRunning = false;
   private updateInterval = 100; // ms
   private intervalId?: NodeJS.Timeout;
@@ -59,9 +59,9 @@ class AccelerometerClass {
    * Subscribe to accelerometer updates
    */
   subscribe(callback: AccelerometerCallback): () => void {
-    this.listeners.push(callback);
+    this.listeners.add(callback);
     return () => {
-      this.listeners = this.listeners.filter((cb) => cb !== callback);
+      this.listeners.delete(callback);
     };
   }
 
@@ -104,7 +104,7 @@ class AccelerometerClass {
    */
   dispose(): void {
     this.stop();
-    this.listeners = [];
+    this.listeners.clear();
   }
 }
 

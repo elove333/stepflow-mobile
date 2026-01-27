@@ -12,7 +12,7 @@ export interface GyroscopeData extends Vector3D {
 type GyroscopeCallback = (data: GyroscopeData) => void;
 
 class GyroscopeClass {
-  private listeners: GyroscopeCallback[] = [];
+  private listeners: Set<GyroscopeCallback> = new Set();
   private isRunning = false;
   private updateInterval = 100; // ms
   private intervalId?: NodeJS.Timeout;
@@ -59,9 +59,9 @@ class GyroscopeClass {
    * Subscribe to gyroscope updates
    */
   subscribe(callback: GyroscopeCallback): () => void {
-    this.listeners.push(callback);
+    this.listeners.add(callback);
     return () => {
-      this.listeners = this.listeners.filter((cb) => cb !== callback);
+      this.listeners.delete(callback);
     };
   }
 
@@ -104,7 +104,7 @@ class GyroscopeClass {
    */
   dispose(): void {
     this.stop();
-    this.listeners = [];
+    this.listeners.clear();
   }
 }
 

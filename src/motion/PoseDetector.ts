@@ -25,7 +25,7 @@ export interface PoseDetectorConfig {
 class PoseDetectorClass {
   private isInitialized = false;
   private config: PoseDetectorConfig;
-  private listeners: ((pose: Pose | null) => void)[] = [];
+  private listeners: Set<(pose: Pose | null) => void> = new Set();
 
   constructor() {
     this.config = {
@@ -93,9 +93,9 @@ class PoseDetectorClass {
    * Subscribe to pose updates
    */
   subscribe(callback: (pose: Pose | null) => void): () => void {
-    this.listeners.push(callback);
+    this.listeners.add(callback);
     return () => {
-      this.listeners = this.listeners.filter((cb) => cb !== callback);
+      this.listeners.delete(callback);
     };
   }
 
@@ -168,7 +168,7 @@ class PoseDetectorClass {
    */
   dispose(): void {
     this.stop();
-    this.listeners = [];
+    this.listeners.clear();
     this.isInitialized = false;
   }
 }

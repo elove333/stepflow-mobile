@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 import { Card, ProgressGraph } from '../components';
@@ -10,16 +10,12 @@ import type { ProgressDataPoint } from '../components/ProgressGraph';
 
 export const ProgressScreen: React.FC = () => {
   const dispatch = useDispatch();
-  const { stats, progressData, achievements, isLoading } = useSelector(
+  const { stats, progressData, achievements } = useSelector(
     (state: RootState) => state.progress,
   );
   const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month'>('week');
 
-  useEffect(() => {
-    loadProgressData();
-  }, []);
-
-  const loadProgressData = async () => {
+  const loadProgressData = React.useCallback(async () => {
     try {
       const [statsRes, progressRes, achievementsRes] = await Promise.all([
         getUserStats(),
@@ -33,16 +29,35 @@ export const ProgressScreen: React.FC = () => {
     } catch (error) {
       console.error('Failed to load progress data:', error);
     }
-  };
+  }, [dispatch]);
 
-  // Transform progress data for graph
-  const graphData: ProgressDataPoint[] = progressData.map((p) => ({
-    date: new Date(p.date).toLocaleDateString('en', { month: 'short', day: 'numeric' }),
-    value: p.accuracy,
-  }));
+  useEffect(() => {
+    loadProgressData();
+  }, [loadProgressData]);
 
-  const unlockedAchievements = achievements.filter((a) => a.unlockedAt);
-  const lockedAchievements = achievements.filter((a) => !a.unlockedAt);
+  // Transform progress data for graph - memoized to avoid recalculation
+  const graphData: ProgressDataPoint[] = useMemo(
+    () =>
+      progressData.map((p) => ({
+        date: new Date(p.date).toLocaleDateString('en', { month: 'short', day: 'numeric' }),
+        value: p.accuracy,
+      })),
+    [progressData],
+  );
+
+  // Split achievements in a single pass - more efficient than double filter
+  const { unlockedAchievements, lockedAchievements } = useMemo(() => {
+    const unlocked = [];
+    const locked = [];
+    for (const achievement of achievements) {
+      if (achievement.unlockedAt) {
+        unlocked.push(achievement);
+      } else {
+        locked.push(achievement);
+      }
+    }
+    return { unlockedAchievements: unlocked, lockedAchievements: locked };
+  }, [achievements]);
 
   return (
     <ScrollView style={styles.container}>
