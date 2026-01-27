@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
 import { Button, Card } from '../components';
 import { useAuth } from '../hooks/useAuth';
 
 export const SettingsScreen: React.FC = () => {
-  const navigation = useNavigation<any>();
   const { user, logout } = useAuth();
 
   // Settings state

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { colors, spacing, typography } from '../theme';
-import { Button, Card } from '../components';
+import { Card } from '../components';
 import { useSession } from '../hooks/useSession';
 import { Session } from '../api/sessions';
 
@@ -13,6 +13,7 @@ export const SessionPickerScreen: React.FC = () => {
 
   useEffect(() => {
     loadSessions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelectSession = (session: Session) => {

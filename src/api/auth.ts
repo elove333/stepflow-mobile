@@ -77,9 +77,9 @@ export const logout = async (): Promise<ApiResponse<void>> => {
 /**
  * Refresh authentication token
  */
-export const refreshToken = async (refreshToken: string): Promise<ApiResponse<AuthTokens>> => {
+export const refreshToken = async (token: string): Promise<ApiResponse<AuthTokens>> => {
   const response = await client.post<AuthTokens>('/auth/refresh', {
-    refreshToken,
+    refreshToken: token,
   });
 
   // Update auth token

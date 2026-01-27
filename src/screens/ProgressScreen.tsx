@@ -10,30 +10,27 @@ import type { ProgressDataPoint } from '../components/ProgressGraph';
 
 export const ProgressScreen: React.FC = () => {
   const dispatch = useDispatch();
-  const { stats, progressData, achievements, isLoading } = useSelector(
-    (state: RootState) => state.progress,
-  );
+  const { stats, progressData, achievements } = useSelector((state: RootState) => state.progress);
   const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month'>('week');
 
   useEffect(() => {
+    const loadProgressData = async () => {
+      try {
+        const [statsRes, progressRes, achievementsRes] = await Promise.all([
+          getUserStats(),
+          getProgressData({ interval: 'day' }),
+          getAchievements(),
+        ]);
+
+        dispatch(setStats(statsRes.data));
+        dispatch(setProgressData(progressRes.data));
+        dispatch(setAchievements(achievementsRes.data));
+      } catch (error) {
+        console.error('Failed to load progress data:', error);
+      }
+    };
     loadProgressData();
-  }, []);
-
-  const loadProgressData = async () => {
-    try {
-      const [statsRes, progressRes, achievementsRes] = await Promise.all([
-        getUserStats(),
-        getProgressData({ interval: 'day' }),
-        getAchievements(),
-      ]);
-
-      dispatch(setStats(statsRes.data));
-      dispatch(setProgressData(progressRes.data));
-      dispatch(setAchievements(achievementsRes.data));
-    } catch (error) {
-      console.error('Failed to load progress data:', error);
-    }
-  };
+  }, [dispatch]);
 
   // Transform progress data for graph
   const graphData: ProgressDataPoint[] = progressData.map((p) => ({

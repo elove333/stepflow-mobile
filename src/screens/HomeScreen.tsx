@@ -13,17 +13,16 @@ export const HomeScreen: React.FC = () => {
   const [recommendedSessions, setRecommendedSessions] = React.useState<any[]>([]);
 
   useEffect(() => {
+    const loadRecommended = async () => {
+      try {
+        const sessions = await getRecommendedSessions();
+        setRecommendedSessions(sessions.slice(0, 3));
+      } catch (error) {
+        console.error('Failed to load recommendations:', error);
+      }
+    };
     loadRecommended();
-  }, []);
-
-  const loadRecommended = async () => {
-    try {
-      const sessions = await getRecommendedSessions();
-      setRecommendedSessions(sessions.slice(0, 3));
-    } catch (error) {
-      console.error('Failed to load recommendations:', error);
-    }
-  };
+  }, [getRecommendedSessions]);
 
   const handleStartSession = () => {
     navigation.navigate('SessionPicker');

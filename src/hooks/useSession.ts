@@ -2,7 +2,7 @@
  * Session Hook
  */
 
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../state';
 import {
@@ -35,9 +35,9 @@ export const useSession = () => {
         const response = await sessionsApi.getSessions(params);
         dispatch(setSessions(response.data));
         return response.data;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to load sessions'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to load sessions'));
+        throw err;
       }
     },
     [dispatch],
@@ -53,9 +53,9 @@ export const useSession = () => {
         const response = await sessionsApi.getSession(id);
         dispatch(setLoading(false));
         return response.data;
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to load session'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to load session'));
+        throw err;
       }
     },
     [dispatch],
@@ -79,9 +79,9 @@ export const useSession = () => {
       try {
         await sessionsApi.startSession(session.id);
         dispatch(startSessionAction(session));
-      } catch (error: any) {
-        dispatch(setError(error.message || 'Failed to start session'));
-        throw error;
+      } catch (err: any) {
+        dispatch(setError(err.message || 'Failed to start session'));
+        throw err;
       }
     },
     [dispatch],
@@ -135,9 +135,9 @@ export const useSession = () => {
       await sessionsApi.completeSession(activeSession.session.id, progress);
       dispatch(endSession());
       return progress;
-    } catch (error: any) {
-      dispatch(setError(error.message || 'Failed to complete session'));
-      throw error;
+    } catch (err: any) {
+      dispatch(setError(err.message || 'Failed to complete session'));
+      throw err;
     }
   }, [dispatch, activeSession]);
 
@@ -157,9 +157,9 @@ export const useSession = () => {
       const response = await sessionsApi.getRecommendedSessions();
       dispatch(setLoading(false));
       return response.data;
-    } catch (error: any) {
-      dispatch(setError(error.message || 'Failed to load recommendations'));
-      throw error;
+    } catch (err: any) {
+      dispatch(setError(err.message || 'Failed to load recommendations'));
+      throw err;
     }
   }, [dispatch]);
 

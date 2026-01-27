@@ -26,7 +26,7 @@ export const LiveSessionScreen: React.FC = () => {
   const session = activeSession?.session || selectedSession;
   const bpm = session?.bpm || 120;
 
-  const { lastStep, lastBeat, lastSync, initialize, isInitialized, checkSync } = useMotion({
+  const { lastStep, initialize, isInitialized, checkSync } = useMotion({
     enableStepDetection: true,
     enableBeatSync: true,
     bpm,
@@ -38,7 +38,7 @@ export const LiveSessionScreen: React.FC = () => {
     if (selectedSession && !activeSession) {
       startSession(selectedSession);
     }
-  }, [selectedSession, activeSession]);
+  }, [selectedSession, activeSession, startSession]);
 
   useEffect(() => {
     // Initialize motion detection
@@ -48,7 +48,7 @@ export const LiveSessionScreen: React.FC = () => {
         Alert.alert('Error', 'Failed to initialize motion detection');
       });
     }
-  }, [activeSession, isInitialized]);
+  }, [activeSession, isInitialized, initialize]);
 
   useEffect(() => {
     // Handle step detection
@@ -70,7 +70,7 @@ export const LiveSessionScreen: React.FC = () => {
         setTimeout(() => setFeedback(null), 1000);
       }
     }
-  }, [lastStep]);
+  }, [lastStep, activeSession, checkSync, recordStepEvent]);
 
   const handlePause = () => {
     if (activeSession?.isPaused) {

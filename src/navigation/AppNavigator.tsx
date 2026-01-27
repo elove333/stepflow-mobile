@@ -6,7 +6,7 @@ import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { colors, spacing, typography } from '../theme';
 
 export const AppNavigator: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
   // Show loading screen while checking auth
   if (isLoading) {

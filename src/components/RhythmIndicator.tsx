@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
-import { colors, spacing } from '../theme';
+import { colors } from '../theme';
 
 export interface RhythmIndicatorProps {
   bpm: number;
