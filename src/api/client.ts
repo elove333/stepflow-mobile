@@ -3,7 +3,13 @@
  * Base HTTP client for API requests
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from 'axios';
 
 export interface ApiError {
   message: string;
@@ -42,26 +48,23 @@ class ApiClient {
   private setupInterceptors(): void {
     // Request interceptor
     this.client.interceptors.request.use(
-      (config) => {
-        // Ensure headers object exists
-        config.headers = config.headers || {};
-
+      (config: InternalAxiosRequestConfig) => {
         // Add auth token if available
         if (this.authToken) {
           config.headers.Authorization = `Bearer ${this.authToken}`;
         }
         return config;
       },
-      (error) => {
-        return Promise.reject(this.handleError(error as AxiosError));
+      (error: AxiosError) => {
+        return Promise.reject(this.handleError(error));
       },
     );
 
     // Response interceptor
     this.client.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        return Promise.reject(this.handleError(error as AxiosError));
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => {
+        return Promise.reject(this.handleError(error));
       },
     );
   }
