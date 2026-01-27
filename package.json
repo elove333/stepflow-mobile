@@ -2,8 +2,7 @@
   "name": "stepflow-mobile",
   "version": "1.0.0",
   "private": true,
-  "description": "StepFlow - A rhythm-based 
-  "movement training mobile app",
+  "description": "StepFlow - A rhythm-based movement training mobile app",
   "author": "Emerald Hardee",
   "license": "UNLICENSED",
   "scripts": {
