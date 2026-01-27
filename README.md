@@ -34,9 +34,9 @@ This project follows a strict **Definition of Done** (DoD) to ensure code qualit
 1. Read the <a>Contributing Guidelines</a>
 2. Familiarize yourself with the <a>DoD requirements</a>
 3. Review the <a>Branch Protection Rules</a>
-
-### Development Process
-
+1. Read the [Contributing Guidelines](#)
+2. Familiarize yourself with the [DoD requirements](#)
+3. Review the [Branch Protection Rules](#)
 1. **Create a feature branch**
    ```bash
    git checkout -b feature/your-feature-name
