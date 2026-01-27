@@ -1,5 +1,19 @@
 # stepflow-for StepFlow - a rhythm-based movement training app.
 
+## Project Overview
+
+STEPFLOW-mobile is a React Native application that integrates with STEPFLOW-backend and STEPFLOW-AI to provide a complete rhythm-based movement training experience. The app includes seamless integration with PREMIERE tools for advanced motion analysis, AI processing, and multi-language support.
+
+## Integration Architecture
+
+The app is integrated with three main services:
+
+- **STEPFLOW-backend**: Workflow orchestration, task routing, and content archival
+- **STEPFLOW-AI**: Motion tracking, video analysis, pose estimation, and model training
+- **PREMIERE Tools**: 3D motion analysis, audio diarization, translation services, and Dance Motion Datasets
+
+See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete integration documentation.
+
 ## Project Structure
 
 ```
@@ -58,12 +72,27 @@ src/
 │   ├── timingHelpers.ts     # Time and BPM calculations
 │   └── movementHelpers.ts   # Motion calculation utilities
 │
+├── services/         # Integration services (NEW)
+│   ├── websocket.ts      # Real-time WebSocket communication
+│   └── integration.ts    # Workflow orchestration
+│
+├── config/           # Configuration modules (NEW)
+│   ├── workflows.ts      # Predefined workflow templates
+│   └── integration.ts    # Integration settings
+│
 └── App.tsx           # Main App component
 ```
 
 ## Features
 
-### 1. Motion Detection
+### 1. STEPFLOW Integration (NEW)
+- **Backend Integration**: Workflow task management, content archival, data synchronization
+- **AI Processing**: Motion tracking, video analysis, pose estimation, dance recognition
+- **PREMIERE Tools**: 3D motion analysis, audio diarization, multi-language translation
+- **Real-time Sync**: WebSocket-based live updates and notifications
+- **Workflow Orchestration**: Automated pipelines for session processing and content management
+
+### 2. Motion Detection
 - **Pose Detection**: Real-time body pose tracking using device camera
 - **Accelerometer & Gyroscope**: Device motion sensors for movement tracking
 - **Step Detection**: Intelligent step detection with configurable thresholds
@@ -85,8 +114,16 @@ src/
 - Authentication with JWT tokens
 - Session management and progress tracking
 - Analytics and feedback submission
+- **Backend, AI, and PREMIERE service integration**
 
-### 5. Screens
+### 5. Workflow Management (NEW)
+- Predefined workflow templates for common tasks
+- Session processing pipeline (upload → analyze → archive)
+- Model training with PREMIERE datasets
+- Content archival automation
+- Real-time motion analysis
+
+### 6. Screens
 - **Home**: Dashboard with quick actions and recommendations
 - **Session Picker**: Browse and select workout sessions
 - **Live Session**: Real-time session with beat indicator and stats
@@ -142,7 +179,32 @@ npm run lint
 ### Testing
 ```bash
 npm test
+
+# Run integration tests
+npm test -- src/__tests__/integration
 ```
+
+## Integration Usage
+
+### Quick Start with Integration
+
+```typescript
+// Import integration services
+import { integrationOrchestrator } from './services/integration';
+import * as AIAPI from './api/ai';
+import * as BackendAPI from './api/backend';
+
+// Process a session with full workflow
+const workflow = await integrationOrchestrator.processSession(
+  sessionId,
+  videoFile
+);
+
+// Monitor progress
+const status = integrationOrchestrator.getWorkflowStatus(sessionId);
+```
+
+See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete usage examples.
 
 ## Architecture Decisions
 
@@ -172,6 +234,11 @@ npm test
 Create a `.env` file (not committed) with:
 ```
 API_BASE_URL=https://api.stepflow.app
+WS_URL=wss://api.stepflow.app/ws
+AI_SERVICE_URL=https://ai.stepflow.app
+BACKEND_SERVICE_URL=https://backend.stepflow.app
+PREMIERE_SERVICE_URL=https://premiere.stepflow.app
+APP_ENV=development
 ```
 
 ### Theme Customization
