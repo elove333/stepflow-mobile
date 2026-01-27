@@ -1,7 +1,4 @@
-# STEPFLOW Mobile —
-
-A cross-platform mobile application built with React Native, Swift, and Kotlin.
-
+# STEPFLOW Mobile — React Native, Swift, and Kotlin
 ## 🚀 Quick Start
 
 ### Prerequisites
