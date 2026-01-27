@@ -39,7 +39,7 @@ export const LiveSessionScreen: React.FC = () => {
     if (selectedSession && !activeSession) {
       startSession(selectedSession);
     }
-  }, [selectedSession, activeSession]);
+  }, [selectedSession, activeSession, startSession]);
 
   useEffect(() => {
     // Initialize motion detection
@@ -49,7 +49,7 @@ export const LiveSessionScreen: React.FC = () => {
         Alert.alert('Error', 'Failed to initialize motion detection');
       });
     }
-  }, [activeSession, isInitialized]);
+  }, [activeSession, isInitialized, initialize]);
 
   useEffect(() => {
     // Handle step detection
