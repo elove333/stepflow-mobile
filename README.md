@@ -1,46 +1,45 @@
-# STEPFLOW Mobile
+# STEPFLOW Mobile =
+✅ Clear project overview
+✅ Clear separation of mobile / backend / AI
+✅ Development workflow section exists
+✅ Integration section exists
+✅ Professional tone
 
-## Project Overview
-STEPFLOW Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and STEPFLOW-backend. This mobile app serves as the user interface for accessing data processed by the AI system and managed by the backend infrastructure.
+You’re already ahead of many repos.
 
-## Key Features
-- **Real-time Data Display**: Fetch and display results from STEPFLOW-backend.
-- **AI Integration**: View insights derived from STEPFLOW-AI, including motion tracking and emotion analysis.
-- **User-Friendly Interface**: Built with a focus on simplicity and usability.
+⸻
 
-## Development Workflow
+2️⃣ What needs fixing (important)
 
-1. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-2. **Start Local Development Server**:
-   ```bash
-   npm start
-   ```
-3. **Build for Production**:
-   ```bash
-   npm run build
-   ```
+❌ Problem 1: Mobile apps are NOT “deployed” to DigitalOcean
 
-## Integration with STEPFLOW Ecosystem
-- **STEPFLOW-backend**: Provides REST/GraphQL APIs used to fetch data.
-- **STEPFLOW-AI**: Supplies processed AI results which are displayed in the app.
+This part is incorrect:
 
-## Deployment
-The app is deployed via DigitalOcean's workflow. Follow these steps:
-1. Install serverless support:
-   ```bash
-   doctl serverless install
-   ```
-2. Connect to your namespace:
-   ```bash
-   doctl serverless connect
-   ```
-3. Deploy the app:
-   ```bash
-   doctl serverless deploy
-   ```
+“The app is deployed via DigitalOcean’s workflow…
+doctl serverless deploy”
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+🚨 React Native mobile apps are NOT deployed to DigitalOcean
+They are:
+	•	Built locally or in CI
+	•	Distributed via:
+	•	TestFlight / App Store (iOS)
+	•	Play Console (Android)
+
+DigitalOcean hosts your backend + AI only, not the mobile app.
+
+So this section is misleading and should be removed or rewritten.
+
+⸻
+
+❌ Problem 2: Missing Environment Variables section
+
+You mention integration, but you don’t explain:
+	•	Where the API base URL comes from
+	•	How to change dev vs prod
+	•	How someone else runs the app
+
+This is critical for collaborators.
+
+⸻
+
+❌ Problem 3: iOS/Android instructions are too generic
