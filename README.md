@@ -1,45 +1,78 @@
-# STEPFLOW Mobile =
-✅ Clear project overview
-✅ Clear separation of mobile / backend / AI
-✅ Development workflow section exists
-✅ Integration section exists
-✅ Professional tone
+#STEPFLOW Mobile=
+Project Overview
+STEPFLOW Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and STEPFLOW-backend. This mobile app serves as the user interface for accessing data processed by the Al system and managed by the backend infrastructure.
+## Screenshots
+![Home Screen](assets/screenshots/home.png)
+![Lesson Screen](assets/screenshots/lesson.png)
+![Practice Screen](assets/screenshots/practice.png)
+#Bash
+	•	npm run ios
+	•	npm run android
+	•CocoaPods step
+🔧 Development Workflow
+## Development Workflow
 
-You’re already ahead of many repos.
+### Install Dependencies
+```bash
+npm install
+#Start Metro Bundler
+npm start
+#Run on iOS (macOS only)
+bash
+cd ios
+pod install
+cd ..
+npm run ios
+#Run on Android
 
-⸻
+Ensure an emulator or device is running:
+npm run android
+---
 
-2️⃣ What needs fixing (important)
+### 🌐 Environment Variables
 
-❌ Problem 1: Mobile apps are NOT “deployed” to DigitalOcean
+```md
+## Environment Variables
 
-This part is incorrect:
+STEPFLOW Mobile connects to the backend hosted on DigitalOcean.
 
-“The app is deployed via DigitalOcean’s workflow…
-doctl serverless deploy”
+Create a `.env` file in the project root:
 
-🚨 React Native mobile apps are NOT deployed to DigitalOcean
-They are:
-	•	Built locally or in CI
-	•	Distributed via:
-	•	TestFlight / App Store (iOS)
-	•	Play Console (Android)
+```env
+_BASE_URL=https://api.stepflow.https://app.mydanceworks.net/studio/modern/Dashboard.aspx
+cp .env.example .env
+(You should also add `.env.example` to the repo.)
 
-DigitalOcean hosts your backend + AI only, not the mobile app.
+---
 
-So this section is misleading and should be removed or rewritten.
+### 🔌 Integration with STEPFLOW Ecosystem
 
-⸻
+```md
+## Integration with STEPFLOW Ecosystem
+⚠️ Do not commit .env files.
+STEPFLOW Mobile communicates only with the backend API.
 
-❌ Problem 2: Missing Environment Variables section
+- **STEPFLOW-backend**
+  - Hosted on DigitalOcean
+  - Provides REST/GraphQL APIs
+  - Handles auth, user data, lesson content, and AI orchestration
 
-You mention integration, but you don’t explain:
-	•	Where the API base URL comes from
-	•	How to change dev vs prod
-	•	How someone else runs the app
+- **STEPFLOW-AI**
+  - Invoked internally by the backend
+  - Performs movement analysis and scoring
+  - Returns structured feedback
 
-This is critical for collaborators.
+The mobile app does NOT communicate directly with the AI service.
+🚀 Deployment (Corrected)
+## Deployment
 
-⸻
+STEPFLOW Mobile is a native application and is not deployed to DigitalOcean.
 
-❌ Problem 3: iOS/Android instructions are too generic
+Deployment targets:
+- iOS → TestFlight / App Store
+- Android → Google Play Console
+
+DigitalOcean is used exclusively for:
+- Backend API hosting
+- AI inference services
+- Databases and storage
