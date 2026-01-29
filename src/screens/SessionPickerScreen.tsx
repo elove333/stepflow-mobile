@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, spacing, typography } from '../theme';
+import { colors, spacing, typography, commonScreenStyles } from '../theme';
 import { Button, Card } from '../components';
 import { useSession } from '../hooks/useSession';
 import { Session } from '../api/sessions';
@@ -97,24 +97,7 @@ export const SessionPickerScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    padding: spacing.screenPadding,
-    paddingTop: spacing.lg,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
-    marginBottom: spacing.xs,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-  },
+  ...commonScreenStyles,
   filterContainer: {
     maxHeight: 50,
   },
@@ -194,23 +177,5 @@ const styles = StyleSheet.create({
   metaText: {
     fontSize: typography.fontSize.sm,
     color: colors.text,
-  },
-  loadingText: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    padding: spacing.xl,
-  },
-  errorText: {
-    fontSize: typography.fontSize.md,
-    color: colors.error,
-    textAlign: 'center',
-    padding: spacing.xl,
-  },
-  noDataText: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    padding: spacing.xl,
   },
 });

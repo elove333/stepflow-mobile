@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { colors, spacing, typography } from '../theme';
+import { colors, spacing, typography, commonScreenStyles } from '../theme';
 import { Card, ProgressGraph } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../state';
@@ -200,33 +200,10 @@ export const ProgressScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    padding: spacing.screenPadding,
-    paddingTop: spacing.xl,
-  },
-  title: {
-    fontSize: typography.fontSize.xxxl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
-    marginBottom: spacing.xs,
-  },
-  subtitle: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-  },
+  ...commonScreenStyles,
   statsCard: {
     margin: spacing.screenPadding,
     marginTop: 0,
-  },
-  cardTitle: {
-    fontSize: typography.fontSize.lg,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
-    marginBottom: spacing.md,
   },
   statsGrid: {
     flexDirection: 'row',
@@ -305,12 +282,6 @@ const styles = StyleSheet.create({
   achievementsSection: {
     padding: spacing.screenPadding,
     paddingTop: 0,
-  },
-  sectionTitle: {
-    fontSize: typography.fontSize.xl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
-    marginBottom: spacing.md,
   },
   subsectionTitle: {
     fontSize: typography.fontSize.md,

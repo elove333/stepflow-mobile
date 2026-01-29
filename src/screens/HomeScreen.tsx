@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { colors, spacing, typography } from '../theme';
+import { colors, spacing, typography, commonScreenStyles } from '../theme';
 import { Button, Card } from '../components';
 import { useAuth } from '../hooks/useAuth';
 import { useSession } from '../hooks/useSession';
@@ -98,55 +98,18 @@ export const HomeScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    padding: spacing.screenPadding,
-    paddingTop: spacing.xl,
-  },
+  ...commonScreenStyles,
   greeting: {
     fontSize: typography.fontSize.xxxl,
     fontWeight: typography.fontWeight.bold,
     color: colors.text,
     marginBottom: spacing.xs,
   },
-  subtitle: {
-    fontSize: typography.fontSize.lg,
-    color: colors.textSecondary,
-  },
   quickStartCard: {
     margin: spacing.screenPadding,
   },
-  cardTitle: {
-    fontSize: typography.fontSize.xl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
-    marginBottom: spacing.sm,
-  },
-  cardDescription: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    marginBottom: spacing.md,
-  },
   button: {
     marginTop: spacing.sm,
-  },
-  section: {
-    paddingHorizontal: spacing.screenPadding,
-    marginBottom: spacing.lg,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-  },
-  sectionTitle: {
-    fontSize: typography.fontSize.xl,
-    fontWeight: typography.fontWeight.bold,
-    color: colors.text,
   },
   seeAll: {
     fontSize: typography.fontSize.md,
@@ -169,17 +132,5 @@ const styles = StyleSheet.create({
   progressCard: {
     margin: spacing.screenPadding,
     marginBottom: spacing.xl,
-  },
-  loadingText: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    padding: spacing.lg,
-  },
-  noDataText: {
-    fontSize: typography.fontSize.md,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    padding: spacing.lg,
   },
 });
