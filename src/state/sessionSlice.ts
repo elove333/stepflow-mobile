@@ -4,6 +4,7 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Session } from '../api/sessions';
+import { LoadableState, createLoadableReducers } from './sliceHelpers';
 
 export interface ActiveSession {
   session: Session;
@@ -15,12 +16,10 @@ export interface ActiveSession {
   isPaused: boolean;
 }
 
-export interface SessionState {
+export interface SessionState extends LoadableState {
   sessions: Session[];
   activeSession: ActiveSession | null;
   selectedSession: Session | null;
-  isLoading: boolean;
-  error: string | null;
 }
 
 const initialState: SessionState = {
@@ -35,16 +34,7 @@ const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-      if (action.payload) {
-        state.error = null;
-      }
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
+    ...createLoadableReducers<SessionState>(),
     setSessions: (state, action: PayloadAction<Session[]>) => {
       state.sessions = action.payload;
       state.isLoading = false;
@@ -122,9 +112,6 @@ const sessionSlice = createSlice({
     },
     endSession: (state) => {
       state.activeSession = null;
-    },
-    clearError: (state) => {
-      state.error = null;
     },
   },
 });

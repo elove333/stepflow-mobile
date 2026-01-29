@@ -4,13 +4,12 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserStats, ProgressData, Achievement } from '../api/analytics';
+import { LoadableState, createLoadableReducers } from './sliceHelpers';
 
-export interface ProgressState {
+export interface ProgressState extends LoadableState {
   stats: UserStats | null;
   progressData: ProgressData[];
   achievements: Achievement[];
-  isLoading: boolean;
-  error: string | null;
 }
 
 const initialState: ProgressState = {
@@ -25,16 +24,7 @@ const progressSlice = createSlice({
   name: 'progress',
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-      if (action.payload) {
-        state.error = null;
-      }
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
+    ...createLoadableReducers<ProgressState>(),
     setStats: (state, action: PayloadAction<UserStats>) => {
       state.stats = action.payload;
       state.isLoading = false;
@@ -79,9 +69,6 @@ const progressSlice = createSlice({
       state.stats = null;
       state.progressData = [];
       state.achievements = [];
-    },
-    clearError: (state) => {
-      state.error = null;
     },
   },
 });

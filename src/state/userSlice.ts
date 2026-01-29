@@ -4,13 +4,12 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User, AuthTokens } from '../api/auth';
+import { LoadableState, createLoadableReducers } from './sliceHelpers';
 
-export interface UserState {
+export interface UserState extends LoadableState {
   user: User | null;
   tokens: AuthTokens | null;
   isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
 }
 
 const initialState: UserState = {
@@ -25,16 +24,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-      if (action.payload) {
-        state.error = null;
-      }
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
+    ...createLoadableReducers<UserState>(),
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       state.isAuthenticated = true;
@@ -60,9 +50,6 @@ const userSlice = createSlice({
       state.user = null;
       state.tokens = null;
       state.isAuthenticated = false;
-      state.error = null;
-    },
-    clearError: (state) => {
       state.error = null;
     },
   },
