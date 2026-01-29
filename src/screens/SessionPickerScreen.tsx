@@ -98,6 +98,30 @@ export const SessionPickerScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   ...commonScreenStyles,
+  // Override header with smaller top padding for this screen
+  header: {
+    padding: spacing.screenPadding,
+    paddingTop: spacing.lg,
+  },
+  // Override state text with larger padding for this screen
+  loadingText: {
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    padding: spacing.xl,
+  },
+  errorText: {
+    fontSize: typography.fontSize.md,
+    color: colors.error,
+    textAlign: 'center',
+    padding: spacing.xl,
+  },
+  noDataText: {
+    fontSize: typography.fontSize.md,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    padding: spacing.xl,
+  },
   filterContainer: {
     maxHeight: 50,
   },

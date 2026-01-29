@@ -16,7 +16,7 @@ export const useAuth = () => {
     (state: RootState) => state.user,
   );
 
-  const createAsyncAction = useAsyncAction(dispatch, setLoading, setError, 'Operation failed');
+  const createAsyncAction = useAsyncAction(dispatch, setLoading, setError);
 
   /**
    * Login user
@@ -31,7 +31,7 @@ export const useAuth = () => {
         }),
       );
       return response.data;
-    }),
+    }, 'Login failed'),
     [dispatch, createAsyncAction],
   );
 
@@ -48,7 +48,7 @@ export const useAuth = () => {
         }),
       );
       return response.data;
-    }),
+    }, 'Registration failed'),
     [dispatch, createAsyncAction],
   );
 
@@ -59,7 +59,7 @@ export const useAuth = () => {
     createAsyncAction(async () => {
       await authApi.logout();
       dispatch(clearAuth());
-    }),
+    }, 'Logout failed'),
     [dispatch, createAsyncAction],
   );
 
@@ -71,7 +71,7 @@ export const useAuth = () => {
       const response = await authApi.updateProfile(data);
       dispatch(updateUser(response.data));
       return response.data;
-    }),
+    }, 'Profile update failed'),
     [dispatch, createAsyncAction],
   );
 
@@ -82,7 +82,7 @@ export const useAuth = () => {
     createAsyncAction(async (currentPassword: string, newPassword: string) => {
       await authApi.changePassword(currentPassword, newPassword);
       dispatch(setLoading(false));
-    }),
+    }, 'Password change failed'),
     [dispatch, createAsyncAction],
   );
 
@@ -93,7 +93,7 @@ export const useAuth = () => {
     createAsyncAction(async (email: string) => {
       await authApi.requestPasswordReset(email);
       dispatch(setLoading(false));
-    }),
+    }, 'Password reset request failed'),
     [dispatch, createAsyncAction],
   );
 

@@ -201,6 +201,13 @@ export const ProgressScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   ...commonScreenStyles,
+  // Override cardTitle with smaller font for this screen
+  cardTitle: {
+    fontSize: typography.fontSize.lg,
+    fontWeight: typography.fontWeight.bold,
+    color: colors.text,
+    marginBottom: spacing.md,
+  },
   statsCard: {
     margin: spacing.screenPadding,
     marginTop: 0,

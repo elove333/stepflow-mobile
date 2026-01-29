@@ -99,6 +99,11 @@ export const HomeScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   ...commonScreenStyles,
+  // Override subtitle with larger font for this screen
+  subtitle: {
+    fontSize: typography.fontSize.lg,
+    color: colors.textSecondary,
+  },
   greeting: {
     fontSize: typography.fontSize.xxxl,
     fontWeight: typography.fontWeight.bold,

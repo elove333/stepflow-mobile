@@ -26,7 +26,7 @@ export const useSession = () => {
     (state: RootState) => state.session,
   );
 
-  const createAsyncAction = useAsyncAction(dispatch, setLoading, setError, 'Operation failed');
+  const createAsyncAction = useAsyncAction(dispatch, setLoading, setError);
 
   /**
    * Load available sessions
@@ -36,7 +36,7 @@ export const useSession = () => {
       const response = await sessionsApi.getSessions(params);
       dispatch(setSessions(response.data));
       return response.data;
-    }),
+    }, 'Failed to load sessions'),
     [dispatch, createAsyncAction],
   );
 
@@ -48,7 +48,7 @@ export const useSession = () => {
       const response = await sessionsApi.getSession(id);
       dispatch(setLoading(false));
       return response.data;
-    }),
+    }, 'Failed to load session'),
     [dispatch, createAsyncAction],
   );
 
@@ -69,7 +69,7 @@ export const useSession = () => {
     createAsyncAction(async (session: Session) => {
       await sessionsApi.startSession(session.id);
       dispatch(startSessionAction(session));
-    }),
+    }, 'Failed to start session'),
     [dispatch, createAsyncAction],
   );
 
@@ -121,7 +121,7 @@ export const useSession = () => {
       await sessionsApi.completeSession(activeSession.session.id, progress);
       dispatch(endSession());
       return progress;
-    }),
+    }, 'Failed to complete session'),
     [dispatch, activeSession, createAsyncAction],
   );
 
@@ -140,7 +140,7 @@ export const useSession = () => {
       const response = await sessionsApi.getRecommendedSessions();
       dispatch(setLoading(false));
       return response.data;
-    }),
+    }, 'Failed to load recommendations'),
     [dispatch, createAsyncAction],
   );
 
