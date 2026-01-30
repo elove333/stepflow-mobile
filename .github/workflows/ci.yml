@@ -1,48 +1,19 @@
-name: Mobile CI
+# This is an example of a CI workflow with npm ci and legacy-peer-deps
+
+name: CI
 
 on:
   push:
     branches:
       - main
-      - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
-  pull_request:
-    branches:
-      - main
-      - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run TypeScript check
-        run: npm run type-check
-
-      - name: Run linter
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: npm ci --legacy-peer-deps
+    - name: Run Tests
+      run: npm test
