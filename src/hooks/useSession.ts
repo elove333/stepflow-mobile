@@ -36,6 +36,7 @@ export const useSession = () => {
         dispatch(setSessions(response.data));
         return response.data;
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Failed to load sessions'));
         throw err;
       }
@@ -54,6 +55,7 @@ export const useSession = () => {
         dispatch(setLoading(false));
         return response.data;
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Failed to load session'));
         throw err;
       }
@@ -80,6 +82,7 @@ export const useSession = () => {
         await sessionsApi.startSession(session.id);
         dispatch(startSessionAction(session));
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Failed to start session'));
         throw err;
       }
@@ -136,6 +139,7 @@ export const useSession = () => {
       dispatch(endSession());
       return progress;
     } catch (err: any) {
+      // Using 'err' instead of 'error' to avoid variable shadowing
       dispatch(setError(err.message || 'Failed to complete session'));
       throw err;
     }
@@ -158,6 +162,7 @@ export const useSession = () => {
       dispatch(setLoading(false));
       return response.data;
     } catch (err: any) {
+      // Using 'err' instead of 'error' to avoid variable shadowing
       dispatch(setError(err.message || 'Failed to load recommendations'));
       throw err;
     }

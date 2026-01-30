@@ -31,6 +31,7 @@ export const useAuth = () => {
         );
         return response.data;
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Login failed'));
         throw err;
       }
@@ -54,6 +55,7 @@ export const useAuth = () => {
         );
         return response.data;
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Registration failed'));
         throw err;
       }
@@ -70,6 +72,7 @@ export const useAuth = () => {
       await authApi.logout();
       dispatch(clearAuth());
     } catch (err: any) {
+      // Using 'err' instead of 'error' to avoid variable shadowing
       dispatch(setError(err.message || 'Logout failed'));
       throw err;
     }
@@ -86,6 +89,7 @@ export const useAuth = () => {
         dispatch(updateUser(response.data));
         return response.data;
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Profile update failed'));
         throw err;
       }
@@ -103,6 +107,7 @@ export const useAuth = () => {
         await authApi.changePassword(currentPassword, newPassword);
         dispatch(setLoading(false));
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Password change failed'));
         throw err;
       }
@@ -120,6 +125,7 @@ export const useAuth = () => {
         await authApi.requestPasswordReset(email);
         dispatch(setLoading(false));
       } catch (err: any) {
+        // Using 'err' instead of 'error' to avoid variable shadowing
         dispatch(setError(err.message || 'Password reset request failed'));
         throw err;
       }

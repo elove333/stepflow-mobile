@@ -12,6 +12,8 @@ export const HomeScreen: React.FC = () => {
   const { getRecommendedSessions, isLoading } = useSession();
   const [recommendedSessions, setRecommendedSessions] = React.useState<any[]>([]);
 
+  // Load recommended sessions on mount
+  // Function is defined inside useEffect to satisfy React Hook exhaustive-deps rule
   useEffect(() => {
     const loadRecommended = async () => {
       try {
