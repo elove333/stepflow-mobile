@@ -13,7 +13,8 @@ export const SessionPickerScreen: React.FC = () => {
 
   useEffect(() => {
     loadSessions();
-    // Only run on mount - loadSessions reference changes but we don't want to reload on every change
+    // Only run on mount - eslint-disable needed because ESLint wants loadSessions in dependencies
+    // but we intentionally want this to run only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
