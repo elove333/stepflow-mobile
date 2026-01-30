@@ -1,19 +1,59 @@
 # This is an example of a CI workflow with npm ci and legacy-peer-deps
 
-name: CI
+name: Mobile CI
 
 on:
   push:
     branches:
       - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-  build:
+  ci:
+    name: Validate Mobile App
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Install Dependencies
-      run: npm ci --legacy-peer-deps
-    - name: Run Tests
-      run: npm test
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Validate lockfile integrity
+        run: npm ci --dry-run
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript type check
+        run: npm run typecheck
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Prettier formatting check
+        run: npm run format
+
+      - name: Run unit tests (Jest)
+        run: npm test -- --ci --runInBand
+
+      - name: Upload test results (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            ./coverage
+            ./jest-results.json
+            ./test-output
+          retention-days: 7
