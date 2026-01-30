@@ -1,12 +1,32 @@
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.db
+
+# Virtual environments
+venv/
 .env
 .env.*
-.vscode/
-.idea/
+
+# Git + IDE noise
 .git/
 .gitignore
+.vscode/
+.idea/
+
+# Model artifacts (optional — keep out of image if mounted externally)
+models/
+checkpoints/
+
+# Tests
 tests/
+
+# Local files
+*.db
+*.sqlite
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
