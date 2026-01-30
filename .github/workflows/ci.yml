@@ -1,48 +1,79 @@
-name: Mobile CI
+name: CI
 
 on:
   push:
     branches:
       - main
-      - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
   pull_request:
     branches:
       - main
-      - develop
-      - feature/*
-      - feature/**/*
-      - bugfix/*
-      - hotfix/*
-      - release/*
-      - experiment/*
-  workflow_dispatch:
 
 jobs:
-  build:
+  install:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Install dependencies
-        run: npm install
+  validate-lockfile:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Validate lockfile
+        run: npx npm-check-updates --lockfile-only
 
-      - name: Run TypeScript check
-        run: npm run type-check
+  type-check:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Type Checking
+        run: npm run tsc --noEmit
 
-      - name: Run linter
+  lint:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: ESLint
         run: npm run lint
 
-      - name: Run tests
+  format:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Prettier
+        run: npm run prettier --check .
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Unit Tests
         run: npm test
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Detox E2E Tests
+        run: npm run detox:test
