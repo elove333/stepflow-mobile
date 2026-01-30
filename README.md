@@ -1,6 +1,6 @@
-#STEPFLOW Mobile=
+#step-flow mobile=
 Project Overview
-STEPFLOW Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and STEPFLOW-backend. This mobile app serves as the user interface for accessing data processed by the Al system and managed by the backend infrastructure.
+step-flow Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and step-flow-backend. This mobile app serves as the user interface for accessing data processed by the Al system and managed by the backend infrastructure.
 ## Screenshots
 ![Home Screen](assets/screenshots/home.png)
 ![Lesson Screen](assets/screenshots/lesson.png)
@@ -50,14 +50,14 @@ cp .env.example .env
 ```md
 ## Integration with STEPFLOW Ecosystem
 ⚠️ Do not commit .env files.
-STEPFLOW Mobile communicates only with the backend API.
+step-flow Mobile communicates only with the backend API.
 
-- **STEPFLOW-backend**
+- **step-flow-backend**
   - Hosted on DigitalOcean
   - Provides REST/GraphQL APIs
   - Handles auth, user data, lesson content, and AI orchestration
 
-- **STEPFLOW-AI**
+- **step-flow-AI**
   - Invoked internally by the backend
   - Performs movement analysis and scoring
   - Returns structured feedback
@@ -66,7 +66,7 @@ The mobile app does NOT communicate directly with the AI service.
 🚀 Deployment (Corrected)
 ## Deployment
 
-STEPFLOW Mobile is a native application and is not deployed to DigitalOcean.
+step-flow Mobile is a native application and is not deployed to DigitalOcean.
 
 Deployment targets:
 - iOS → TestFlight / App Store
