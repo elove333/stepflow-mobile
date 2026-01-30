@@ -63,7 +63,7 @@ class ApiClient {
     // Response interceptor
     this.client.interceptors.response.use(
       (response: AxiosResponse) => response,
-      (error: AxiosError) => {
+      (error: ) => {
         return Promise.reject(this.handleError(error));
       },
     );
@@ -72,7 +72,7 @@ class ApiClient {
   /**
    * Handle API errors
    */
-  private handleError(error: AxiosError): ApiError {
+  private handleError(error: ): ApiError {
     const apiError: ApiError = {
       message: 'An unexpected error occurred',
     };
