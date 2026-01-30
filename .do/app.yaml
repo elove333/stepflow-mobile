@@ -1,0 +1,17 @@
+services:
+  - name: web
+    github:
+      branch: main
+      deploy_on_push: true
+    build_command: "npm run build"
+    run_command: "npm start"
+    routes:
+      - path: /
+    static_sites:
+      - build_command: "npm run build"
+        output_dir: build/
+envs:
+  - key: NODE_ENV
+    value: production
+  - key: API_URL
+    value: https://api.example.com
