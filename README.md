@@ -1,6 +1,6 @@
-#step-flow mobile=
+#stepflow
 Project Overview
-step-flow Mobile is the front-end application designed to connect with the stepflow ecosystem, which includes stepflow-AI and step-flow-backend. This mobile app serves as the user interface for accessing data processed by the Al system and managed by the backend infrastructure.
+stepflow Mobile is the front-end application designed to connect with the stepflow ecosystem, which includes stepflow-AI and step-flow-backend. This mobile app serves as the user interface for accessing data processed by the Al system and managed by the backend infrastructure.
 ## Screenshots
 ![Home Screen](assets/screenshots/home.png)
 ![Lesson Screen](assets/screenshots/lesson.png)
