@@ -1,6 +1,5 @@
-#stepflow
 {
-  "name": "stepflow-mobile",
+  "name": "stepflow",
   "version": "1.0.0",
   "private": true,
   "scripts": {
