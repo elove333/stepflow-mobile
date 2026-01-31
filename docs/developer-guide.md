@@ -68,12 +68,13 @@ doctl version
 
 #### Linux
 ```bash
-# Download the latest release
+# Download the latest release (check https://github.com/digitalocean/doctl/releases for the latest version)
 cd ~
-wget https://github.com/digitalocean/doctl/releases/download/v1.94.0/doctl-1.94.0-linux-amd64.tar.gz
+DOCTL_VERSION="vX.Y.Z"  # Replace vX.Y.Z with the latest version from the releases page
+wget "https://github.com/digitalocean/doctl/releases/download/${DOCTL_VERSION}/doctl-${DOCTL_VERSION#v}-linux-amd64.tar.gz"
 
 # Extract the binary
-tar xf ~/doctl-1.94.0-linux-amd64.tar.gz
+tar xf "~/doctl-${DOCTL_VERSION#v}-linux-amd64.tar.gz"
 
 # Move to PATH
 sudo mv ~/doctl /usr/local/bin
