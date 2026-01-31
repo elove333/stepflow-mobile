@@ -295,7 +295,7 @@ Submitted action 'auth/validate-token' for deployment
 
 Deployment status recorded in 'deployment.json'
 
-Deployed functions ('doctl sbx fn get <funcName> --url' for URL):
+Deployed functions ('doctl serverless functions get <funcName> --url' for URL):
   - analytics/track-event
   - auth/validate-token
 ```
