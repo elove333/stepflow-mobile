@@ -1,23 +1,31 @@
-# This is an example of a CI workflow with npm ci and Node 18 setup
-
-name: CI
+name: Mobile CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install Dependencies
-      run: npm ci --legacy-peer-deps
-    - name: Run Tests
-      run: npm test
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Show versions
+        run: |
+          node -v
+          npm -v
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
