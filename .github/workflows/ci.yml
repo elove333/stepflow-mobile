@@ -1,4 +1,4 @@
-# This is an example of a CI workflow with npm ci and legacy-peer-deps
+# This is an example of a CI workflow with npm ci and Node 18 setup
 
 name: CI
 
@@ -13,6 +13,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
     - name: Install Dependencies
       run: npm ci --legacy-peer-deps
     - name: Run Tests
