@@ -1,6 +1,7 @@
-{
-  "name": "stepflow",
-  "version": "0.1.0",
+
+{{
+  "name": "step-flow",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -18,4 +19,4 @@
     "eslint": "^9.0.0",
     "jest": "^29.0.0"
   }
-}
+}}
