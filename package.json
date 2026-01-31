@@ -1,5 +1,5 @@
-"dependencies": { ... },
-"devDependencies": { ... },
+"dependencies": {stepflow-mobile},
+"devDependencies": {stepflow-mobile},
 "engines": { ... }
 {
   "name": "stepflow-mobile",
@@ -19,7 +19,7 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json}\"",
     "type-check": "tsc --noEmit"
-  },
+  },stepflow
   "dependencies": {
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
