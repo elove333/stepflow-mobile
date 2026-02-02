@@ -15,3 +15,27 @@ const App: React.FC = () => {
 };
 
 export default App;
+src/
+  app/
+    main.ts
+    routes.ts
+    config.ts
+
+  features/
+    auth/
+      ui/
+      data/
+      types.ts
+      index.ts
+    dance/
+      ui/
+      data/
+      types.ts
+      index.ts
+
+  shared/
+    ui/
+    lib/
+      logger.ts
+    types/
+      index.ts
