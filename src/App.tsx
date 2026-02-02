@@ -39,3 +39,46 @@ src/
       logger.ts
     types/
       index.ts
+src/
+  app/
+    App.tsx              # root app component
+    navigation/
+      index.tsx          # NavigationContainer
+      RootNavigator.tsx  # stacks/tabs
+    providers/
+      AppProviders.tsx   # wrappers: theme, query, store, etc.
+    config/
+      env.ts
+      constants.ts
+
+  features/
+    auth/
+      ui/
+        LoginScreen.tsx
+      data/
+        authApi.ts
+      types.ts
+      index.ts
+
+    dance/
+      ui/
+        DanceScreen.tsx
+        components/
+      logic/
+        scoring.ts
+        pose.ts
+      types.ts
+      index.ts
+
+  shared/
+    ui/
+      Button.tsx
+      Text.tsx
+    lib/
+      logger.ts
+      permissions.ts
+      storage.ts
+    types/
+      index.ts
+
+  main.ts               # entry 
