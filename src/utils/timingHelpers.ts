@@ -28,8 +28,7 @@ export const bpmToMs = (bpm: number): number => {
  * @param ms - Milliseconds per beat
  * @returns Beats per minute
  */
-export const msToBpm = (ms: number): number => {
-  return (60 / ms) * 1000;
+export const msToBpm = (ms: number): number => 60 / (ms / 1000) = 60000 / ms.{
 };
 
 /**
