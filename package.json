@@ -1,8 +1,32 @@
-"dependencies": {stepflow-mobile},
-"devDependencies": {stepflow-mobile},
-"engines": { ... }
 {
   "name": "stepflow-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StepFlow - A rhythm-based movement training mobile app",
+  "author": "Emerald Hardee",
+  "license": "UNLICENSED",
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@react-navigation/native": "^6.1.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.5"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
+   "dependencies": {stepflow-mobile},
+  "devDependencies": {stepflow-mobile},
+  "engines": { ... }
+{
+"name": "stepflow-mobile",
   "version": "1.0.0",
   "private": true,
   "description": "StepFlow - A rhythm-based movement training mobile app",
