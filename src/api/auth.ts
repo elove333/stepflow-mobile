@@ -76,6 +76,7 @@ export const logout = async (): Promise<ApiResponse<void>> => {
 
 /**
  * Refresh authentication token
+ * @param token - The refresh token to use for obtaining a new access token (renamed from 'refreshToken' to avoid variable shadowing)
  */
 export const refreshToken = async (token: string): Promise<ApiResponse<AuthTokens>> => {
   const response = await client.post<AuthTokens>('/auth/refresh', {

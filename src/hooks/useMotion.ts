@@ -51,6 +51,7 @@ export const useMotion = (config: UseMotionConfig = {}) => {
       // Initialize pose detector
       if (enablePose) {
         await PoseDetector.init();
+        // Using 'poseData' parameter name to avoid shadowing the 'pose' state variable
         const unsubPose = PoseDetector.subscribe((poseData) => setPose(poseData));
         unsubscribeRefs.current.push(unsubPose);
         PoseDetector.start();

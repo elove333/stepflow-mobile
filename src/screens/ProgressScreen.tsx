@@ -13,6 +13,8 @@ export const ProgressScreen: React.FC = () => {
   const { stats, progressData, achievements } = useSelector((state: RootState) => state.progress);
   const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month'>('week');
 
+  // Load progress data on mount
+  // Function is defined inside useEffect to satisfy React Hook exhaustive-deps rule
   useEffect(() => {
     const loadProgressData = async () => {
       try {

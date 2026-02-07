@@ -26,6 +26,7 @@ export const LiveSessionScreen: React.FC = () => {
   const session = activeSession?.session || selectedSession;
   const bpm = session?.bpm || 120;
 
+  // Only destructure the motion values we actually use to avoid unused variable warnings
   const { lastStep, initialize, isInitialized, checkSync } = useMotion({
     enableStepDetection: true,
     enableBeatSync: true,
@@ -38,6 +39,7 @@ export const LiveSessionScreen: React.FC = () => {
     if (selectedSession && !activeSession) {
       startSession(selectedSession);
     }
+    // Include startSession in dependencies to satisfy exhaustive-deps rule
   }, [selectedSession, activeSession, startSession]);
 
   useEffect(() => {
@@ -48,6 +50,7 @@ export const LiveSessionScreen: React.FC = () => {
         Alert.alert('Error', 'Failed to initialize motion detection');
       });
     }
+    // Include initialize in dependencies to satisfy exhaustive-deps rule
   }, [activeSession, isInitialized, initialize]);
 
   useEffect(() => {
@@ -70,6 +73,7 @@ export const LiveSessionScreen: React.FC = () => {
         setTimeout(() => setFeedback(null), 1000);
       }
     }
+    // Include all used values in dependencies to satisfy exhaustive-deps rule
   }, [lastStep, activeSession, checkSync, recordStepEvent]);
 
   const handlePause = () => {
