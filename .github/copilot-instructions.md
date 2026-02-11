@@ -64,7 +64,7 @@ npm run test:watch  # Run tests in watch mode
 
 ### React & React Native
 - **Functional components only**: Use React hooks, not class components
-- **TypeScript for all components**: Use `React.FC` or explicit type annotations
+- **TypeScript for all components**: Use explicit type annotations for props (e.g., `function Component(props: ComponentProps) {}` or `const Component = (props: ComponentProps) => {}`). Avoid `React.FC` due to its drawbacks with implicit children and defaultProps.
 - **Safe area handling**: Always wrap screens with SafeAreaProvider/SafeAreaView
 - **Platform-specific code**: Use `Platform.select()` or `.ios.ts`/`.android.ts` files when needed
 
@@ -160,7 +160,7 @@ Use the `useMotion` hook to access these features with proper configuration.
 
 ## Assets
 
-Assets are organized in the `/assets` directory:
+Assets are organized in the `assets/` directory at the project root:
 - **audio/**: Sound effects and music (mp3, wav, m4a)
 - **animations/**: Lottie animations (json) and video animations
 - Follow naming conventions: lowercase with hyphens (e.g., `button-click.mp3`)
