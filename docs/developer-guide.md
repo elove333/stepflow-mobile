@@ -835,7 +835,10 @@ export const processMotionData = async (motionData: any[]) => {
    doctl serverless status
    
    # Get function URLs
-   doctl serverless functions list --name --url
+   # List all functions
+   doctl serverless functions list
+   # Get the URL for a specific function
+   doctl serverless functions get <function-name> --url
    ```
 
 4. **Monitor logs**:
