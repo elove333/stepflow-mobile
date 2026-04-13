@@ -725,26 +725,86 @@ async function main(args) {
 exports.main = main;
 ```
 
-### Example 3: Real-Time Motion Data Processing
+### Example 3: Session Completion with Progress Data
 
-The mobile app sends motion data to be processed by STEPFLOW-AI through a serverless function.
+The mobile app completes a session and submits progress data to the backend through a serverless function.
 
 **Frontend code (src/api/sessions.ts)**:
 ```typescript
-import { client } from './client';
+import { client, ApiResponse } from './client';
 
-export const processMotionData = async (motionData: any[]) => {
-  try {
-    const response = await client.post('/motion/process', {
-      data: motionData,
-      sessionId: Date.now().toString(),
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Motion processing failed:', error);
-    throw error;
-  }
+export interface SessionProgress {
+  sessionId: string;
+  userId: string;
+  completedAt: string;
+  score: number;
+  accuracy: number;
+  totalSteps: number;
+  onBeatSteps: number;
+}
+
+/**
+ * Complete a session and submit progress
+ */
+export const completeSession = async (
+  sessionId: string,
+  progress: Omit<SessionProgress, 'sessionId' | 'userId' | 'completedAt'>,
+): Promise<ApiResponse<SessionProgress>> => {
+  return await client.post<SessionProgress>(`/sessions/${sessionId}/complete`, progress);
 };
+```
+
+**Serverless function (packages/sessions/complete-session/index.js)**:
+```javascript
+async function main(args) {
+  const { sessionId, score, accuracy, totalSteps, onBeatSteps } = args;
+  
+  // Validate input
+  if (!sessionId || score === undefined) {
+    return {
+      statusCode: 400,
+      body: { error: 'Session ID and score are required' }
+    };
+  }
+  
+  // Process session completion (in production, this would save to a database)
+  const sessionProgress = {
+    sessionId,
+    userId: args.__ow_user || 'anonymous',
+    completedAt: new Date().toISOString(),
+    score,
+    accuracy,
+    totalSteps,
+    onBeatSteps
+  };
+  
+  console.log('Session completed:', sessionProgress);
+  
+  return {
+    statusCode: 200,
+    body: {
+      success: true,
+      message: 'Session completed successfully',
+      progress: sessionProgress
+    }
+  };
+}
+
+exports.main = main;
+```
+
+**Deployment**:
+```bash
+# Navigate to serverless project
+cd ~/stepflow-serverless
+
+# Deploy the function
+doctl serverless deploy .
+
+# Get the function URL
+doctl serverless functions get sessions/complete-session --url
+
+# The mobile app will call this endpoint when completing a session
 ```
 
 ---
