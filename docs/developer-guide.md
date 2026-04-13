@@ -235,7 +235,7 @@ packages:
         runtime: nodejs:18
         main: index.js
         web: true
-        webSecure: false
+        webSecure: false  # Set to true in production or implement authentication in function code
         limits:
           timeout: 10000
           memory: 256
@@ -723,6 +723,25 @@ async function main(args) {
 }
 
 exports.main = main;
+```
+
+**Function dependencies (packages/auth/validate-token/package.json)**:
+```json
+{
+  "name": "validate-token",
+  "version": "1.0.0",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0"
+  }
+}
+```
+
+**Note**: Install dependencies before deployment:
+```bash
+cd packages/auth/validate-token
+npm install
+cd ../../..
+doctl serverless deploy .
 ```
 
 ### Example 3: Session Completion with Progress Data
