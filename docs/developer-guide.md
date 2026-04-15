@@ -671,15 +671,17 @@ The mobile app validates user tokens via a serverless function.
 ```typescript
 import { client } from './client';
 
-export const validateToken = async (token: string) => {
+export const getCurrentUser = async () => {
   try {
-    const response = await client.post('/auth/validate-token', {
-      token: token,
-    });
-    return response.data;
+    // This endpoint uses the current authentication token (e.g., via headers)
+    const response = await client.get('/auth/me');
+    return {
+      valid: true,
+      user: response.data,
+    };
   } catch (error) {
     console.error('Token validation failed:', error);
-    return { valid: false };
+    return { valid: false, user: null };
   }
 };
 ```
