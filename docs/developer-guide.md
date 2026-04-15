@@ -616,6 +616,7 @@ export const trackEvent = async (eventName: string, properties: object) => {
     return response;
   } catch (error) {
     console.error('Analytics tracking failed:', error);
+    throw error;
   }
 };
 ```
