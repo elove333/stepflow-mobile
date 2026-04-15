@@ -608,7 +608,7 @@ import { client } from './client';
 
 export const trackEvent = async (eventName: string, properties: object) => {
   try {
-    const response = await client.post('/analytics/track-event', {
+    const response = await client.post('/analytics/track', {
       event: eventName,
       properties: properties,
       timestamp: new Date().toISOString(),
