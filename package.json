@@ -1,11 +1,1 @@
-{
-  "name": "your-project-name",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "test": "jest"
-  },
-  "devDependencies": {
-    // Other devDependencies that weren't removed should be kept here
-  }
-}
+{"description": "StepFlow - A rhythm-based movement training mobile app"}
