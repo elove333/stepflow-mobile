@@ -14,9 +14,9 @@
   "dependencies": {
     "react": "18.3.1",
     "react-native": "0.76.5",
-    "@react-navigation/native": "^6.0.0",
-    "@react-navigation/stack": "^6.0.0",
-    "@react-navigation/bottom-tabs": "^6.0.0",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/stack": "^6.1.0",
+    "@react-navigation/bottom-tabs": "^6.1.0",
     "react-native-vision-camera": "^3.0.0",
     "react-native-gesture-handler": "~2.20.0",
     "react-native-reanimated": "~3.16.0",
