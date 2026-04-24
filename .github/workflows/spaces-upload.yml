@@ -1,0 +1,27 @@
+name: Deploy to DigitalOcean Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up AWS CLI for DigitalOcean Spaces
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.SPACES_KEY }}
+        aws configure set aws_secret_access_key ${{ secrets.SPACES_SECRET }}
+        aws configure set default.region us-east-1
+    
+    - name: Build the application
+      run: npm install && npm run build
+
+    - name: Upload to DigitalOcean Spaces
+      run: |
+        aws s3 sync build/ s3://stepflow --endpoint-url=https://sfo3.digitaloceanspaces.com
