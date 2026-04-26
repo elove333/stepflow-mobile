@@ -1,8 +1,15 @@
-# stepflow-for StepFlow - a rhythm-based movement training app.
+# STEPFLOW Mobile
 
 ## Project Overview
 
 STEPFLOW-mobile is a React Native application that integrates with STEPFLOW-backend and STEPFLOW-AI to provide a complete rhythm-based movement training experience. The app includes seamless integration with PREMIERE tools for advanced motion analysis, AI processing, and multi-language support.
+
+STEPFLOW Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and STEPFLOW-backend. This mobile app serves as the user interface for accessing data processed by the AI system and managed by the backend infrastructure.
+
+## Screenshots
+![Home Screen](assets/screenshots/home.png)
+![Lesson Screen](assets/screenshots/lesson.png)
+![Practice Screen](assets/screenshots/practice.png)
 
 ## Integration Architecture
 
@@ -14,6 +21,11 @@ The app is integrated with three main services:
 
 See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete integration documentation.
 
+## Key Features
+- **Real-time Data Display**: Fetch and display results from STEPFLOW-backend.
+- **AI Integration**: View insights derived from STEPFLOW-AI, including motion tracking and emotion analysis.
+- **User-Friendly Interface**: Built with a focus on simplicity and usability.
+
 ## Project Structure
 
 ```
@@ -23,7 +35,10 @@ src/
 │   ├── auth.ts       # Authentication endpoints
 │   ├── sessions.ts   # Session management endpoints
 │   ├── analytics.ts  # Analytics and statistics endpoints
-│   └── feedback.ts   # User feedback endpoints
+│   ├── feedback.ts   # User feedback endpoints
+│   ├── backend.ts    # Backend workflow & archival API (NEW)
+│   ├── ai.ts         # AI processing & ML models API (NEW)
+│   └── premiere.ts   # PREMIERE tools suite API (NEW)
 │
 ├── components/       # Reusable UI components
 │   ├── Button.tsx           # Customizable button component
@@ -85,7 +100,7 @@ src/
 
 ## Features
 
-### 1. STEPFLOW Integration (NEW)
+### 1. STEPFLOW Integration
 - **Backend Integration**: Workflow task management, content archival, data synchronization
 - **AI Processing**: Motion tracking, video analysis, pose estimation, dance recognition
 - **PREMIERE Tools**: 3D motion analysis, audio diarization, multi-language translation
@@ -98,32 +113,32 @@ src/
 - **Step Detection**: Intelligent step detection with configurable thresholds
 - **Beat Sync**: Synchronize movements with music tempo (BPM)
 
-### 2. User Interface
+### 3. User Interface
 - Clean, modern design with consistent theming
 - Responsive components following Material Design principles
 - Real-time feedback during sessions
 - Interactive progress visualization
 
-### 3. State Management
+### 4. State Management
 - Centralized Redux store with TypeScript
 - Separate slices for user, session, and progress
 - Optimized for performance with minimal re-renders
 
-### 4. API Integration
+### 5. API Integration
 - RESTful API client with error handling
 - Authentication with JWT tokens
 - Session management and progress tracking
 - Analytics and feedback submission
 - **Backend, AI, and PREMIERE service integration**
 
-### 5. Workflow Management (NEW)
+### 6. Workflow Management
 - Predefined workflow templates for common tasks
 - Session processing pipeline (upload → analyze → archive)
 - Model training with PREMIERE datasets
 - Content archival automation
 - Real-time motion analysis
 
-### 6. Screens
+### 7. Screens
 - **Home**: Dashboard with quick actions and recommendations
 - **Session Picker**: Browse and select workout sessions
 - **Live Session**: Real-time session with beat indicator and stats
@@ -131,7 +146,7 @@ src/
 - **Progress**: Visual progress tracking with graphs and achievements
 - **Settings**: User preferences and account management
 
-## Setup and Installation
+## Development Workflow
 
 ### Prerequisites
 - Node.js 16+
@@ -142,29 +157,31 @@ src/
 ### Install Dependencies
 ```bash
 npm install
-# or
-yarn install
 ```
 
-### iOS Setup
+### Start Metro Bundler
 ```bash
-cd ios && pod install && cd ..
-```
-
-### Run the App
-
-```bash
-# iOS
-npm run ios
-
-# Android
-npm run android
-
-# Start Metro bundler
 npm start
 ```
 
-## Development
+### Run on iOS (macOS only)
+```bash
+cd ios
+pod install
+cd ..
+npm run ios
+```
+
+### Run on Android
+Ensure an emulator or device is running:
+```bash
+npm run android
+```
+
+### Build for Production
+```bash
+npm run build
+```
 
 ### Type Checking
 ```bash
@@ -197,7 +214,8 @@ import * as BackendAPI from './api/backend';
 // Process a session with full workflow
 const workflow = await integrationOrchestrator.processSession(
   sessionId,
-  videoFile
+  videoFile,
+  userId
 );
 
 // Monitor progress
@@ -205,6 +223,90 @@ const status = integrationOrchestrator.getWorkflowStatus(sessionId);
 ```
 
 See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete usage examples.
+
+## Environment Variables
+
+STEPFLOW Mobile connects to the backend hosted on DigitalOcean.
+
+Create a `.env` file (not committed) with:
+```env
+API_BASE_URL=https://api.stepflow.app
+WS_URL=wss://api.stepflow.app/ws
+AI_SERVICE_URL=https://ai.stepflow.app
+BACKEND_SERVICE_URL=https://backend.stepflow.app
+PREMIERE_SERVICE_URL=https://premiere.stepflow.app
+APP_ENV=development
+```
+
+Example:
+```bash
+cp .env.example .env
+```
+
+⚠️ Do not commit `.env` files.
+
+## Integration with STEPFLOW Ecosystem
+
+STEPFLOW Mobile communicates with the backend API.
+
+- **STEPFLOW-backend**
+  - Hosted on DigitalOcean
+  - Provides REST/GraphQL APIs used to fetch data
+  - Handles auth, user data, lesson content, and AI orchestration
+  - Workflow task management and content archival
+
+- **STEPFLOW-AI**
+  - Invoked internally by the backend
+  - Performs movement analysis and scoring
+  - Returns structured feedback
+  - Supplies processed AI results which are displayed in the app
+  - Motion tracking, video analysis, and model training
+
+- **PREMIERE Tools**
+  - 3D motion analysis with skeleton tracking
+  - Audio diarization for speaker identification
+  - Multi-language translation services
+  - Dance Motion Dataset access
+  - CMS content management
+
+The mobile app communicates with all services through the integration layer.
+
+## Deployment
+
+### Mobile App Deployment
+
+STEPFLOW Mobile is a native application deployed to app stores:
+
+**Deployment targets:**
+- **iOS** → TestFlight / App Store
+- **Android** → Google Play Console
+
+### Backend/Serverless Deployment
+
+The backend API and serverless functions are deployed via DigitalOcean's workflow. For a quick start, follow these steps:
+
+1. Install serverless support:
+   ```bash
+   doctl serverless install
+   ```
+
+2. Connect to your namespace:
+   ```bash
+   doctl serverless connect
+   ```
+
+3. Deploy serverless functions:
+   ```bash
+   doctl serverless deploy
+   ```
+
+**DigitalOcean is used for:**
+- Backend API hosting
+- Serverless functions
+- AI inference services
+- Databases and storage
+
+For comprehensive documentation on DigitalOcean's `doctl` CLI, serverless functions management, and detailed deployment workflows, see the [Developer Guide](docs/developer-guide.md).
 
 ## Architecture Decisions
 
@@ -214,44 +316,20 @@ See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete usage examples.
 - Props are fully typed with TypeScript
 
 ### Motion Detection
-- Modular design with fallback methods
-- Device capability checking
-- Configurable parameters for different devices
+- Modular architecture with separate sensors
+- Configurable sensitivity and thresholds
+- Real-time processing optimized for 60 FPS
 
 ### State Management
-- Redux Toolkit for simplified Redux
-- Normalized state structure
-- Async actions with proper error handling
+- Redux Toolkit for simplified state management
+- Normalized state shape to avoid duplication
+- Selector functions for derived data
 
-### Navigation
-- Stack-based navigation with React Navigation
-- Type-safe navigation with TypeScript
-- Proper screen lifecycle management
-
-## Configuration
-
-### Environment Variables
-Create a `.env` file (not committed) with:
-```
-API_BASE_URL=https://api.stepflow.app
-WS_URL=wss://api.stepflow.app/ws
-AI_SERVICE_URL=https://ai.stepflow.app
-BACKEND_SERVICE_URL=https://backend.stepflow.app
-PREMIERE_SERVICE_URL=https://premiere.stepflow.app
-APP_ENV=development
-```
-
-### Theme Customization
-Edit files in `src/theme/` to customize colors, spacing, and typography.
-
-## Contributing
-
-1. Follow the existing code structure
-2. Use TypeScript for type safety
-3. Write clean, documented code
-4. Test thoroughly before committing
+### API Integration
+- Centralized API client configuration
+- Type-safe API responses
+- Automatic error handling and retry logic
+- Real-time synchronization via WebSocket
 
 ## License
-
-Copyright © 2026 StepFlow
-
+This project is licensed under the [MIT License](LICENSE).
