@@ -4,6 +4,7 @@ export * from './hooks';
 export * from './motion';
 export * from './navigation';
 export * from './screens';
+export * from './services';
 export * from './state';
 export * from './theme';
 export * from './utils';
