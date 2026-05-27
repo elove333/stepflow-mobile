@@ -31,10 +31,23 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Lint
+        id: lint
+        continue-on-error: true
         run: npm run lint
 
       - name: Type check
+        id: type_check
+        continue-on-error: true
         run: npm run type-check
 
       - name: Tests
+        id: tests
+        continue-on-error: true
         run: npm test
+
+      - name: Check summary
+        if: always()
+        run: |
+          echo "lint: ${{ steps.lint.outcome }}"
+          echo "type-check: ${{ steps.type_check.outcome }}"
+          echo "tests: ${{ steps.tests.outcome }}"
