@@ -1,1 +1,13 @@
-name: Build and Deploy to DigitalOcean\n\non:\n  push:\n    branches:\n    - main\n\njobs:\n  build-and-deploy:\n    runs-on: ubuntu-latest\n\n    steps:\n    - name: Checkout code\n      uses: actions/checkout@v2\n\n    - name: Install doctl\n      run: sudo snap install doctl\n\n    - name: Authenticate doctl\n      run: doctl auth init --access-token ${{ secrets.DO_ACCESS_TOKEN }}\n\n    - name: Build the app\n      run: doctl apps dev build --spec .do/app.yaml --no-cache\n\n    - name: Deploy to DigitalOcean\n      run: doctl apps create --spec .do/app.yaml\n
+name: DigitalOcean Deploy (Manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Not configured
+        run: |
+          echo "This repository is a React Native mobile app."
+          echo "DigitalOcean App Platform deploy is not configured for mobile builds."
