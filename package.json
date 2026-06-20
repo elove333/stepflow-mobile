@@ -5,7 +5,9 @@
   "private": true,
   "main": "index.js",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "tools/*",
+    "agents/*"
   ],
   "scripts": {
     "start": "react-native start",

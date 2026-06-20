@@ -25,7 +25,7 @@ tools/
 
 - `apps/socketio-server` is a placeholder Node workspace.
 - `apps/botpress` is a placeholder Node workspace.
-- `tools/codex` is a placeholder directory for the Rust tool.
-- `agents/sopo-agent-advanced-strategy` is a placeholder directory for the agent project.
+- `tools/codex` is a placeholder workspace for the Rust tool.
+- `agents/sopo-agent-advanced-strategy` is a placeholder workspace for the agent project.
 
 The existing mobile app remains in place at the repository root for now. A future follow-up can move it under `apps/mobile` if you want a full workspace migration.

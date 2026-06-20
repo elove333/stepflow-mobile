@@ -1,0 +1,9 @@
+{
+  "name": "@stepflow/sopo-agent-advanced-strategy",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder workspace metadata for the SOPO agent project",
+  "scripts": {
+    "status": "node -e \"console.log('Scaffold only: import the SOPO agent project into agents/sopo-agent-advanced-strategy before running workspace commands.')\""
+  }
+}
