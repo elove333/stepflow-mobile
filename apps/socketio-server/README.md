@@ -1,6 +1,6 @@
 # socketio-server workspace
 
-This directory is reserved for the realtime server project based on `socket.io`.
+This directory is reserved for the real-time server project based on `socket.io`.
 
 ## Status
 
@@ -11,5 +11,5 @@ This directory is reserved for the realtime server project based on `socket.io`.
 ## Expected ownership
 
 - Node.js + TypeScript server code
-- Realtime APIs and socket event handling
+- Real-time APIs and socket event handling
 - Server-only configuration and deployment assets
