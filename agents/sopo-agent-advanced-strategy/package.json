@@ -1,9 +1,24 @@
 {
   "name": "@stepflow/sopo-agent-advanced-strategy",
   "private": true,
-  "version": "0.0.0",
-  "description": "Placeholder workspace metadata for the SOPO agent project",
+  "version": "0.1.0",
+  "description": "SOPO live agent Socket.IO runner",
+  "type": "module",
+  "main": "dist/src/runner.js",
   "scripts": {
-    "status": "node -e \"console.log('Scaffold only: import the SOPO agent project into agents/sopo-agent-advanced-strategy before running workspace commands.')\""
+    "build": "tsc",
+    "start": "node dist/src/runner.js",
+    "test": "node --test dist/tests/strategy.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.5.0"
   }
 }
