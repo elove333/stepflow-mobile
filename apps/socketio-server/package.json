@@ -1,0 +1,9 @@
+{
+  "name": "@stepflow/socketio-server",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder workspace for the socket.io-based realtime server fork",
+  "scripts": {
+    "status": "node -e \"console.log('Scaffold only: import the socket.io fork into apps/socketio-server before running workspace commands.')\""
+  }
+}

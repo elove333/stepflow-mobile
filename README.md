@@ -1,5 +1,26 @@
 # STEPFLOW Mobile
 
+## Monorepo scaffolding
+
+The repository now includes placeholder directories for adding separate projects into one shared repository without blending them into one application runtime.
+
+```text
+apps/
+  botpress/
+  socketio-server/
+agents/
+  sopo-agent-advanced-strategy/
+tools/
+  codex/
+```
+
+- `apps/socketio-server` is reserved for the `socket.io`-based realtime server.
+- `apps/botpress` is reserved for the Botpress project.
+- `tools/codex` is reserved for the Codex terminal tool.
+- `agents/sopo-agent-advanced-strategy` is reserved for the SOPO agent project.
+
+See [docs/MONOREPO.md](docs/MONOREPO.md) for the isolation rules and current scaffold status.
+
 ## Project Overview
 
 STEPFLOW-mobile is a React Native application that integrates with STEPFLOW-backend and STEPFLOW-AI to provide a complete rhythm-based movement training experience. The app includes seamless integration with PREMIERE tools for advanced motion analysis, AI processing, and multi-language support.

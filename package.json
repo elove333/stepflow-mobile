@@ -4,6 +4,9 @@
   "description": "StepFlow - A rhythm-based movement training mobile app with integrated backend, AI, and PREMIERE services",
   "private": true,
   "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
@@ -11,7 +14,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "type-check": "tsc --noEmit",
-    "build": "react-native bundle"
+    "build": "react-native bundle",
+    "workspaces:list": "node -e \"const pkg=require('./package.json'); console.log(pkg.workspaces.join('\\n'))\""
   },
   "dependencies": {
     "axios": "^1.6.0"
