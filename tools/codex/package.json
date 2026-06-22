@@ -1,0 +1,9 @@
+{
+  "name": "@stepflow/codex",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder workspace metadata for the Codex Rust tool",
+  "scripts": {
+    "status": "node -e \"console.log('Scaffold only: import the Codex project into tools/codex before running workspace commands.')\""
+  }
+}

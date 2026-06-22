@@ -1,0 +1,9 @@
+{
+  "name": "@stepflow/botpress",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder workspace for the Botpress application",
+  "scripts": {
+    "status": "node -e \"console.log('Scaffold only: import the Botpress project into apps/botpress before running workspace commands.')\""
+  }
+}
