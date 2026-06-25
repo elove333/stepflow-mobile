@@ -21,26 +21,8 @@ tools/
 
 See [docs/MONOREPO.md](docs/MONOREPO.md) for the isolation rules and current scaffold status.
 
-## Project Overview
-
-STEPFLOW-mobile is a React Native application that integrates with STEPFLOW-backend and STEPFLOW-AI to provide a complete rhythm-based movement training experience. The app includes seamless integration with PREMIERE tools for advanced motion analysis, AI processing, and multi-language support.
-
-STEPFLOW Mobile is the front-end application designed to connect with the STEPFLOW ecosystem, which includes STEPFLOW-AI and STEPFLOW-backend. This mobile app serves as the user interface for accessing data processed by the AI system and managed by the backend infrastructure.
-
-## Screenshots
-![Home Screen](assets/screenshots/home.png)
-![Lesson Screen](assets/screenshots/lesson.png)
-![Practice Screen](assets/screenshots/practice.png)
-
-## Integration Architecture
-
-The app is integrated with three main services:
-
-- **STEPFLOW-backend**: Workflow orchestration, task routing, and content archival
-- **STEPFLOW-AI**: Motion tracking, video analysis, pose estimation, and model training
-- **PREMIERE Tools**: 3D motion analysis, audio diarization, translation services, and Dance Motion Datasets
-
-See [docs/INTEGRATION.md](docs/INTEGRATION.md) for complete integration documentation.
+## Project Overview Sopo bot
+call legal plays in real time sopo
 
 ## Key Features
 - **Real-time Data Display**: Fetch and display results from STEPFLOW-backend.
@@ -128,12 +110,7 @@ src/
 - **Real-time Sync**: WebSocket-based live updates and notifications
 - **Workflow Orchestration**: Automated pipelines for session processing and content management
 
-### 2. Motion Detection
-- **Pose Detection**: Real-time body pose tracking using device camera
-- **Accelerometer & Gyroscope**: Device motion sensors for movement tracking
-- **Step Detection**: Intelligent step detection with configurable thresholds
-- **Beat Sync**: Synchronize movements with music tempo (BPM)
-
+###
 ### 3. User Interface
 - Clean, modern design with consistent theming
 - Responsive components following Material Design principles
@@ -159,13 +136,7 @@ src/
 - Content archival automation
 - Real-time motion analysis
 
-### 7. Screens
-- **Home**: Dashboard with quick actions and recommendations
-- **Session Picker**: Browse and select workout sessions
-- **Live Session**: Real-time session with beat indicator and stats
-- **Feedback**: Post-session rating and comments
-- **Progress**: Visual progress tracking with graphs and achievements
-- **Settings**: User preferences and account management
+##
 
 ## Development Workflow
 
@@ -173,7 +144,7 @@ src/
 - Node.js 16+
 - React Native development environment
 - iOS: Xcode and CocoaPods
-- Android: Android Studio and SDK
+
 
 ### Install Dependencies
 ```bash
@@ -266,91 +237,6 @@ cp .env.example .env
 
 ⚠️ Do not commit `.env` files.
 
-## Integration with STEPFLOW Ecosystem
 
-STEPFLOW Mobile communicates with the backend API.
 
-- **STEPFLOW-backend**
-  - Hosted on DigitalOcean
-  - Provides REST/GraphQL APIs used to fetch data
-  - Handles auth, user data, lesson content, and AI orchestration
-  - Workflow task management and content archival
-
-- **STEPFLOW-AI**
-  - Invoked internally by the backend
-  - Performs movement analysis and scoring
-  - Returns structured feedback
-  - Supplies processed AI results which are displayed in the app
-  - Motion tracking, video analysis, and model training
-
-- **PREMIERE Tools**
-  - 3D motion analysis with skeleton tracking
-  - Audio diarization for speaker identification
-  - Multi-language translation services
-  - Dance Motion Dataset access
-  - CMS content management
-
-The mobile app communicates with all services through the integration layer.
-
-## Deployment
-
-### Mobile App Deployment
-
-STEPFLOW Mobile is a native application deployed to app stores:
-
-**Deployment targets:**
-- **iOS** → TestFlight / App Store
-- **Android** → Google Play Console
-
-### Backend/Serverless Deployment
-
-The backend API and serverless functions are deployed via DigitalOcean's workflow. For a quick start, follow these steps:
-
-1. Install serverless support:
-   ```bash
-   doctl serverless install
-   ```
-
-2. Connect to your namespace:
-   ```bash
-   doctl serverless connect
-   ```
-
-3. Deploy serverless functions:
-   ```bash
-   doctl serverless deploy
-   ```
-
-**DigitalOcean is used for:**
-- Backend API hosting
-- Serverless functions
-- AI inference services
-- Databases and storage
-
-For comprehensive documentation on DigitalOcean's `doctl` CLI, serverless functions management, and detailed deployment workflows, see the [Developer Guide](docs/developer-guide.md).
-
-## Architecture Decisions
-
-### Component Design
-- Components are pure and reusable
-- No screen-specific logic in components
-- Props are fully typed with TypeScript
-
-### Motion Detection
-- Modular architecture with separate sensors
-- Configurable sensitivity and thresholds
-- Real-time processing optimized for 60 FPS
-
-### State Management
-- Redux Toolkit for simplified state management
-- Normalized state shape to avoid duplication
-- Selector functions for derived data
-
-### API Integration
-- Centralized API client configuration
-- Type-safe API responses
-- Automatic error handling and retry logic
-- Real-time synchronization via WebSocket
-
-## License
 This project is licensed under the [MIT License](LICENSE).
