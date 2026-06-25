@@ -302,18 +302,18 @@ STEPFLOW Mobile is a native application deployed to app stores:
 - **iOS** → TestFlight / App Store
 - **Android** → Google Play Console
 
-### Backend/Serverless Deployment
+### Backend/Realtime Deployment
 
-The backend API and serverless functions are deployed via DigitalOcean's workflow. For a quick start, follow these steps:
+The backend API and realtime services are deployed via DigitalOcean's workflow. For a quick start, follow these steps:
 
 1. Install serverless support:
    ```bash
    doctl serverless install
    ```
 
-2. Connect to your namespace:
+2. Run the socket.io realtime server workspace:
    ```bash
-   doctl serverless connect
+   npm run status --workspace @stepflow/socketio-server
    ```
 
 3. Deploy serverless functions:
