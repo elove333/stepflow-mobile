@@ -311,7 +311,7 @@ The backend API and realtime services are deployed via DigitalOcean's workflow. 
    doctl serverless install
    ```
 
-2. Run the socket.io realtime server workspace:
+2. Check the socket.io realtime server workspace status:
    ```bash
    npm run status --workspace @stepflow/socketio-server
    ```
