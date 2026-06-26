@@ -102,8 +102,8 @@ export async function decideAction(turn: TurnState, context?: StrategyContext): 
   const canCheck = legal.has('check') && (Number(turn.to_call) || 0) <= 0;
   const hint = context?.memoryHint;
 
-  // Helper: tilt a borderline call to fold when memory strongly suggests it
-  function memoryTiltedCall(
+  // Helper: return the call action, or fold/check if memory strongly suggests folding in this spot
+  function callWithMemoryFallback(
     callAction: AgentAction,
     foldReasoning: string,
   ): AgentAction {
@@ -142,7 +142,7 @@ export async function decideAction(turn: TurnState, context?: StrategyContext): 
     }
 
     if (legal.has('call') && smallCall(turn)) {
-      return memoryTiltedCall(
+      return callWithMemoryFallback(
         { action: 'call', reasoning: 'small preflop price' },
         'memory-informed preflop fold',
       );
@@ -156,7 +156,7 @@ export async function decideAction(turn: TurnState, context?: StrategyContext): 
       return withMemoryTag({ action: 'bet', amount: betAmount(turn, 0.5), reasoning: 'made hand value bet' }, context);
     }
     if (legal.has('call') && mediumCall(turn)) {
-      return memoryTiltedCall(
+      return callWithMemoryFallback(
         { action: 'call', reasoning: 'made hand continues' },
         'memory-informed fold with made hand',
       );
@@ -168,7 +168,7 @@ export async function decideAction(turn: TurnState, context?: StrategyContext): 
   }
 
   if (legal.has('call') && smallCall(turn)) {
-    return memoryTiltedCall(
+    return callWithMemoryFallback(
       { action: 'call', reasoning: 'small price call' },
       'memory-informed fold small price',
     );

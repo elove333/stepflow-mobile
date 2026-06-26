@@ -37,8 +37,8 @@ export function boardTexture(board: string[]): BoardTexture {
     acc[s] = (acc[s] ?? 0) + 1;
     return acc;
   }, {});
-  const isFlushDraw = Object.values(suitCounts).some((n) => n >= 2);
-  return isFlushDraw ? 'wet' : 'dry';
+  const hasMultipleSameSuit = Object.values(suitCounts).some((n) => n >= 2);
+  return hasMultipleSameSuit ? 'wet' : 'dry';
 }
 
 export function handStrength(cards: string[]): HandStrength {
@@ -113,13 +113,15 @@ export class BotMemory {
 
   /**
    * Append one entry to the in-memory buffer and to the JSONL file.
+   * The file is opened in append mode ('a'), so writeFile writes only
+   * the new line rather than truncating.
    */
   async record(entry: MemoryEntry): Promise<void> {
     this.entries.push(entry);
     const line = JSON.stringify(entry) + '\n';
     const fh = await open(this.filePath, 'a');
     try {
-      await fh.writeFile(line, 'utf8');
+      await fh.write(line, null, 'utf8');
     } finally {
       await fh.close();
     }
@@ -142,12 +144,17 @@ export class BotMemory {
 
     const freq: Partial<Record<LegalAction, number>> = {};
     for (const e of similar) {
-      freq[e.action] = (freq[e.action] ?? 0) + 1;
+      if (e.action) {
+        freq[e.action] = (freq[e.action] ?? 0) + 1;
+      }
     }
 
-    const topAction = (
-      Object.entries(freq).sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))[0][0] as LegalAction
-    );
+    const entries = Object.entries(freq);
+    if (entries.length === 0) {
+      return { matchCount: similar.length, topAction: null, texture, strength };
+    }
+
+    const topAction = entries.sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))[0][0] as LegalAction;
 
     return { matchCount: similar.length, topAction, texture, strength };
   }
