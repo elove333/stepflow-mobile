@@ -20,8 +20,19 @@ npm start
 - `AGENT_NAME` optional display name
 - `DECISION_TIMEOUT_MS` defaults to `7500`
 - `MANAGEMENT_TOKEN` reserved for future management API flows and is not used by the runner yet
+- `BOT_MEMORY_PATH` path to the JSONL hand-history file (default: `bot-memory.jsonl` in cwd)
 
 Do not commit `.env`.
+
+## Bot Memory
+
+The runner loads `bot-memory.jsonl` at startup and appends every decision it makes.
+At decision time it looks up the last 1 000 entries for hands with the same
+**street × position × board-texture × hand-strength** and passes the most-frequent
+past action as a hint to `decideAction`. The strategy uses that hint to:
+
+- annotate reasoning with `[mem:Nx top=action]` (≥ 3 matches)
+- tilt borderline calls to fold when memory strongly suggests it (≥ 5 matches, top=fold)
 
 ## Practice Arena
 

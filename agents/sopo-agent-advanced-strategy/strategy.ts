@@ -88,64 +88,91 @@ function firstLegal(turn: TurnState, actions: LegalAction[], reasoning: string):
   return { action: 'fold', reasoning: 'no preferred legal action' };
 }
 
-export async function decideAction(turn: TurnState, context?: StrategyContext): Promise<AgentAction> {
-  void context;
+/** Append a memory tag to reasoning when we have enough history for this spot. */
+function withMemoryTag(action: AgentAction, context: StrategyContext | undefined): AgentAction {
+  const hint = context?.memoryHint;
+  if (!hint || hint.matchCount < 3) return action;
+  const tag = `[mem:${hint.matchCount}x ${hint.topAction}]`;
+  return { ...action, reasoning: action.reasoning ? `${action.reasoning} ${tag}` : tag };
+}
 
+export async function decideAction(turn: TurnState, context?: StrategyContext): Promise<AgentAction> {
   const legal = legalSet(turn);
   const street = String(turn.street).toLowerCase();
   const canCheck = legal.has('check') && (Number(turn.to_call) || 0) <= 0;
+  const hint = context?.memoryHint;
+
+  // Helper: tilt a borderline call to fold when memory strongly suggests it
+  function memoryTiltedCall(
+    callAction: AgentAction,
+    foldReasoning: string,
+  ): AgentAction {
+    if (hint && hint.matchCount >= 5 && hint.topAction === 'fold') {
+      return withMemoryTag(firstLegal(turn, ['fold', 'check'], foldReasoning), context);
+    }
+    return withMemoryTag(callAction, context);
+  }
 
   if (street === 'preflop') {
     if (isPremiumPreflop(turn.your_cards)) {
       if (legal.has('allin')) {
-        return { action: 'allin', reasoning: 'premium preflop pressure' };
+        return withMemoryTag({ action: 'allin', reasoning: 'premium preflop pressure' }, context);
       }
       if (legal.has('raise')) {
-        return {
+        return withMemoryTag({
           action: 'raise',
           amount: shoveAmount(turn),
           reasoning: 'premium preflop stack-sized raise shove',
-        };
+        }, context);
       }
       if (legal.has('bet')) {
-        return {
+        return withMemoryTag({
           action: 'bet',
           amount: shoveAmount(turn),
           reasoning: 'premium preflop stack-sized bet shove',
-        };
+        }, context);
       }
       if (legal.has('call')) {
-        return { action: 'call', reasoning: 'premium preflop continue' };
+        return withMemoryTag({ action: 'call', reasoning: 'premium preflop continue' }, context);
       }
     }
 
     if (canCheck) {
-      return { action: 'check', reasoning: 'free preflop option' };
+      return withMemoryTag({ action: 'check', reasoning: 'free preflop option' }, context);
     }
 
     if (legal.has('call') && smallCall(turn)) {
-      return { action: 'call', reasoning: 'small preflop price' };
+      return memoryTiltedCall(
+        { action: 'call', reasoning: 'small preflop price' },
+        'memory-informed preflop fold',
+      );
     }
 
-    return firstLegal(turn, ['fold', 'check', 'call'], 'weak preflop spot');
+    return withMemoryTag(firstLegal(turn, ['fold', 'check', 'call'], 'weak preflop spot'), context);
   }
 
   if (hasMadePair(turn)) {
     if (canCheck && legal.has('bet')) {
-      return { action: 'bet', amount: betAmount(turn, 0.5), reasoning: 'made hand value bet' };
+      return withMemoryTag({ action: 'bet', amount: betAmount(turn, 0.5), reasoning: 'made hand value bet' }, context);
     }
     if (legal.has('call') && mediumCall(turn)) {
-      return { action: 'call', reasoning: 'made hand continues' };
+      return memoryTiltedCall(
+        { action: 'call', reasoning: 'made hand continues' },
+        'memory-informed fold with made hand',
+      );
     }
   }
 
   if (canCheck) {
-    return { action: 'check', reasoning: 'free card' };
+    return withMemoryTag({ action: 'check', reasoning: 'free card' }, context);
   }
 
   if (legal.has('call') && smallCall(turn)) {
-    return { action: 'call', reasoning: 'small price call' };
+    return memoryTiltedCall(
+      { action: 'call', reasoning: 'small price call' },
+      'memory-informed fold small price',
+    );
   }
 
-  return firstLegal(turn, ['fold', 'check', 'call'], 'bad price without a hand');
+  return withMemoryTag(firstLegal(turn, ['fold', 'check', 'call'], 'bad price without a hand'), context);
 }

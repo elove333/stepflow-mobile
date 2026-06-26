@@ -2,6 +2,31 @@ export type LegalAction = 'fold' | 'check' | 'call' | 'bet' | 'raise' | 'allin';
 
 export type Street = 'preflop' | 'flop' | 'turn' | 'river';
 
+export interface MemoryEntry {
+  ts: number;
+  hand_id: string;
+  match_id?: string;
+  street: string;
+  your_cards: string[];
+  board: string[];
+  position: string;
+  pot: number;
+  to_call: number;
+  action: LegalAction;
+  amount?: number;
+  reasoning?: string;
+}
+
+export type BoardTexture = 'none' | 'dry' | 'wet' | 'paired';
+export type HandStrength = 'premium' | 'medium' | 'trash';
+
+export interface MemoryHint {
+  matchCount: number;
+  topAction: LegalAction | null;
+  texture: BoardTexture;
+  strength: HandStrength;
+}
+
 export interface TurnState {
   hand_id: string;
   match_type?: string;
@@ -36,6 +61,7 @@ export interface StrategyContext {
   budgetMs: number;
   origin: string;
   agentName?: string;
+  memoryHint?: MemoryHint;
 }
 
 export interface RunnerConfig {
@@ -43,4 +69,5 @@ export interface RunnerConfig {
   apiKey: string;
   agentName?: string;
   decisionTimeoutMs: number;
+  memoryPath: string;
 }
