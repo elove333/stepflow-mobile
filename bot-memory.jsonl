@@ -1623,3 +1623,4 @@
 {"ts":1779519041122,"hand_id":"bracket-challenge_ch_bea581523e21212c-challenge-m0-hand-10-1779519017450","result":"tie","chips_delta":0,"kind":"result"}
 {"ts":1779519088397,"hand_id":"bracket-challenge_ch_85ab1bbbea614c6b-challenge-m0-hand-1-1779519054374","result":"tie","chips_delta":0,"kind":"result"}
 {"ts":1779519125009,"hand_id":"bracket-challenge_ch_85ab1bbbea614c6b-challenge-m0-hand-2-1779519091351","result":"tie","chips_delta":0,"kind":"result"}
+{"ts":1778893497988,"hand_id":"nightly_2026-05-16-r1-m2-h6","match_id":"nightly_2026-05-16-r1-m2","street":"PREFLOP","your_cards":["5s","5h"],"board":[],"position":"BTN","pot":160,"to_call":0,"action":"bet","amount":400,"reasoning":"preflop-open-strong"}
